@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8yb4wusteax1"]
+
+[ext_resource type="Script" path="res://main.cs" id="1_hh8ph"]
+[ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
+[ext_resource type="PackedScene" uid="uid://dokenwina4rjk" path="res://player.tscn" id="2_8hnjy"]
+[ext_resource type="PackedScene" uid="uid://dhhx5w2nd4kv2" path="res://monster_generator.tscn" id="2_umpxy"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_hh8ph")
+
+[node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]
+
+[node name="Platform2" parent="." instance=ExtResource("1_rxpng")]
+position = Vector2(989, 462)
+
+[node name="Platform" parent="." instance=ExtResource("1_rxpng")]
+position = Vector2(99, 259)
+scale = Vector2(0.745, 1)
+
+[node name="Platform7" parent="Platform" instance=ExtResource("1_rxpng")]
+position = Vector2(453.691, 0.999908)
+rotation = 0.755193
+scale = Vector2(0.624, 1.222)
+skew = 0.282859
+
+[node name="Platform8" parent="Platform" instance=ExtResource("1_rxpng")]
+position = Vector2(-220.134, -395)
+rotation = 1.01671
+scale = Vector2(1.06794, 1.28888)
+skew = 0.223289
+
+[node name="Player" parent="." instance=ExtResource("2_8hnjy")]
+position = Vector2(1108, 227)
+
+[node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
+position = Vector2(-11, 602)
+scale = Vector2(4.12, 1)
+
+[node name="Platform5" parent="." instance=ExtResource("1_rxpng")]
+position = Vector2(988, 312)
+
+[node name="Platform4" parent="." instance=ExtResource("1_rxpng")]
+position = Vector2(838, 399)
+scale = Vector2(0.2, 1)
+
+[node name="Platform6" parent="." instance=ExtResource("1_rxpng")]
+position = Vector2(838, 219)
+scale = Vector2(0.2, 1)
+
+[node name="Platform" parent="Platform6" instance=ExtResource("1_rxpng")]
+position = Vector2(-1495, -150)
+rotation = 0.0974149
+scale = Vector2(3.49819, 2.37184)
+skew = 1.08487
+
+[node name="Player1Cam" type="Camera2D" parent="."]
+position_smoothing_enabled = true
