@@ -1,0 +1,105 @@
+[gd_scene load_steps=3 format=3 uid="uid://drq756scms26v"]
+
+[ext_resource type="Script" path="res://main_menu.cs" id="1_ck1qw"]
+
+[sub_resource type="Theme" id="Theme_iu8wk"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ck1qw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -248.0
+offset_top = 208.0
+offset_right = 684.0
+offset_bottom = 656.0
+grow_horizontal = 0
+rotation = -0.523599
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/default_color = Color(1, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_font_sizes/normal_font_size = 32
+text = "And Friends"
+fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_iu8wk")
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 75
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer2"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/normal_font_size = 63
+text = "The Adventures of Strong Guy!"
+fit_content = true
+
+[node name="Start Menu" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+size_flags_stretch_ratio = 10.0
+
+[node name="Start" type="Button" parent="MarginContainer/Start Menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_neighbor_bottom = NodePath("../Options")
+text = "Start"
+
+[node name="Options" type="Button" parent="MarginContainer/Start Menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_neighbor_top = NodePath("../Start")
+focus_neighbor_bottom = NodePath("../Credits")
+text = "Options
+"
+
+[node name="Credits" type="Button" parent="MarginContainer/Start Menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_neighbor_top = NodePath("../Options")
+focus_neighbor_bottom = NodePath("../Quit")
+text = "Credits"
+
+[node name="Quit" type="Button" parent="MarginContainer/Start Menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_neighbor_top = NodePath("../Credits")
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/Start Menu/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/Start Menu/Quit" to="." method="_on_quit_pressed"]
