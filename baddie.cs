@@ -9,6 +9,11 @@ public partial class baddie : CharacterBody2D
 	public Boolean gettingHit = false;
 	public int gettingHit_direction = -1;
 	public float speed = .5f;
+	
+
+	private int health;
+	private int mana;
+	private int energy;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();

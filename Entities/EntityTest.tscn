@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct2kurvd5qu2j"]
+
+[ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_qrpr6"]
+[ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="2_k0x1n"]
+
+[node name="EntityTest" type="Node2D"]
+
+[node name="Platform" parent="." instance=ExtResource("1_qrpr6")]
+position = Vector2(-99, 342)
+scale = Vector2(3.185, 2.13)
+
+[node name="Entity" parent="." instance=ExtResource("2_k0x1n")]
+position = Vector2(117, 45)

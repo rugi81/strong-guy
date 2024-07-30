@@ -3,18 +3,35 @@ using System;
 
 public partial class player : CharacterBody2D
 {
+	// Object refs
 	private AnimatedSprite2D spr;
-	private Boolean jumping = false;
-	private Boolean kicking = false;
-	private Boolean face_right = true;
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-	private int WalkSpeed = 0;
-	private const int MaxWalkSpeed = 200;
-	private float WalkAcceleration = 10;
 	private Area2D punch;
 	private Node2D wrapper;
-	
+
+	// Constants
+	private const int MaxWalkSpeed = 300;
+	private float WalkAcceleration = 30;
+
+	// Player Stats
+	private String name = "";
+	private int health = 100;
+	private int energy = 100;
+	private int mana = 100;
+	private int score = 0;
+	private int WalkSpeed = 0;
+
+	// State vars
+	private Boolean jumping = false;
+	private Boolean somersault = false;
+	private Boolean kicking = false;
+	private Boolean face_right = true;
+
+	// Action vars
+	private Boolean canSomersault = false;
+
+	// Get the gravity from the project settings to be synced with RigidBody nodes.
+	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();	
+
 	[Signal]
 	public delegate void PunchTargetEventHandler( Boolean direction, float power );
 	
@@ -33,16 +50,31 @@ public partial class player : CharacterBody2D
 
 		velocity.Y += (float)delta * Gravity;
 		
-			punch.Monitoring = false;
+		punch.Monitoring = false;
+
 		if (IsOnFloor()){
 			jumping = false;
 		}
 
+		if (jumping && somersault){
+			Rotation += (face_right)?.1f:-.1f;
+			GD.Print(Rotation);
+			if ( Rotation > -0.1f && Rotation < 0.1f ){
+				somersault = false;
+			}
+		}else{
+			Rotation = 0;
+		}
+		
 		if (Input.IsActionJustPressed("input_jump") && !jumping){
 			spr.Play("sg-jump");
 			velocity.Y -= 550;	
 			jumping = true;
+			if ( canSomersault ){
+				somersault = true;
+			}
 			kicking = false;
+			
 			//GD.Print("!");
 		}
 		
