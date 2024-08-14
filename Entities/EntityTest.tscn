@@ -6,8 +6,16 @@
 [node name="EntityTest" type="Node2D"]
 
 [node name="Platform" parent="." instance=ExtResource("1_qrpr6")]
-position = Vector2(-99, 342)
-scale = Vector2(3.185, 2.13)
+position = Vector2(-416, 221)
+scale = Vector2(2.01, 1)
+
+[node name="Platform2" parent="." instance=ExtResource("1_qrpr6")]
+position = Vector2(275, 365)
+
+[node name="Platform3" parent="." instance=ExtResource("1_qrpr6")]
+position = Vector2(697, 516)
 
 [node name="Entity" parent="." instance=ExtResource("2_k0x1n")]
 position = Vector2(117, 45)
+
+[editable path="Entity"]

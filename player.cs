@@ -65,9 +65,9 @@ public partial class player : CharacterBody2D
 		}else{
 			Rotation = 0;
 		}
-		
+
 		if (Input.IsActionJustPressed("input_jump") && !jumping){
-			spr.Play("sg-jump");
+			spr.Play("jump");
 			velocity.Y -= 550;	
 			jumping = true;
 			if ( canSomersault ){
@@ -81,7 +81,7 @@ public partial class player : CharacterBody2D
 		if (Input.IsActionPressed("input_left"))
 		{
 			if (!jumping && !kicking)
-				spr.Play("sg-walk");
+				spr.Play("walk");
 			//spr.FlipH = true;
 			//GD.Print( Scale );
 			wrapper.Scale = new Vector2(-1,1);
@@ -94,7 +94,7 @@ public partial class player : CharacterBody2D
 		else if (Input.IsActionPressed("input_right"))
 		{
 			if (!jumping && !kicking)
-				spr.Play("sg-walk");
+				spr.Play("walk");
 //			spr.FlipH = false;
 			wrapper.Scale = new Vector2(1,1);
 			face_right = true;
@@ -114,13 +114,13 @@ public partial class player : CharacterBody2D
 			}
 			velocity.X = WalkSpeed;
 			if (!jumping && !kicking)
-				spr.Play("sg-idle");
+				spr.Play("idle");
 //			velocity.X = 0;
 		}
 		
 		if (Input.IsActionJustPressed("input_action")){
 			//GD.Print("KICK");
-			spr.Play("sg-punch");
+			spr.Play("punch");
 			kicking = true;
 			punch.Monitoring = true;
 		}
@@ -144,7 +144,7 @@ public partial class player : CharacterBody2D
 	
 	private void _on_animated_sprite_2d_animation_finished()
 	{
-		if (spr.Animation == "kick" || spr.Animation == "sg-punch"){
+		if (spr.Animation == "kick" || spr.Animation == "punch"){
 			kicking = false;
 		}
 		// Replace with function body.

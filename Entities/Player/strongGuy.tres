@@ -1,0 +1,81 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://bfnuaa0ewknv8"]
+
+[ext_resource type="Texture2D" uid="uid://qb18hjpjcyvf" path="res://asset/strong-guy-0.png" id="1_0o8qr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sna4r"]
+atlas = ExtResource("1_0o8qr")
+region = Rect2(14, 50, 320, 280)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3cp5"]
+atlas = ExtResource("1_0o8qr")
+region = Rect2(1334, 40, 320, 280)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yt4v"]
+atlas = ExtResource("1_0o8qr")
+region = Rect2(910, 13, 320, 280)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d01wv"]
+atlas = ExtResource("1_0o8qr")
+region = Rect2(446, 47, 320, 280)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sna4r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sna4r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3cp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3cp5")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sna4r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yt4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yt4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d01wv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d01wv")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d01wv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yt4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d01wv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yt4v")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]

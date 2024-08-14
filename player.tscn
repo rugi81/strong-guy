@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dokenwina4rjk"]
 
 [ext_resource type="Script" path="res://player.cs" id="1_iyf48"]
-[ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://baseEntity.tres" id="2_5o7pt"]
+[ext_resource type="SpriteFrames" uid="uid://bfnuaa0ewknv8" path="res://Entities/Player/strongGuy.tres" id="2_fpq8o"]
 [ext_resource type="Script" path="res://Punch.cs" id="4_ibjfe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mq18k"]
@@ -23,8 +23,8 @@ shape = SubResource("RectangleShape2D_mq18k")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Wrapper"]
 position = Vector2(0, -20)
 scale = Vector2(0.5, 0.5)
-sprite_frames = ExtResource("2_5o7pt")
-animation = &"hit"
+sprite_frames = ExtResource("2_fpq8o")
+animation = &"attack"
 autoplay = "sg-idle"
 
 [node name="Punch" type="Area2D" parent="Wrapper"]
