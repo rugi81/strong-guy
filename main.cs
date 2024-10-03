@@ -9,19 +9,29 @@ public partial class main : Node2D
 	private Godot.Collections.Array<Node> playerArr;
 	private Vector2 playersMidpoint;
 	private float playersMaxDistance;
+	private TileMap ground;
+	private Godot.Collections.Array<Node> wheels;
 
 	[Export]
 	private float minZoom = .25f;
 
 	[Export]
 	private float maxZoom = 1.25f;
-	
+	[Export]
+	private float trainAcceleration = 1;
+	private float trainSpeed = 10;
+	private float groundBoundary = -600;
+	private float groundOrigin = 600;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		cam1 = GetNode<Camera2D>("Player1Cam");
 		players = GetNode<Node>("Players");
 		playerArr = players.GetChildren();
+		ground = GetNode<TileMap>("Ground");
+		wheels = GetTree().GetNodesInGroup("train_wheel");
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,6 +49,15 @@ public partial class main : Node2D
 
 		cam1.Zoom = new Vector2(zoomAmt,zoomAmt);
 		cam1.Position = newPos;
+
+		ground.Position += new Vector2(-(trainSpeed),0);
+		if ( ground.Position.X < groundBoundary ){
+			ground.Position = new Vector2(groundOrigin, ground.Position.Y);
+		}
+		for (int i = 0; i < wheels.Count; i++ ){
+			Sprite2D w = (Sprite2D) wheels[i];
+			w.Rotate( trainSpeed/100 );
+		}
 	}
 
 	private Vector2 GetPlayersMidPoint(){

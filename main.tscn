@@ -97,9 +97,9 @@ autowrap_mode = 0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 follow_viewport_enabled = true
+scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-modulate = Color(0.427493, 0.427493, 0.427493, 1)
 position = Vector2(922, 346)
 motion_scale = Vector2(-1, 0)
 
