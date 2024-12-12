@@ -94,6 +94,9 @@ public partial class Entity : CharacterBody2D
 			spr.Play("jump");
 			anim.Play("jump");
 			jumping = true;
+			if ( attacking ){
+				attacking = false;
+			}
 		}
 		
 		Velocity = velocity;

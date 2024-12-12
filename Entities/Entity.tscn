@@ -4,7 +4,7 @@
 [ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="2_ng66n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t1weh"]
-size = Vector2(41, 154)
+size = Vector2(41, 123)
 
 [sub_resource type="Animation" id="Animation_xnw7h"]
 length = 0.001

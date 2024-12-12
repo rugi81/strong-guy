@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwrk2y3vhwrnv"]
+
+[ext_resource type="Script" path="res://Train_Room.cs" id="1_jik0w"]
+[ext_resource type="TileSet" uid="uid://bvfmxqpeyq53i" path="res://train_shell.tres" id="2_8ty8t"]
+[ext_resource type="TileSet" uid="uid://wbh4f1e333k3" path="res://train2.tres" id="2_jsdf7"]
+[ext_resource type="PackedScene" uid="uid://b36w2kmoldrp8" path="res://Entities/player.tscn" id="3_iwidq"]
+[ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="5_xkksw"]
+
+[node name="Train Room" type="Node2D"]
+script = ExtResource("1_jik0w")
+
+[node name="Bg" type="TileMap" parent="."]
+modulate = Color(0.501407, 0.501406, 0.501406, 1)
+tile_set = ExtResource("2_jsdf7")
+format = 2
+layer_0/name = "First"
+layer_0/tile_data = PackedInt32Array(65536, 327680, 1, 131072, 327680, 1, 1, 327680, 1, 65537, 327680, 1, 131073, 327680, 1, 2, 327680, 1, 65538, 327680, 1, 131074, 327680, 1, 3, 327680, 1, 65539, 327680, 1, 131075, 327680, 1, 4, 327680, 1, 65540, 327680, 1, 131076, 327680, 1, 0, 327680, 1)
+layer_1/name = "Second"
+layer_1/modulate = Color(1, 0.25243, 0.614783, 1)
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array()
+
+[node name="Shell" type="TileMap" parent="."]
+tile_set = ExtResource("2_8ty8t")
+format = 2
+layer_0/name = "Walls"
+layer_0/tile_data = PackedInt32Array(3, 458752, 6, 131075, 458752, 6, 0, 196608, 4, 65536, 196608, 4, 131072, 196608, 4, 65539, 458752, 6, 4, 65536, 4, 65540, 65536, 4, 131076, 65536, 4)
+layer_1/name = "Floors"
+layer_1/modulate = Color(0.472941, 0.645752, 1, 1)
+layer_1/tile_data = PackedInt32Array(0, 0, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 4, 0, 4, 131072, 131072, 4, 131073, 131072, 4, 131074, 131072, 4, 131075, 131072, 4, 131076, 131072, 4)
+layer_2/name = "Background"
+layer_2/enabled = false
+layer_2/modulate = Color(0.556953, 0.556953, 0.556953, 1)
+layer_2/z_index = -1
+layer_2/tile_data = PackedInt32Array(0, 327680, 1, 65536, 327680, 1, 131072, 327680, 1, 1, 327680, 1, 65537, 327680, 1, 131073, 327680, 1, 2, 327680, 1, 65538, 327680, 1, 131074, 327680, 1, 3, 327680, 1, 65539, 327680, 1, 131075, 327680, 1, 4, 327680, 1, 65540, 327680, 1, 131076, 327680, 1)
+
+[node name="Art" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_iwidq")]
+position = Vector2(61, 48)
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" parent="Player" index="0"]
+position = Vector2(3.5, -3.5)
+
+[node name="AnimatedSprite2D" parent="Player/Wrapper" index="0"]
+sprite_frames = ExtResource("5_xkksw")
+
+[editable path="Player"]

@@ -78,6 +78,8 @@ public partial class player : CharacterBody2D
 			//GD.Print("!");
 		}
 		
+		GD.Print("Jumping: "+jumping+" - Kicking: "+kicking);
+
 		if (Input.IsActionPressed("input_left"))
 		{
 			if (!jumping && !kicking)
@@ -118,7 +120,7 @@ public partial class player : CharacterBody2D
 //			velocity.X = 0;
 		}
 		
-		if (Input.IsActionJustPressed("input_action")){
+		if (Input.IsActionJustPressed("input_action") && !Input.IsActionJustPressed("input_jump")){
 			//GD.Print("KICK");
 			spr.Play("punch");
 			kicking = true;
