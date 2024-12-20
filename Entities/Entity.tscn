@@ -4,7 +4,7 @@
 [ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="2_ng66n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t1weh"]
-size = Vector2(41, 123)
+size = Vector2(50, 130)
 
 [sub_resource type="Animation" id="Animation_xnw7h"]
 length = 0.001
@@ -151,11 +151,19 @@ script = ExtResource("1_cys3l")
 position = Vector2(3.5, 12)
 shape = SubResource("RectangleShape2D_t1weh")
 
+[node name="Body" type="Area2D" parent="."]
+scale = Vector2(1.1, 1.1)
+collision_mask = 7
+
+[node name="EntityBody" type="CollisionShape2D" parent="Body"]
+position = Vector2(3.5, 12)
+shape = SubResource("RectangleShape2D_t1weh")
+
 [node name="Wrapper" type="Node2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Wrapper"]
 sprite_frames = ExtResource("2_ng66n")
-animation = &"attack"
+animation = &"hit"
 autoplay = "idle"
 frame = 1
 
@@ -176,5 +184,6 @@ position = Vector2(52, -17)
 scale = Vector2(5, 5)
 shape = SubResource("CircleShape2D_njsx3")
 
+[connection signal="body_shape_entered" from="Body" to="." method="_on_body_body_shape_entered"]
 [connection signal="animation_finished" from="Wrapper/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Wrapper/Actions/attack" to="." method="_on_attack_body_entered"]

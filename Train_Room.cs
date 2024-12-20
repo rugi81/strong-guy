@@ -6,7 +6,7 @@ public partial class Train_Room : Node2D
 	[Export] private int size_x = 5;
 	[Export] private int size_y = 3;
 	[Export] private String wall_type = "";
-	[Export] private Vector3I[] exits; // x,y coords + exit type; 0 = hatch, 1 = door etc.
+	[Export] private Vector3[] exits; // x,y coords + exit type; 0 = hatch, 1 = door etc.
 	[Export] private Boolean autogenerate = true;
 
 	private Vector3I[] health;
@@ -20,7 +20,7 @@ public partial class Train_Room : Node2D
 	public override void _Ready()
 	{
 		tm = GetNode<TileMap>("Shell");
-		bg = GetNode<TileMap>("BG");
+		bg = GetNode<TileMap>("Bg");
 
 		if ( autogenerate ){
 

@@ -10,6 +10,7 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_hh8ph")
 minZoom = 0.4
+hasTrain = false
 maxZoom = 1.0
 
 [node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]

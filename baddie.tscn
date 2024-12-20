@@ -1,78 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://buuabr7xy2nnw"]
+[gd_scene load_steps=5 format=3 uid="uid://buuabr7xy2nnw"]
 
 [ext_resource type="Script" path="res://baddie.cs" id="1_axmao"]
-[ext_resource type="Texture2D" uid="uid://c2ccymi8cr5ab" path="res://asset/baddies.png" id="1_ipsvg"]
+[ext_resource type="SpriteFrames" uid="uid://cdrn20is2ghhv" path="res://Entities/Baddies/test.tres" id="2_4yhaf"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ycvu2"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0bol6"]
-atlas = ExtResource("1_ipsvg")
-region = Rect2(108, 24, 250, 300)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ukxpf"]
-atlas = ExtResource("1_ipsvg")
-region = Rect2(401, 24, 250, 300)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y2m0s"]
-atlas = ExtResource("1_ipsvg")
-region = Rect2(694, 24, 250, 300)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k14u7"]
-atlas = ExtResource("1_ipsvg")
-region = Rect2(954, 21, 250, 300)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jp3jw"]
-atlas = ExtResource("1_ipsvg")
-region = Rect2(75, 865, 250, 300)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d3gq1"]
-atlas = ExtResource("1_ipsvg")
-region = Rect2(399, 875, 250, 300)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_36b2y"]
-atlas = ExtResource("1_ipsvg")
-region = Rect2(703, 835, 250, 300)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_epuk6"]
-atlas = ExtResource("1_ipsvg")
-region = Rect2(954, 835, 250, 300)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_vyokh"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0bol6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ukxpf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y2m0s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k14u7")
-}],
-"loop": false,
-"name": &"attack",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jp3jw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d3gq1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_36b2y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_epuk6")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1hruo"]
 size = Vector2(111, 112)
@@ -84,7 +15,7 @@ script = ExtResource("1_axmao")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_ycvu2")
-sprite_frames = SubResource("SpriteFrames_vyokh")
+sprite_frames = ExtResource("2_4yhaf")
 animation = &"walk"
 autoplay = "walk"
 frame_progress = 0.596866

@@ -116,9 +116,14 @@ public partial class Entity : CharacterBody2D
 	private void _on_attack_body_entered(Node2D body)
 	{	
 		GD.Print("contact "+attacking);
-		if ( body.GetType().Name == "baddie" && attacking ){
-			((baddie)body).getHit( face_right );
+		if ( body.GetType().Name == "ghost" && attacking ){
+			((ghost)body).getHit( face_right );
 		}
+		GD.Print( body.GetType().Name );
 	}
 
+	private void _on_body_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
+		GD.Print("BODY CONTACT "+body.GetType().Name);
+		
+	}
 }
