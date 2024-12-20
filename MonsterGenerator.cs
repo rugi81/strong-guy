@@ -19,7 +19,7 @@ public partial class MonsterGenerator : Node2D
 	}
 	
 	public void SpawnBaddie (){
-		ghost b = Baddies.Instantiate<ghost>();
+		baddie b = Baddies.Instantiate<baddie>();
 		b.Position = new Vector2( GD.RandRange(100,1500) , -1000 );
 		b.Scale = new Vector2(.5f,.5f);
 		AddChild(b);

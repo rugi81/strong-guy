@@ -1,10 +1,9 @@
 using Godot;
 using System;
 
-public partial class baddie : CharacterBody2D
+public partial class baddie : Entity
 {
-	public const float Speed = 300.0f;
-	public const float JumpVelocity = -400.0f;
+
 	public Boolean dir;
 	public Boolean gettingHit = false;
 	public int gettingHit_direction = -1;
@@ -15,17 +14,15 @@ public partial class baddie : CharacterBody2D
 	private int mana;
 	private int energy;
 
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
 	private AnimatedSprite2D anim;
  	private Timer revertColorTimer;
 
 	public override void _Ready()
 	{
-		anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		anim = GetNode<AnimatedSprite2D>("Wrapper/AnimatedSprite2D");
 		revertColorTimer = GetNode<Timer>("RevertColor");
-		
+		GD.Print( "baddie: "+GetTree().Root.Name );
+
 		var r = GD.RandRange( 0, 1 );
 		dir = ( r > .5 );
 		//GD.Print( dir );
@@ -116,10 +113,5 @@ public partial class baddie : CharacterBody2D
 		// Replace with function body.
 		anim.Modulate = new Color(1,1,1);
 	}
+
 }
-
-
-
-
-
-
