@@ -17,6 +17,8 @@ public partial class baddie : Entity
 	private AnimatedSprite2D anim;
  	private Timer revertColorTimer;
 
+	private Boolean jumping;
+
 	public override void _Ready()
 	{
 		anim = GetNode<AnimatedSprite2D>("Wrapper/AnimatedSprite2D");
@@ -35,16 +37,20 @@ public partial class baddie : Entity
 		// Add the gravity.
 		if (!IsOnFloor())
 			velocity.Y += gravity * (float)delta;
+		else if (IsOnFloor())
+			jumping = false;
 
 		// Handle Jump.
 		var r = GD.RandRange( 0, 100 );
 		if ( r > 99 && IsOnFloor() ){
+			anim.Animation = "jump";
 			velocity.Y = JumpVelocity;
+			jumping = true;
 		}
 
 		var d = ( dir )?100:-100;
 		Vector2 direction = new Vector2( d,0 );
-		if (IsOnFloor()){
+		if (IsOnFloor() && !jumping){
 
 			velocity.X = Mathf.MoveToward(Velocity.X, Speed * direction.X, speed);
 			anim.Animation = "walk";
@@ -112,6 +118,10 @@ public partial class baddie : Entity
 	{
 		// Replace with function body.
 		anim.Modulate = new Color(1,1,1);
+	}
+
+	private void _on_attack_range_body_shape_entered(){
+		// 
 	}
 
 }

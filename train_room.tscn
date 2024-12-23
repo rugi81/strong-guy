@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwrk2y3vhwrnv"]
+[gd_scene load_steps=5 format=3 uid="uid://dwrk2y3vhwrnv"]
 
 [ext_resource type="Script" path="res://Train_Room.cs" id="1_jik0w"]
 [ext_resource type="TileSet" uid="uid://bvfmxqpeyq53i" path="res://train_shell.tres" id="2_8ty8t"]
 [ext_resource type="TileSet" uid="uid://wbh4f1e333k3" path="res://train2.tres" id="2_jsdf7"]
 [ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="4_nqn7n"]
-[ext_resource type="PackedScene" uid="uid://puxlgid11p7r" path="res://Entities/ghost.tscn" id="5_wqwo0"]
 
 [node name="Train Room" type="Node2D"]
 script = ExtResource("1_jik0w")
@@ -39,10 +38,6 @@ layer_2/tile_data = PackedInt32Array(0, 327680, 1, 65536, 327680, 1, 131072, 327
 [node name="Entity" parent="." instance=ExtResource("4_nqn7n")]
 visible = false
 position = Vector2(71, 69)
-scale = Vector2(0.5, 0.5)
-
-[node name="ghost" parent="." instance=ExtResource("5_wqwo0")]
-position = Vector2(182, 78)
 scale = Vector2(0.5, 0.5)
 
 [editable path="Entity"]

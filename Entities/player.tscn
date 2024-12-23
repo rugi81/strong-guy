@@ -8,7 +8,7 @@
 [node name="AnimatedSprite2D" parent="Wrapper" index="0"]
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("2_o8fl1")
-animation = &"attack"
+animation = &"jump"
 
 [node name="attack" parent="Wrapper/Actions" index="0"]
 position = Vector2(40, 6)
