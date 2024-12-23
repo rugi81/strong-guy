@@ -8,11 +8,18 @@
 size = Vector2(300, 150)
 
 [node name="baddie" instance=ExtResource("1_u7kho")]
+collision_layer = 4
 script = ExtResource("2_qofuk")
+
+[node name="Body" parent="." index="1"]
+collision_layer = 4
 
 [node name="AnimatedSprite2D" parent="Wrapper" index="0"]
 sprite_frames = ExtResource("3_i54li")
-animation = &"jump"
+animation = &"attack"
+
+[node name="attack" parent="Wrapper/Actions" index="0"]
+collision_mask = 3
 
 [node name="ChangeMind" type="Timer" parent="." index="3"]
 wait_time = 3.0
@@ -24,6 +31,7 @@ one_shot = true
 
 [node name="Attack_range" type="Area2D" parent="." index="5"]
 position = Vector2(-1, 18)
+collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack_range" index="0"]
 shape = SubResource("RectangleShape2D_7h62v")
@@ -31,3 +39,4 @@ shape = SubResource("RectangleShape2D_7h62v")
 [connection signal="timeout" from="ChangeMind" to="." method="_on_change_mind_timeout"]
 [connection signal="timeout" from="RevertColor" to="." method="_on_revert_color_timeout"]
 [connection signal="body_shape_entered" from="Attack_range" to="." method="_on_attack_range_body_shape_entered"]
+[connection signal="body_shape_exited" from="Attack_range" to="." method="_on_attack_range_body_shape_exited"]

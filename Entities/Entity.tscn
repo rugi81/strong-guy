@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1aqxftan7xhs"]
+[gd_scene load_steps=12 format=3 uid="uid://b1aqxftan7xhs"]
 
 [ext_resource type="Script" path="res://Entities/Entity.cs" id="1_cys3l"]
 [ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="2_ng66n"]
@@ -132,10 +132,26 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_mc1sy"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rul1c"]
 _data = {
 "RESET": SubResource("Animation_xnw7h"),
 "attack": SubResource("Animation_c6udy"),
+"hit": SubResource("Animation_mc1sy"),
 "idle": SubResource("Animation_lx7j1"),
 "jump": SubResource("Animation_w05x1"),
 "walk": SubResource("Animation_8jqa6")
