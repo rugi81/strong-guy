@@ -5,6 +5,10 @@ public partial class MonsterGenerator : Node2D
 {
 	[Export]
 	public PackedScene Baddies {get;set;}
+
+	[Export]
+	private int MaxEntities = 1;
+	private int EntityCount = 0;
 	
 	
 	// Called when the node enters the scene tree for the first time.
@@ -19,10 +23,13 @@ public partial class MonsterGenerator : Node2D
 	}
 	
 	public void SpawnBaddie (){
-		baddie b = Baddies.Instantiate<baddie>();
-		b.Position = new Vector2( GD.RandRange(100,1500) , -1000 );
-		b.Scale = new Vector2(.5f,.5f);
-		AddChild(b);
+		if ( EntityCount < MaxEntities ){
+			baddie b = Baddies.Instantiate<baddie>();
+			b.Position = new Vector2( GD.RandRange(100,1500) , -1000 );
+			b.Scale = new Vector2(.5f,.5f);
+			AddChild(b);
+			EntityCount++;
+		}
 	}
 
 	private void _on_spawn_timer_timeout()
