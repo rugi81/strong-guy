@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8yb4wusteax1"]
+[gd_scene load_steps=7 format=3 uid="uid://c8yb4wusteax1"]
 
 [ext_resource type="Script" path="res://main.cs" id="1_hh8ph"]
 [ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
 [ext_resource type="PackedScene" uid="uid://dhhx5w2nd4kv2" path="res://monster_generator.tscn" id="2_umpxy"]
 [ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="5_4um7m"]
+[ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="5_fauoe"]
 [ext_resource type="Texture2D" uid="uid://budwgshi2ynf4" path="res://asset/Epic_BlueSunset_Cam_0_Front+Z.png" id="5_jsh27"]
 
 [node name="Main" type="Node2D"]
@@ -11,6 +12,7 @@ script = ExtResource("1_hh8ph")
 hasTrain = false
 
 [node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]
+MaxEntities = 8
 
 [node name="Platform2" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(989, 462)
@@ -35,6 +37,19 @@ skew = 0.223289
 
 [node name="Player" parent="Players" instance=ExtResource("5_4um7m")]
 position = Vector2(1230, 152)
+scale = Vector2(0.7, 0.7)
+
+[node name="AnimatedSprite2D" parent="Players/Player/Wrapper" index="0"]
+sprite_frames = ExtResource("5_fauoe")
+animation = &"attack"
+
+[node name="Player2" parent="Players" instance=ExtResource("5_4um7m")]
+position = Vector2(309, -204)
+scale = Vector2(0.7, 0.7)
+playerIndex = 1
+
+[node name="AnimatedSprite2D" parent="Players/Player2/Wrapper" index="0"]
+position = Vector2(2.85713, -2.85715)
 scale = Vector2(0.7, 0.7)
 
 [node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
@@ -99,3 +114,6 @@ motion_scale = Vector2(-1, 0)
 [node name="EpicBlueSunsetCam0Front+z" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 scale = Vector2(3, 3)
 texture = ExtResource("5_jsh27")
+
+[editable path="Players/Player"]
+[editable path="Players/Player2"]

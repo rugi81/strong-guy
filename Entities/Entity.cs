@@ -55,7 +55,7 @@ public partial class Entity : CharacterBody2D
 			}
 			velocity.X = direction.X * Speed;
 			face_right = !!(direction.X > 0);
-			wrapper.Scale = new Vector2( face_right?1:-1, 1 );
+			DoFacing();
 		}
 		else
 		{
@@ -98,10 +98,7 @@ public partial class Entity : CharacterBody2D
 		}
 
 		if (gettingHit){
-			DoGettingHit( velocity );
-		}
-
-		if (gettingHurt){
+			velocity = DoGettingHit( velocity );
 		}
 		
 		Velocity = velocity;
@@ -109,13 +106,17 @@ public partial class Entity : CharacterBody2D
 
 	}
 
+	protected void DoFacing(){
+		wrapper.Scale = new Vector2( face_right?1:-1, 1 );
+	}
+
 	protected void DoAttack(){
 		//GD.Print("Attack: {0}; {1}", msgCount++, playerIndex);
-		GD.Print("Attacking - "+this.GetType().Name);
+		//GD.Print("Attacking - "+this.GetType().Name);
 		spr.Play("attack");
 		anim.Play("attack");
 		attacking = true;
-		GD.Print("Attacking - "+attacking);
+		//GD.Print("Attacking - "+attacking);
 	}
 
 	public virtual void getHit( Boolean inDir ){
@@ -134,7 +135,7 @@ public partial class Entity : CharacterBody2D
 		return velocity;
 	}
 
-	private void _on_animation_player_animation_finished(String animStr){
+	protected void _on_animation_player_animation_finished(String animStr){
 		if (animStr == "attack"){
 			//GD.Print("Stop Attack");
 			anim.Stop(true);
@@ -146,6 +147,7 @@ public partial class Entity : CharacterBody2D
 			anim.Stop(true);
 			spr.Stop();
 			gettingHurt = false;
+			gettingHit = false;
 		}
 	}
 

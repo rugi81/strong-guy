@@ -11,6 +11,7 @@ public partial class baddie : Entity
 	public new int gettingHit_direction = -1;
 	public float speed = .5f;
 	protected Boolean attackPlayer = false;
+	protected Boolean canAttack = true;
 
 	private int health;
 	private int mana;
@@ -18,6 +19,7 @@ public partial class baddie : Entity
 
 	//private AnimatedSprite2D anim;
  	private Timer revertColorTimer;
+	protected Timer attackDelay;
 
 	//private Boolean jumping;
 
@@ -25,6 +27,7 @@ public partial class baddie : Entity
 	{		
 		//anim = GetNode<AnimatedSprite2D>("Wrapper/AnimatedSprite2D");
 		revertColorTimer = GetNode<Timer>("RevertColor");
+		attackDelay = GetNode<Timer>("Attack Delay");
 		GD.Print( "baddie: "+GetTree().Root.Name );
 
 		var r = GD.RandRange( 0, 1 );
@@ -46,21 +49,27 @@ public partial class baddie : Entity
 
 		// Handle Jump.
 		var r = GD.RandRange( 0, 100 );
-		if ( r > 99 && IsOnFloor() ){
+		if ( r > 99 && IsOnFloor() && !attackPlayer && !attacking ){
 			anim.Play("jump");
 			spr.Play("jump");
 			velocity.Y = JumpVelocity;
 			jumping = true;
 		}
 
-		var d = ( dir )?100:-100;
+		var d = ( face_right )?100:-100;
+		if ( attackPlayer ){
+			d *= 10;
+		}
 		Vector2 direction = new Vector2( d,0 );
 
-		if (IsOnFloor() && !jumping){
+		if (IsOnFloor() && !jumping ){
 
-			velocity.X = Mathf.MoveToward(Velocity.X, Speed * direction.X, speed);
+			if ( attackPlayer )
+				velocity.X = Mathf.MoveToward(Velocity.X, Speed * direction.X, speed * 20);
+			else
+				velocity.X = Mathf.MoveToward(Velocity.X, Speed * direction.X, speed);
 
-			if ( !attacking ){
+			if ( !attacking && !attackPlayer ){
 				anim.Play("walk");
 				spr.Play("walk");
 			}
@@ -73,8 +82,10 @@ public partial class baddie : Entity
 			gettingHit = false;			
 		}
 
-		if (!gettingHit && !attacking && attackPlayer){
+		//GD.Print( attackPlayer );
+		if (!gettingHit && !attacking && attackPlayer && canAttack){
 			//face the player
+			canAttack = false;
 			DoAttack();
 		}
 		
@@ -88,7 +99,7 @@ public partial class baddie : Entity
 			Position = new Vector2(1124, Position.Y);
 		}*/
 		if (Position.Y > 2000){
-			GD.Print("eek");
+			//GD.Print("eek");
 			QueueFree();
 		}
 		
@@ -111,6 +122,7 @@ public partial class baddie : Entity
 	
 	private void _on_change_mind_timeout()
 	{
+		if (attackPlayer){ return; } // don't want to change our mind if we're mid attack
 		var r = GD.RandRange( 0, 1 );
 		dir = ( r > .5 );
 		face_right = !(dir);
@@ -131,8 +143,19 @@ public partial class baddie : Entity
 		spr.Modulate = new Color(1,1,1);
 	}
 
+	private void _on_attack_delay_timeout(){
+		if (!canAttack){
+			canAttack = true;
+		}
+	}
+
 	private void _on_attack_range_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
 		attackPlayer = true;
+
+		if ( body.GetType().Name == "Entity" ){
+			face_right = !( body.Position.X < this.Position.X );
+			DoFacing();
+		}
 	}
 
 	private void _on_attack_range_body_shape_exited(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
@@ -142,11 +165,19 @@ public partial class baddie : Entity
 
 	protected new void _on_attack_body_entered(Node2D body)
 	{	
-		GD.Print("baddie contact "+body.GetType().Name);
+		//GD.Print("baddie contact "+body.GetType().Name);
 		if ( body.GetType().Name == "Entity" && attacking ){
 			((Entity)body).getHit( face_right );
 		}
 		//GD.Print( body.GetType().Name );
+	}
+
+	protected new void _on_animation_player_animation_finished(String animStr){
+		base._on_animation_player_animation_finished(animStr);
+
+		if (animStr == "attack"){
+			
+		}
 	}
 
 }

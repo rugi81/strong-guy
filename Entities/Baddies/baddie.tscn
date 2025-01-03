@@ -5,7 +5,7 @@
 [ext_resource type="SpriteFrames" uid="uid://cdrn20is2ghhv" path="res://Entities/Baddies/ghost.tres" id="3_i54li"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7h62v"]
-size = Vector2(300, 150)
+size = Vector2(500, 150)
 
 [node name="baddie" instance=ExtResource("1_u7kho")]
 collision_layer = 4
@@ -18,8 +18,14 @@ collision_layer = 4
 sprite_frames = ExtResource("3_i54li")
 animation = &"attack"
 
+[node name="AnimationPlayer" parent="Wrapper" index="1"]
+speed_scale = 0.518
+
 [node name="attack" parent="Wrapper/Actions" index="0"]
 collision_mask = 3
+
+[node name="CollisionShape2D" parent="Wrapper/Actions/attack" index="0"]
+scale = Vector2(3, 5)
 
 [node name="ChangeMind" type="Timer" parent="." index="3"]
 wait_time = 3.0
@@ -29,7 +35,10 @@ autostart = true
 wait_time = 0.2
 one_shot = true
 
-[node name="Attack_range" type="Area2D" parent="." index="5"]
+[node name="Attack Delay" type="Timer" parent="." index="5"]
+autostart = true
+
+[node name="Attack_range" type="Area2D" parent="." index="6"]
 position = Vector2(-1, 18)
 collision_layer = 4
 
@@ -38,5 +47,6 @@ shape = SubResource("RectangleShape2D_7h62v")
 
 [connection signal="timeout" from="ChangeMind" to="." method="_on_change_mind_timeout"]
 [connection signal="timeout" from="RevertColor" to="." method="_on_revert_color_timeout"]
+[connection signal="timeout" from="Attack Delay" to="." method="_on_attack_delay_timeout"]
 [connection signal="body_shape_entered" from="Attack_range" to="." method="_on_attack_range_body_shape_entered"]
 [connection signal="body_shape_exited" from="Attack_range" to="." method="_on_attack_range_body_shape_exited"]

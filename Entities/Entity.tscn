@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://b1aqxftan7xhs"]
 
 [ext_resource type="Script" path="res://Entities/Entity.cs" id="1_cys3l"]
-[ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="2_ng66n"]
+[ext_resource type="SpriteFrames" uid="uid://ckbvojvmqqqce" path="res://Entities/Player/robot.tres" id="2_d0xh7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t1weh"]
 size = Vector2(50, 130)
@@ -178,7 +178,7 @@ shape = SubResource("RectangleShape2D_t1weh")
 [node name="Wrapper" type="Node2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Wrapper"]
-sprite_frames = ExtResource("2_ng66n")
+sprite_frames = ExtResource("2_d0xh7")
 animation = &"hit"
 autoplay = "idle"
 frame = 1
