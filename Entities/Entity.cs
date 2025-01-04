@@ -47,6 +47,8 @@ public partial class Entity : CharacterBody2D
 
 		Vector2 direction = Input.GetVector("input_left"+playerIndex, "input_right"+playerIndex, "input_jump"+playerIndex, "input_down"+playerIndex);
 		
+		GD.Print( "GettingHit: "+gettingHit+" - Hurting:"+gettingHurt );
+
 		if (  Mathf.Round( direction.X * 100 )/100 != 0 )//Vector2.Zero)
 		{
 			if (!jumping && !attacking && !gettingHurt){			
@@ -128,10 +130,20 @@ public partial class Entity : CharacterBody2D
 		var hitForce = new Vector2( GD.RandRange( 300, 900 ) * -gettingHit_direction, -GD.RandRange( 300, 900 ) );
 		velocity += hitForce;
 		gettingHit = false; // initial impact
-		gettingHurt = true;
+
+		if ( attacking ){
+			attacking = false;
+		}
 		
 		anim.Play("hit");
 		spr.Play("hit");
+				
+		if (gettingHurt){
+			anim.Seek(.5);
+		}else{
+			gettingHurt = true;
+		}
+		
 		return velocity;
 	}
 

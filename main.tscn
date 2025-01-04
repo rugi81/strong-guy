@@ -9,10 +9,12 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_hh8ph")
+minZoom = 0.1
 hasTrain = false
+maxZoom = 1.0
 
 [node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]
-MaxEntities = 8
+MaxEntities = 3
 
 [node name="Platform2" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(989, 462)
@@ -42,15 +44,6 @@ scale = Vector2(0.7, 0.7)
 [node name="AnimatedSprite2D" parent="Players/Player/Wrapper" index="0"]
 sprite_frames = ExtResource("5_fauoe")
 animation = &"attack"
-
-[node name="Player2" parent="Players" instance=ExtResource("5_4um7m")]
-position = Vector2(309, -204)
-scale = Vector2(0.7, 0.7)
-playerIndex = 1
-
-[node name="AnimatedSprite2D" parent="Players/Player2/Wrapper" index="0"]
-position = Vector2(2.85713, -2.85715)
-scale = Vector2(0.7, 0.7)
 
 [node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(-11, 602)
@@ -116,4 +109,3 @@ scale = Vector2(3, 3)
 texture = ExtResource("5_jsh27")
 
 [editable path="Players/Player"]
-[editable path="Players/Player2"]
