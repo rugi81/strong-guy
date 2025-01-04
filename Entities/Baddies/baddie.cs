@@ -167,7 +167,7 @@ public partial class baddie : Entity
 	{	
 		//GD.Print("baddie contact "+body.GetType().Name);
 		if ( body.GetType().Name == "Entity" && attacking ){
-			((Entity)body).getHit( face_right );
+			((Entity)body).getHit( face_right, 5 );
 		}
 		//GD.Print( body.GetType().Name );
 	}

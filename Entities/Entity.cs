@@ -12,6 +12,11 @@ public partial class Entity : CharacterBody2D
 	[Export]
 	protected int playerIndex = 0;
 
+	[Export]
+	protected int playerMaxHealth = 100;
+	protected int currentHealth;
+
+
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -550.0f;
 
@@ -33,6 +38,8 @@ public partial class Entity : CharacterBody2D
 		spr = GetNode<AnimatedSprite2D>("Wrapper/AnimatedSprite2D");
 		anim = GetNode<AnimationPlayer>("Wrapper/AnimationPlayer");
 		wrapper = GetNode<Node2D>("Wrapper");
+
+		currentHealth = playerMaxHealth;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -125,6 +132,12 @@ public partial class Entity : CharacterBody2D
 		gettingHit = true;
 		gettingHit_direction = ( inDir )?-1:1;
 	}
+	public virtual void getHit( Boolean inDir, int dmg ){
+		this.getHit(inDir);
+		currentHealth -= dmg;
+		GD.Print( "Player "+playerIndex+" -Health: "+currentHealth );
+	}
+
 
 	protected Vector2 DoGettingHit( Vector2 velocity ){
 		var hitForce = new Vector2( GD.RandRange( 300, 900 ) * -gettingHit_direction, -GD.RandRange( 300, 900 ) );
@@ -134,7 +147,7 @@ public partial class Entity : CharacterBody2D
 		if ( attacking ){
 			attacking = false;
 		}
-		
+
 		anim.Play("hit");
 		spr.Play("hit");
 				

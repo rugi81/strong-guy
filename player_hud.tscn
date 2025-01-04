@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://t37p4udv0hqp"]
+
+[ext_resource type="Script" path="res://PlayerHUD.cs" id="1_glgk0"]
+
+[node name="PlayerHUD" type="CanvasLayer"]
+script = ExtResource("1_glgk0")
+
+[node name="P1 HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Health" type="RichTextLabel" parent="P1 HUD"]
+layout_mode = 0
+offset_top = 38.0
+offset_right = 88.0
+offset_bottom = 78.0
+text = "Health: 100"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Score" type="RichTextLabel" parent="P1 HUD"]
+layout_mode = 0
+offset_top = 19.0
+offset_right = 61.0
+offset_bottom = 59.0
+text = "Score: 0"
+fit_content = true
+autowrap_mode = 0
