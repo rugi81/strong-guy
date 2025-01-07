@@ -10,6 +10,11 @@ public partial class player_hud : Control
 	private RichTextLabel name;
 	private int statusCount = 0;
 
+	private Player p;
+	
+	[Signal]
+	public delegate void HealthChangedEventHandler();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -26,6 +31,16 @@ public partial class player_hud : Control
 	}
 	public void setPlayerColor( Color inColor ){
 		name.AddThemeColorOverride("default_color", new Color( inColor ) );
+	}
+	public void assignPlayer( Player inPlayer ){
+		p = inPlayer;
+		p.HealthChanged += _on_health_changed;
+		createStatusLabel( "Health", p.currentHealth.ToString() );
+	}
+
+	private void _on_health_changed(){
+		var health = p.currentHealth;
+		updateStatus( "Health", health.ToString() );
 	}
 
 	private RichTextLabel getStatusByLabel( String statusLabel ){

@@ -152,7 +152,7 @@ public partial class baddie : Entity
 	private void _on_attack_range_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
 		attackPlayer = true;
 
-		if ( body.GetType().Name == "Entity" ){
+		if ( body.GetType().Name == "Entity" || body.GetType().Name == "Player" ){
 			face_right = !( body.Position.X < this.Position.X );
 			DoFacing();
 		}
@@ -168,6 +168,9 @@ public partial class baddie : Entity
 		//GD.Print("baddie contact "+body.GetType().Name);
 		if ( body.GetType().Name == "Entity" && attacking ){
 			((Entity)body).getHit( face_right, 5 );
+		}
+		if ( body.GetType().Name == "Player" && attacking ){
+			((Player)body).getHit( face_right, 5 );
 		}
 		//GD.Print( body.GetType().Name );
 	}

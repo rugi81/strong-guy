@@ -1,19 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8yb4wusteax1"]
+[gd_scene load_steps=9 format=3 uid="uid://c8yb4wusteax1"]
 
 [ext_resource type="Script" path="res://main.cs" id="1_hh8ph"]
 [ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
 [ext_resource type="PackedScene" uid="uid://dhhx5w2nd4kv2" path="res://monster_generator.tscn" id="2_umpxy"]
-[ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="5_4um7m"]
+[ext_resource type="PackedScene" uid="uid://b0ncl0vl4lsv0" path="res://Entities/Baddies/baddie.tscn" id="3_xm36p"]
+[ext_resource type="PackedScene" uid="uid://bp08fbsh5fj47" path="res://Entities/Player.tscn" id="4_kybmu"]
 [ext_resource type="PackedScene" uid="uid://p1i3s7mirtbs" path="res://UI/player_ui_manager.tscn" id="5_40xp3"]
 [ext_resource type="Texture2D" uid="uid://budwgshi2ynf4" path="res://asset/Epic_BlueSunset_Cam_0_Front+Z.png" id="5_jsh27"]
+[ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="6_bc2q1"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_hh8ph")
-minZoom = 0.1
 hasTrain = false
-maxZoom = 1.0
 
 [node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]
+Baddies = ExtResource("3_xm36p")
 MaxEntities = 3
 
 [node name="Platform2" parent="." instance=ExtResource("1_rxpng")]
@@ -37,13 +38,20 @@ skew = 0.223289
 
 [node name="Players" type="Node" parent="."]
 
-[node name="Player" parent="Players" instance=ExtResource("5_4um7m")]
-position = Vector2(1230, 152)
+[node name="Player" parent="Players" instance=ExtResource("4_kybmu")]
+position = Vector2(257, -53)
 scale = Vector2(0.7, 0.7)
+playerMaxHealth = 10
 
-[node name="AnimatedSprite2D" parent="Players/Player/Wrapper" index="0"]
-animation = &"attack"
-frame = 1
+[node name="Player2" parent="Players" instance=ExtResource("4_kybmu")]
+position = Vector2(1234, 92)
+scale = Vector2(0.6, 0.6)
+playerIndex = 1
+playerMaxHealth = 10
+
+[node name="AnimatedSprite2D" parent="Players/Player2/Wrapper" index="0"]
+scale = Vector2(1, 1)
+sprite_frames = ExtResource("6_bc2q1")
 
 [node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(-11, 602)
@@ -73,8 +81,8 @@ position_smoothing_enabled = true
 [node name="Player UI Manager" parent="." instance=ExtResource("5_40xp3")]
 offset = Vector2(5, 0)
 transform = Transform2D(1, 0, 0, 1, 5, 0)
-playerColors = PackedColorArray(1, 0.443684, 0.375095, 1, 0.326422, 0.532406, 1, 1, 6.83457e-06, 0.773823, 1.54018e-06, 1)
-playerCount = 1
+playerColors = PackedColorArray(1, 0.541241, 0.476759, 1, 0.280038, 0.495665, 1, 1, 0, 0.74902, 0, 1, 0.836007, 0.836006, 7.70092e-07, 1)
+playerCount = 0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 follow_viewport_enabled = true
@@ -89,3 +97,6 @@ scale = Vector2(3, 3)
 texture = ExtResource("5_jsh27")
 
 [editable path="Players/Player"]
+[editable path="Players/Player2"]
+[editable path="Player UI Manager"]
+[editable path="Player UI Manager/Players/PlayerHUD"]

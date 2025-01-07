@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 
 public partial class Entity : CharacterBody2D
 {
@@ -14,7 +15,7 @@ public partial class Entity : CharacterBody2D
 
 	[Export]
 	protected int playerMaxHealth = 100;
-	protected int currentHealth;
+	public int currentHealth;
 
 
 	public const float Speed = 300.0f;
@@ -29,6 +30,12 @@ public partial class Entity : CharacterBody2D
 	public Boolean gettingHurt = false;
 
 	protected int msgCount = 0;
+
+	// Signals
+    [Signal]
+    public delegate void HealthChangedEventHandler();
+	[Signal]
+	public delegate void HealthZeroEventHandler();
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	protected float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -54,7 +61,7 @@ public partial class Entity : CharacterBody2D
 
 		Vector2 direction = Input.GetVector("input_left"+playerIndex, "input_right"+playerIndex, "input_jump"+playerIndex, "input_down"+playerIndex);
 		
-		GD.Print( "GettingHit: "+gettingHit+" - Hurting:"+gettingHurt );
+		//GD.Print( "GettingHit: "+gettingHit+" - Hurting:"+gettingHurt );
 
 		if (  Mathf.Round( direction.X * 100 )/100 != 0 )//Vector2.Zero)
 		{
@@ -113,6 +120,10 @@ public partial class Entity : CharacterBody2D
 		Velocity = velocity;
 		MoveAndSlide();
 
+		if ( currentHealth <= 0 ){
+			EmitSignal("HealthZero");
+		}
+
 	}
 
 	protected void DoFacing(){
@@ -135,7 +146,8 @@ public partial class Entity : CharacterBody2D
 	public virtual void getHit( Boolean inDir, int dmg ){
 		this.getHit(inDir);
 		currentHealth -= dmg;
-		GD.Print( "Player "+playerIndex+" -Health: "+currentHealth );
+		EmitSignal("HealthChanged");
+		//GD.Print( "Player "+playerIndex+" -Health: "+currentHealth );
 	}
 
 
@@ -185,7 +197,7 @@ public partial class Entity : CharacterBody2D
 		//GD.Print( body.GetType().Name );
 	}
 
-	private void _on_body_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
+	protected void _on_body_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
 		//GD.Print("BODY CONTACT "+body.GetType().Name);
 		
 	}

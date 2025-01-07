@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://main.cs" id="1_tu61u"]
 [ext_resource type="PackedScene" uid="uid://dhhx5w2nd4kv2" path="res://monster_generator.tscn" id="2_wkl3u"]
 [ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="4_5qhnb"]
-[ext_resource type="PackedScene" uid="uid://b36w2kmoldrp8" path="res://Entities/player.tscn" id="5_5sgo0"]
+[ext_resource type="PackedScene" uid="uid://bp08fbsh5fj47" path="res://Entities/player.tscn" id="5_5sgo0"]
 [ext_resource type="TileSet" uid="uid://wbh4f1e333k3" path="res://train2.tres" id="5_an03n"]
 [ext_resource type="TileSet" uid="uid://cnpx8f41k03f5" path="res://new_tile_set.tres" id="5_snhnc"]
 [ext_resource type="TileSet" uid="uid://bvfmxqpeyq53i" path="res://train_shell.tres" id="6_at1f4"]

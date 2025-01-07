@@ -6,8 +6,7 @@
 [node name="Player UI Manager" type="CanvasLayer"]
 script = ExtResource("1_qdsar")
 playerHUD = ExtResource("1_d1ehh")
-playerColors = PackedColorArray(1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1)
-playerCount = 3
+playerColors = PackedColorArray(1, 0.287307, 0.225237, 1, 0.206035, 0.434082, 1, 1, 0, 0.819608, 0, 1, 1, 1, 0, 1)
 
 [node name="Players" type="HBoxContainer" parent="."]
 anchors_preset = 15
@@ -21,8 +20,5 @@ size_flags_stretch_ratio = 10.64
 [node name="PlayerHUD" parent="Players" instance=ExtResource("1_d1ehh")]
 visible = false
 layout_mode = 2
-
-[node name="Score" parent="Players/PlayerHUD" index="1"]
-visible = true
 
 [editable path="Players/PlayerHUD"]

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 public partial class player_ui_manager : CanvasLayer
 {
@@ -8,7 +9,7 @@ public partial class player_ui_manager : CanvasLayer
 	private PackedScene playerHUD;
 
 	[Export]
-	private Color[] playerColors;
+	public Color[] playerColors;
 	
 	[Export]
 	private int playerCount = 1;
@@ -25,7 +26,7 @@ public partial class player_ui_manager : CanvasLayer
 			playerHUDs.Add( AddPlayerHUD("[b]Player "+(i+1)+"[/b]", playerColors[i]) );
 		}
 
-		playerHUDs[0].createStatusLabel("Health", (500).ToString());
+		//playerHUDs[0].createStatusLabel("Health", (500).ToString());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,6 +51,10 @@ public partial class player_ui_manager : CanvasLayer
 		player_hud ph = AddPlayerHUD( playerLabel );
 		ph.setPlayerColor( inColor );
 		return ph;
+	}
+
+	public player_hud GetPlayerHUD( int index ){
+		return playerHUDs[index];
 	}
 
 	private void RemovePlayerHUD(){

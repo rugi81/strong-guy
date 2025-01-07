@@ -25,12 +25,23 @@ public partial class main : Node2D
 	private float groundBoundary = -600;
 	private float groundOrigin = 600;
 
+	private player_ui_manager playerUI;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		cam1 = GetNode<Camera2D>("Player1Cam");
 		players = GetNode<Node>("Players");
 		playerArr = players.GetChildren();
+		playerUI = GetNode<player_ui_manager>("Player UI Manager");
+		
+		for ( var i=0; i<playerArr.Count; i++ ){
+			player_hud ph = playerUI.AddPlayerHUD( "[b]Player "+(i+1)+"[/b]", playerUI.playerColors[i] );
+			Player p = (Player) playerArr[i];
+			ph.assignPlayer( p );
+			p.PlayerHealthZero += _on_player_death;
+		}
+
 		if ( hasTrain ){
 			ground = GetNode<TileMap>("Ground");
 			wheels = GetTree().GetNodesInGroup("train_wheel");
@@ -68,6 +79,9 @@ public partial class main : Node2D
 
 	private Vector2 GetPlayersMidPoint(){
 
+		if ( playerArr.Count == 0 ){
+			return new Vector2(0,0);
+		}
 		float 	posX = 0,
 				posY = 0;
 		CharacterBody2D tP = (CharacterBody2D) playerArr[0];
@@ -111,5 +125,8 @@ public partial class main : Node2D
 		}
 	}
 
-	
+	private void _on_player_death( Player p ){
+		GD.Print("DIE: "+p);
+		playerArr.Remove(p);
+	}
 }

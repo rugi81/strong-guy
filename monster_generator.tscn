@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhhx5w2nd4kv2"]
+[gd_scene load_steps=3 format=3 uid="uid://dhhx5w2nd4kv2"]
 
 [ext_resource type="Script" path="res://MonsterGenerator.cs" id="1_qlfnw"]
-[ext_resource type="PackedScene" uid="uid://b0ncl0vl4lsv0" path="res://Entities/Baddies/baddie.tscn" id="2_ifvfp"]
 
 [sub_resource type="Curve2D" id="Curve2D_g1pjh"]
 _data = {
@@ -11,7 +10,6 @@ point_count = 2
 
 [node name="MonsterGenerator" type="Node2D"]
 script = ExtResource("1_qlfnw")
-Baddies = ExtResource("2_ifvfp")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 2.0
