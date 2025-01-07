@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://t37p4udv0hqp"]
+
+[ext_resource type="Script" path="res://UI/player_hud.cs" id="1_wfej6"]
+
+[node name="PlayerHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+script = ExtResource("1_wfej6")
+
+[node name="TitleLabel" type="RichTextLabel" parent="."]
+clip_contents = false
+layout_mode = 0
+offset_right = 107.0
+offset_bottom = 21.0
+bbcode_enabled = true
+text = "[b]Player[/b]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Score" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 0
+offset_top = 19.0
+offset_right = 61.0
+offset_bottom = 59.0
+text = "Score: 50000000
+"
+fit_content = true
+autowrap_mode = 0

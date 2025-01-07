@@ -9,6 +9,7 @@
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("2_o8fl1")
 animation = &"jump"
+frame = 1
 
 [node name="attack" parent="Wrapper/Actions" index="0"]
 position = Vector2(40, 6)

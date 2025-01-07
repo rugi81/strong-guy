@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://p1i3s7mirtbs"]
+
+[ext_resource type="PackedScene" uid="uid://t37p4udv0hqp" path="res://UI/player_hud.tscn" id="1_d1ehh"]
+[ext_resource type="Script" path="res://UI/player_ui_manager.cs" id="1_qdsar"]
+
+[node name="Player UI Manager" type="CanvasLayer"]
+script = ExtResource("1_qdsar")
+playerHUD = ExtResource("1_d1ehh")
+playerColors = PackedColorArray(1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1)
+playerCount = 3
+
+[node name="Players" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 10.64
+
+[node name="PlayerHUD" parent="Players" instance=ExtResource("1_d1ehh")]
+visible = false
+layout_mode = 2
+
+[node name="Score" parent="Players/PlayerHUD" index="1"]
+visible = true
+
+[editable path="Players/PlayerHUD"]

@@ -23,6 +23,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="Last Stand"
 
+[gui]
+
+theme/custom="res://UI/themes/default_theme.tres"
+
 [input]
 
 input_left0={

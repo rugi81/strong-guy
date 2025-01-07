@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://0l18f7gcnacf"]
+
+[ext_resource type="FontFile" uid="uid://bm4o358y73n1r" path="res://asset/ThaleahFat_TTF.ttf" id="1_vplkt"]
+
+[resource]
+default_font = ExtResource("1_vplkt")
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 3
+RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0.537255)
+RichTextLabel/constants/outline_size = 5
+RichTextLabel/constants/shadow_offset_x = 2
+RichTextLabel/constants/shadow_offset_y = 2
+RichTextLabel/font_sizes/bold_font_size = 24
+RichTextLabel/font_sizes/mono_font_size = 22
+RichTextLabel/font_sizes/normal_font_size = 22
+RichTextLabel/fonts/bold_font = ExtResource("1_vplkt")
+RichTextLabel/fonts/bold_italics_font = ExtResource("1_vplkt")
+RichTextLabel/fonts/italics_font = ExtResource("1_vplkt")
+RichTextLabel/fonts/mono_font = ExtResource("1_vplkt")
+RichTextLabel/fonts/normal_font = ExtResource("1_vplkt")

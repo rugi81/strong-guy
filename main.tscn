@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
 [ext_resource type="PackedScene" uid="uid://dhhx5w2nd4kv2" path="res://monster_generator.tscn" id="2_umpxy"]
 [ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="5_4um7m"]
-[ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="5_fauoe"]
+[ext_resource type="PackedScene" uid="uid://p1i3s7mirtbs" path="res://UI/player_ui_manager.tscn" id="5_40xp3"]
 [ext_resource type="Texture2D" uid="uid://budwgshi2ynf4" path="res://asset/Epic_BlueSunset_Cam_0_Front+Z.png" id="5_jsh27"]
 
 [node name="Main" type="Node2D"]
@@ -42,8 +42,8 @@ position = Vector2(1230, 152)
 scale = Vector2(0.7, 0.7)
 
 [node name="AnimatedSprite2D" parent="Players/Player/Wrapper" index="0"]
-sprite_frames = ExtResource("5_fauoe")
 animation = &"attack"
+frame = 1
 
 [node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(-11, 602)
@@ -70,31 +70,11 @@ skew = 1.08487
 zoom = Vector2(0.75, 0.75)
 position_smoothing_enabled = true
 
-[node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="P1 HUD" type="Control" parent="HUD"]
-layout_mode = 3
-anchors_preset = 0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="Health" type="RichTextLabel" parent="HUD/P1 HUD"]
-layout_mode = 0
-offset_top = 38.0
-offset_right = 88.0
-offset_bottom = 78.0
-text = "Health: 100"
-fit_content = true
-autowrap_mode = 0
-
-[node name="Score" type="RichTextLabel" parent="HUD/P1 HUD"]
-layout_mode = 0
-offset_top = 19.0
-offset_right = 61.0
-offset_bottom = 59.0
-text = "Score: 0"
-fit_content = true
-autowrap_mode = 0
+[node name="Player UI Manager" parent="." instance=ExtResource("5_40xp3")]
+offset = Vector2(5, 0)
+transform = Transform2D(1, 0, 0, 1, 5, 0)
+playerColors = PackedColorArray(1, 0.443684, 0.375095, 1, 0.326422, 0.532406, 1, 1, 6.83457e-06, 0.773823, 1.54018e-06, 1)
+playerCount = 1
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 follow_viewport_enabled = true
