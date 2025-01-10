@@ -80,7 +80,7 @@ public partial class main : Node2D
 	private Vector2 GetPlayersMidPoint(){
 
 		if ( playerArr.Count == 0 ){
-			return new Vector2(0,0);
+			return cam1.Position;
 		}
 		float 	posX = 0,
 				posY = 0;
@@ -126,7 +126,7 @@ public partial class main : Node2D
 	}
 
 	private void _on_player_death( Player p ){
-		GD.Print("DIE: "+p);
+		//GD.Print("DIE: "+p);
 		playerArr.Remove(p);
 	}
 }

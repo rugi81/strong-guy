@@ -28,14 +28,19 @@ public partial class Entity : CharacterBody2D
 	public Boolean gettingHit = false;
 	public int gettingHit_direction = -1;
 	public Boolean gettingHurt = false;
+	protected Boolean dying = false;
 
 	protected int msgCount = 0;
+
+	protected String[] anim_names;
 
 	// Signals
     [Signal]
     public delegate void HealthChangedEventHandler();
 	[Signal]
 	public delegate void HealthZeroEventHandler();
+	[Signal]
+	public delegate void EntityDeathEventHandler( Vector2 inPos );
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	protected float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -47,10 +52,16 @@ public partial class Entity : CharacterBody2D
 		wrapper = GetNode<Node2D>("Wrapper");
 
 		currentHealth = playerMaxHealth;
+
+		anim_names = spr.SpriteFrames.GetAnimationNames();
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (dying){
+			return;
+		}
+
 		Vector2 velocity = Velocity;
 
 		// Add the gravity.
@@ -121,6 +132,7 @@ public partial class Entity : CharacterBody2D
 		MoveAndSlide();
 
 		if ( currentHealth <= 0 ){
+			currentHealth = 0;
 			EmitSignal("HealthZero");
 		}
 
@@ -186,6 +198,10 @@ public partial class Entity : CharacterBody2D
 			gettingHurt = false;
 			gettingHit = false;
 		}
+
+		if (animStr == "death"){
+			EntityDie();
+		}
 	}
 
 	protected void _on_attack_body_entered(Node2D body)
@@ -200,5 +216,26 @@ public partial class Entity : CharacterBody2D
 	protected void _on_body_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
 		//GD.Print("BODY CONTACT "+body.GetType().Name);
 		
+	}
+
+	protected void _on_health_zero(){
+		GD.Print("DEATH");
+
+		var hasDeathAnim = Array.Exists( anim_names, e => e == "death" );
+
+		if ( anim.HasAnimation("death") && hasDeathAnim ){
+			GD.Print("death anim");
+			anim.Play("death");
+			spr.Play("death");
+		}else{
+			EntityDie();
+		}
+		dying = true;
+	}
+
+	protected void EntityDie(){
+		QueueFree();
+		EmitSignal("EntityDeath");
+		// spawn tombstone
 	}
 }

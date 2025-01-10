@@ -23,6 +23,6 @@ public partial class Player : Entity
 
     private void _on_player_health_zero( Player p ){
         // DIE
-        QueueFree();
+        //QueueFree();
     }
 }

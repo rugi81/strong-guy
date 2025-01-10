@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
 [ext_resource type="PackedScene" uid="uid://dhhx5w2nd4kv2" path="res://monster_generator.tscn" id="2_umpxy"]
 [ext_resource type="PackedScene" uid="uid://b0ncl0vl4lsv0" path="res://Entities/Baddies/baddie.tscn" id="3_xm36p"]
-[ext_resource type="PackedScene" uid="uid://bp08fbsh5fj47" path="res://Entities/Player.tscn" id="4_kybmu"]
+[ext_resource type="PackedScene" uid="uid://bp08fbsh5fj47" path="res://Entities/Player/Player.tscn" id="4_kybmu"]
 [ext_resource type="PackedScene" uid="uid://p1i3s7mirtbs" path="res://UI/player_ui_manager.tscn" id="5_40xp3"]
 [ext_resource type="Texture2D" uid="uid://budwgshi2ynf4" path="res://asset/Epic_BlueSunset_Cam_0_Front+Z.png" id="5_jsh27"]
 [ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="6_bc2q1"]
@@ -43,15 +43,22 @@ position = Vector2(257, -53)
 scale = Vector2(0.7, 0.7)
 playerMaxHealth = 10
 
+[node name="Wrapper" parent="Players/Player" index="2"]
+position = Vector2(0, 0)
+
 [node name="Player2" parent="Players" instance=ExtResource("4_kybmu")]
 position = Vector2(1234, 92)
 scale = Vector2(0.6, 0.6)
 playerIndex = 1
 playerMaxHealth = 10
 
+[node name="Wrapper" parent="Players/Player2" index="2"]
+position = Vector2(0, 15)
+
 [node name="AnimatedSprite2D" parent="Players/Player2/Wrapper" index="0"]
 scale = Vector2(1, 1)
 sprite_frames = ExtResource("6_bc2q1")
+animation = &"death"
 
 [node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(-11, 602)
