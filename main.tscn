@@ -43,9 +43,6 @@ position = Vector2(257, -53)
 scale = Vector2(0.7, 0.7)
 playerMaxHealth = 10
 
-[node name="Wrapper" parent="Players/Player" index="2"]
-position = Vector2(0, 0)
-
 [node name="Player2" parent="Players" instance=ExtResource("4_kybmu")]
 position = Vector2(1234, 92)
 scale = Vector2(0.6, 0.6)

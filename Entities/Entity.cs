@@ -228,14 +228,15 @@ public partial class Entity : CharacterBody2D
 			anim.Play("death");
 			spr.Play("death");
 		}else{
+			GD.Print("no death anim");
 			EntityDie();
 		}
 		dying = true;
 	}
 
-	protected void EntityDie(){
+	protected virtual void EntityDie(){
+		EmitSignal("EntityDeath", Position, this);
 		QueueFree();
-		EmitSignal("EntityDeath");
 		// spawn tombstone
 	}
 }

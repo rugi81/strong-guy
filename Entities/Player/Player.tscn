@@ -1,19 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://bp08fbsh5fj47"]
+[gd_scene load_steps=6 format=3 uid="uid://bp08fbsh5fj47"]
 
 [ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="1_itky5"]
 [ext_resource type="Script" path="res://Entities/Player/Player.cs" id="2_oyaxt"]
+[ext_resource type="PackedScene" uid="uid://2kanbdnegsma" path="res://Entities/Player/tombstone.tscn" id="3_2x672"]
 [ext_resource type="SpriteFrames" uid="uid://bfnuaa0ewknv8" path="res://Entities/Player/strongGuy.tres" id="3_nsybq"]
+[ext_resource type="AnimationLibrary" uid="uid://o0es8vm6w44p" path="res://Entities/Player/strongGuy.res" id="5_d0l3c"]
 
 [node name="Player" instance=ExtResource("1_itky5")]
 script = ExtResource("2_oyaxt")
-
-[node name="Wrapper" parent="." index="2"]
-position = Vector2(0, 20)
+tombStone = ExtResource("3_2x672")
 
 [node name="AnimatedSprite2D" parent="Wrapper" index="0"]
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("3_nsybq")
 animation = &"jump"
+
+[node name="AnimationPlayer" parent="Wrapper" index="1"]
+libraries = {
+"": ExtResource("5_d0l3c")
+}
 
 [node name="attack" parent="Wrapper/Actions" index="0"]
 position = Vector2(40, 6)

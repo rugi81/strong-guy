@@ -39,7 +39,7 @@ public partial class main : Node2D
 			player_hud ph = playerUI.AddPlayerHUD( "[b]Player "+(i+1)+"[/b]", playerUI.playerColors[i] );
 			Player p = (Player) playerArr[i];
 			ph.assignPlayer( p );
-			p.PlayerHealthZero += _on_player_death;
+			p.EntityDeath += _on_player_death;
 		}
 
 		if ( hasTrain ){
@@ -125,8 +125,10 @@ public partial class main : Node2D
 		}
 	}
 
-	private void _on_player_death( Player p ){
-		//GD.Print("DIE: "+p);
+	private void _on_player_death( Vector2 inPos, Player p ){
+		GD.Print("DIE: "+p);
 		playerArr.Remove(p);
+		// spawn tombstone
+		
 	}
 }
