@@ -12,6 +12,8 @@ public partial class Player : Entity
 
     [Export]
     public PackedScene tombStone;
+    [Export]
+    protected int attackDamage = 10;
 
     public override void _PhysicsProcess(double delta)
 	{
@@ -41,4 +43,23 @@ public partial class Player : Entity
         GetParent().AddChild( ts );
         QueueFree();
     }
+
+	protected new void _on_attack_body_entered(Node2D body)
+	{	
+		
+
+        if ( friendlyFire ){
+    		if ( body.GetType().Name == "Entity" && attacking ){
+	    		((Entity)body).getHit( face_right, attackDamage );
+    		}
+	    	if ( body.GetType().Name == "Player" && attacking ){
+		    	((Player)body).getHit( face_right, attackDamage );
+		    }
+        }
+
+   		if ( body.GetType().Name == "baddie" && attacking ){
+    		((baddie)body).getHit( face_right, attackDamage );
+   		}
+		
+	}    
 }

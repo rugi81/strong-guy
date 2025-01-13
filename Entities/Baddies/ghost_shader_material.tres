@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d1c346133j1vk"]
+
+[ext_resource type="Shader" path="res://Entities/Baddies/baddie.gdshader" id="1_kuner"]
+
+[resource]
+shader = ExtResource("1_kuner")
+shader_parameter/dying = false
+shader_parameter/angle = 0.0

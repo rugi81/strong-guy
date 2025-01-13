@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0ncl0vl4lsv0"]
+[gd_scene load_steps=6 format=3 uid="uid://b0ncl0vl4lsv0"]
 
 [ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="1_u7kho"]
 [ext_resource type="Script" path="res://Entities/Baddies/baddie.cs" id="2_qofuk"]
+[ext_resource type="Material" uid="uid://d1c346133j1vk" path="res://Entities/Baddies/ghost_shader_material.tres" id="3_dogw7"]
 [ext_resource type="SpriteFrames" uid="uid://cdrn20is2ghhv" path="res://Entities/Baddies/ghost.tres" id="3_i54li"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7h62v"]
@@ -11,13 +12,15 @@ size = Vector2(500, 150)
 scale = Vector2(0.7, 0.7)
 collision_layer = 4
 script = ExtResource("2_qofuk")
+attackDamage = 5
 
 [node name="Body" parent="." index="1"]
 collision_layer = 4
 
 [node name="AnimatedSprite2D" parent="Wrapper" index="0"]
+material = ExtResource("3_dogw7")
 sprite_frames = ExtResource("3_i54li")
-animation = &"attack"
+animation = &"walk"
 
 [node name="AnimationPlayer" parent="Wrapper" index="1"]
 speed_scale = 0.518
@@ -46,8 +49,11 @@ collision_layer = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack_range" index="0"]
 shape = SubResource("RectangleShape2D_7h62v")
 
+[node name="Death Delay" type="Timer" parent="." index="7"]
+
 [connection signal="timeout" from="ChangeMind" to="." method="_on_change_mind_timeout"]
 [connection signal="timeout" from="RevertColor" to="." method="_on_revert_color_timeout"]
 [connection signal="timeout" from="Attack Delay" to="." method="_on_attack_delay_timeout"]
 [connection signal="body_shape_entered" from="Attack_range" to="." method="_on_attack_range_body_shape_entered"]
 [connection signal="body_shape_exited" from="Attack_range" to="." method="_on_attack_range_body_shape_exited"]
+[connection signal="timeout" from="Death Delay" to="." method="_on_death_delay_timeout"]

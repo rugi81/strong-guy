@@ -12,6 +12,11 @@ public partial class baddie : Entity
 	public float speed = .5f;
 	protected Boolean attackPlayer = false;
 	protected Boolean canAttack = true;
+	private float deathRoll;
+
+	[Export]
+	protected int attackDamage = 5;
+	protected new int currentHealth = 10;
 
 	private int health;
 	private int mana;
@@ -49,7 +54,7 @@ public partial class baddie : Entity
 
 		// Handle Jump.
 		var r = GD.RandRange( 0, 100 );
-		if ( r > 99 && IsOnFloor() && !attackPlayer && !attacking ){
+		if ( r > 99 && IsOnFloor() && !attackPlayer && !attacking && !dying ){
 			anim.Play("jump");
 			spr.Play("jump");
 			velocity.Y = JumpVelocity;
@@ -57,12 +62,12 @@ public partial class baddie : Entity
 		}
 
 		var d = ( face_right )?100:-100;
-		if ( attackPlayer ){
+		if ( attackPlayer && !dying ){
 			d *= 10;
 		}
 		Vector2 direction = new Vector2( d,0 );
 
-		if (IsOnFloor() && !jumping ){
+		if (IsOnFloor() && !jumping && !dying ){
 
 			if ( attackPlayer )
 				velocity.X = Mathf.MoveToward(Velocity.X, Speed * direction.X, speed * 20);
@@ -83,7 +88,7 @@ public partial class baddie : Entity
 		}
 
 		//GD.Print( attackPlayer );
-		if (!gettingHit && !attacking && attackPlayer && canAttack){
+		if (!gettingHit && !attacking && attackPlayer && canAttack && !dying){
 			//face the player
 			canAttack = false;
 			DoAttack();
@@ -98,6 +103,12 @@ public partial class baddie : Entity
 		if (Position.X > 1124){
 			Position = new Vector2(1124, Position.Y);
 		}*/
+
+		if (dying){
+			Rotation += deathRoll;
+			Scale -= new Vector2(.005f, .005f);
+		}
+
 		if (Position.Y > 2000){
 			//GD.Print("eek");
 			QueueFree();
@@ -110,6 +121,11 @@ public partial class baddie : Entity
 			var collision = GetSlideCollision(i);
 			//GD.Print("I collided with ", ((Node)collision.GetCollider()).Name);
 		}		
+
+		if ( currentHealth <= 0 && !dying ){
+			currentHealth = 0;
+			EmitSignal("HealthZero");
+		}
 	}
 	
 	public override void getHit( Boolean inDir ){
@@ -119,8 +135,14 @@ public partial class baddie : Entity
 		spr.Modulate = new Color(1,0,0);
 		revertColorTimer.Start();
 	}
-	
-	private void _on_change_mind_timeout()
+    public override void getHit(bool inDir, int dmg)
+    {
+		GD.Print("baddie OW");
+        getHit(inDir);
+		currentHealth -= dmg;
+    }
+
+    private void _on_change_mind_timeout()
 	{
 		if (attackPlayer){ return; } // don't want to change our mind if we're mid attack
 		var r = GD.RandRange( 0, 1 );
@@ -167,10 +189,10 @@ public partial class baddie : Entity
 	{	
 		//GD.Print("baddie contact "+body.GetType().Name);
 		if ( body.GetType().Name == "Entity" && attacking ){
-			((Entity)body).getHit( face_right, 5 );
+			((Entity)body).getHit( face_right, attackDamage );
 		}
 		if ( body.GetType().Name == "Player" && attacking ){
-			((Player)body).getHit( face_right, 5 );
+			((Player)body).getHit( face_right, attackDamage );
 		}
 		//GD.Print( body.GetType().Name );
 	}
@@ -182,5 +204,26 @@ public partial class baddie : Entity
 			
 		}
 	}
+
+	protected override void EntityDie(){
+		EmitSignal("EntityDeath", Position, this);
+		dying = true;
+		deathRoll = (float) GD.RandRange(-1f,.1f);
+		GetNode<Timer>("Death Delay").Start(0);
+		GD.Print(GetNode<Timer>("Death Delay"));
+		//((ShaderMaterial)spr.Material).SetShaderParameter("dying", true);
+	}
+
+	protected void EntityDie( Boolean inDying ){
+		GD.Print("DEATH TIMER DONE");
+		if ( inDying ){
+			QueueFree();
+		}
+	}
+
+	private void _on_death_delay_timeout(){
+		GD.Print("DEATH TIMER");
+		EntityDie(dying);
+	}	
 
 }

@@ -33,6 +33,7 @@ public partial class Entity : CharacterBody2D
 	protected int msgCount = 0;
 
 	protected String[] anim_names;
+	protected Boolean friendlyFire = false;
 
 	// Signals
     [Signal]

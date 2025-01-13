@@ -41,13 +41,14 @@ skew = 0.223289
 [node name="Player" parent="Players" instance=ExtResource("4_kybmu")]
 position = Vector2(257, -53)
 scale = Vector2(0.7, 0.7)
-playerMaxHealth = 10
+
+[node name="Wrapper" parent="Players/Player" index="2"]
+position = Vector2(0, 20)
 
 [node name="Player2" parent="Players" instance=ExtResource("4_kybmu")]
 position = Vector2(1234, 92)
 scale = Vector2(0.6, 0.6)
 playerIndex = 1
-playerMaxHealth = 10
 
 [node name="Wrapper" parent="Players/Player2" index="2"]
 position = Vector2(0, 15)
