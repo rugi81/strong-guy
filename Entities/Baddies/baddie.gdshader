@@ -15,7 +15,7 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
-	COLOR = texture( TEXTURE, UV );
+	//COLOR = texture( TEXTURE, UV );
 	COLOR.a = COLOR.a * 0.6;
 }
 

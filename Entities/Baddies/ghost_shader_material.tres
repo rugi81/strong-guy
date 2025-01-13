@@ -5,4 +5,3 @@
 [resource]
 shader = ExtResource("1_kuner")
 shader_parameter/dying = false
-shader_parameter/angle = 0.0

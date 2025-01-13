@@ -16,7 +16,7 @@ public partial class baddie : Entity
 
 	[Export]
 	protected int attackDamage = 5;
-	protected new int currentHealth = 10;
+	protected new int currentHealth = 30;
 
 	private int health;
 	private int mana;
@@ -128,6 +128,11 @@ public partial class baddie : Entity
 		}
 	}
 	
+	public void setHealthAndDamage( int inHealth, int inDamage ){
+		currentHealth = inHealth;
+		attackDamage = inDamage;
+	}
+
 	public override void getHit( Boolean inDir ){
 		//GD.Print( "getHit: "+inDir );
 		gettingHit = true;

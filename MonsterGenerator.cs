@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Net.Http;
 
 public partial class MonsterGenerator : Node2D
 {
@@ -10,6 +11,12 @@ public partial class MonsterGenerator : Node2D
 	private int MaxEntities = 1;
 	private int EntityCount = 0;
 	
+	[Export]
+	private int EntityHealth;
+	[Export]
+	private int EntityDamage;
+
+
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -27,6 +34,7 @@ public partial class MonsterGenerator : Node2D
 			baddie b = Baddies.Instantiate<baddie>();
 			b.Position = new Vector2( GD.RandRange(100,1500) , -1000 );
 			b.Scale = new Vector2(.5f,.5f);
+			b.setHealthAndDamage( EntityHealth, EntityDamage );
 			AddChild(b);
 			EntityCount++;
 		}

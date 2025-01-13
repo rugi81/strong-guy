@@ -10,6 +10,7 @@ collision_mask = 5
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(225, 13)
 shape = SubResource("RectangleShape2D_660wu")
+one_way_collision = true
 
 [node name="Ground" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-1, -1, 450, -1, 450, 27, -1, 28)

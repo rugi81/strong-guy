@@ -15,7 +15,7 @@ hasTrain = false
 
 [node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]
 Baddies = ExtResource("3_xm36p")
-MaxEntities = 3
+MaxEntities = 10
 
 [node name="Platform2" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(989, 462)
