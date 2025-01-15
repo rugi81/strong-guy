@@ -8,6 +8,7 @@ public partial class player_hud : Control
 	
 	private List<RichTextLabel> status = new List<RichTextLabel>();
 	private RichTextLabel name;
+	private TextureProgressBar healthBar;
 	private int statusCount = 0;
 
 	private Player p;
@@ -19,6 +20,7 @@ public partial class player_hud : Control
 	public override void _Ready()
 	{
 		name = GetNode<RichTextLabel>("TitleLabel");
+		healthBar = GetNode<TextureProgressBar>("HealthBar");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -36,11 +38,13 @@ public partial class player_hud : Control
 		p = inPlayer;
 		p.HealthChanged += _on_health_changed;
 		createStatusLabel( "Health", p.currentHealth.ToString() );
+		healthBar.Value = p.currentHealth;
 	}
 
 	private void _on_health_changed(){
 		var health = p.currentHealth;
 		updateStatus( "Health", health.ToString() );
+		healthBar.Value = health;
 	}
 
 	private RichTextLabel getStatusByLabel( String statusLabel ){

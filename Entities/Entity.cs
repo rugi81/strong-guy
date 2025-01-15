@@ -159,6 +159,9 @@ public partial class Entity : CharacterBody2D
 	public virtual void getHit( Boolean inDir, int dmg ){
 		this.getHit(inDir);
 		currentHealth -= dmg;
+		if ( currentHealth < 0 ){
+			currentHealth = 0;
+		}
 		EmitSignal("HealthChanged");
 		//GD.Print( "Player "+playerIndex+" -Health: "+currentHealth );
 	}
