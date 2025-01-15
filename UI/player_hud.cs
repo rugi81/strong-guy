@@ -12,6 +12,7 @@ public partial class player_hud : Control
 	private int statusCount = 0;
 
 	private Player p;
+	private Boolean visibleHealthText = false;
 	
 	[Signal]
 	public delegate void HealthChangedEventHandler();
@@ -77,6 +78,7 @@ public partial class player_hud : Control
 		rtl.Position = new Vector2( 0, statusCount * fieldHeight + 25);
 		rtl.FitContent = true;
 		rtl.AutowrapMode = TextServer.AutowrapMode.Off;
+		rtl.Visible = visibleHealthText;
 
 		AddChild(rtl);
 
