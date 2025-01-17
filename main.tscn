@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8yb4wusteax1"]
+[gd_scene load_steps=10 format=3 uid="uid://c8yb4wusteax1"]
 
 [ext_resource type="Script" path="res://main.cs" id="1_hh8ph"]
 [ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://p1i3s7mirtbs" path="res://UI/player_ui_manager.tscn" id="5_40xp3"]
 [ext_resource type="Texture2D" uid="uid://budwgshi2ynf4" path="res://asset/Epic_BlueSunset_Cam_0_Front+Z.png" id="5_jsh27"]
 [ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="6_bc2q1"]
+[ext_resource type="PackedScene" uid="uid://b1p6w7mf2lw86" path="res://player_manager.tscn" id="8_ltddd"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_hh8ph")
@@ -90,6 +91,9 @@ offset = Vector2(5, 0)
 transform = Transform2D(1, 0, 0, 1, 5, 0)
 playerColors = PackedColorArray(1, 0.541241, 0.476759, 1, 0.280038, 0.495665, 1, 1, 0, 0.74902, 0, 1, 0.836007, 0.836006, 7.70092e-07, 1)
 playerCount = 0
+
+[node name="Player Manager" parent="." node_paths=PackedStringArray("playerFolder") instance=ExtResource("8_ltddd")]
+playerFolder = NodePath("../Players")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 follow_viewport_enabled = true

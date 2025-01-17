@@ -243,4 +243,8 @@ public partial class Entity : CharacterBody2D
 		QueueFree();
 		// spawn tombstone
 	}
+
+	public virtual void setPlayerIndex( int inIndex ){
+		playerIndex = inIndex;
+	}
 }

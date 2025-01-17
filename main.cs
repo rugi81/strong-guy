@@ -25,6 +25,9 @@ public partial class main : Node2D
 	private float groundBoundary = -600;
 	private float groundOrigin = 600;
 
+	[Export]
+	private int maxPlayers = 4;
+
 	private player_ui_manager playerUI;
 
 	// Called when the node enters the scene tree for the first time.
@@ -35,8 +38,8 @@ public partial class main : Node2D
 		playerArr = players.GetChildren();
 		playerUI = GetNode<player_ui_manager>("Player UI Manager");
 		
-		for ( var i=0; i<playerArr.Count; i++ ){
-			player_hud ph = playerUI.AddPlayerHUD( "[b]Player "+(i+1)+"[/b]", playerUI.playerColors[i] );
+		for ( var i=0; i<maxPlayers; i++ ){
+			player_hud ph = playerUI.AddPlayerHUD( i, !!(i<playerArr.Count) );
 			Player p = (Player) playerArr[i];
 			ph.assignPlayer( p );
 			p.EntityDeath += _on_player_death;

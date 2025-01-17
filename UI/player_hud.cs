@@ -11,6 +11,9 @@ public partial class player_hud : Control
 	private TextureProgressBar healthBar;
 	private int statusCount = 0;
 
+	private Control gameHUD;
+	private Control joinHUD;
+
 	private Player p;
 	private Boolean visibleHealthText = false;
 	
@@ -20,13 +23,22 @@ public partial class player_hud : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		name = GetNode<RichTextLabel>("TitleLabel");
-		healthBar = GetNode<TextureProgressBar>("HealthBar");
+		name = GetNode<RichTextLabel>("GameHUD/TitleLabel");
+		healthBar = GetNode<TextureProgressBar>("GameHUD/HealthBar");
+
+		gameHUD = GetNode<Control>("GameHUD");
+		joinHUD = GetNode<Control>("PlayerJoinHUD");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+
+	public void setActive( Boolean active ){
+		gameHUD.Visible = active;
+		joinHUD.Visible = !active;
 	}
 
 	public void setPlayerHUD( String titleLabel ){
@@ -80,7 +92,7 @@ public partial class player_hud : Control
 		rtl.AutowrapMode = TextServer.AutowrapMode.Off;
 		rtl.Visible = visibleHealthText;
 
-		AddChild(rtl);
+		GetNode("GameHUD").AddChild(rtl);
 
 		status.Add(rtl);
 		statusCount++;

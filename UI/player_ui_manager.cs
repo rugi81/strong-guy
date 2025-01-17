@@ -13,7 +13,7 @@ public partial class player_ui_manager : CanvasLayer
 	
 	[Export]
 	private int playerCount = 1;
-
+	
 	private List<player_hud> playerHUDs = new List<player_hud>();
 	private HBoxContainer playersUIContainer;
 
@@ -22,16 +22,27 @@ public partial class player_ui_manager : CanvasLayer
 	{
 		playersUIContainer = GetNode<HBoxContainer>("Players");
 
-		for ( var i = 0; i < playerCount; i++ ){
-			playerHUDs.Add( AddPlayerHUD("[b]Player "+(i+1)+"[/b]", playerColors[i]) );
-		}
+//		for ( var i = 0; i < maxPlayers; i++ ){
+	//		AddPlayerHUD( i, !!(i < playerCount) );
+//		}
 
-		//playerHUDs[0].createStatusLabel("Health", (500).ToString());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	public player_hud AddPlayerHUD( int index ){
+		player_hud ph = AddPlayerHUD("[b]Player "+(index+1)+"[/b]", playerColors[index]);
+		ph.setActive(false);
+		return ph;
+	}
+
+	public player_hud AddPlayerHUD( int index, Boolean active ){
+		player_hud ph = AddPlayerHUD("[b]Player "+(index+1)+"[/b]", playerColors[index]);
+		ph.setActive(active);
+		return ph;
 	}
 
 	public player_hud AddPlayerHUD( String playerLabel ){
@@ -43,7 +54,7 @@ public partial class player_ui_manager : CanvasLayer
 		playersUIContainer.AddChild(ph);
 		ph.setPlayerHUD(playerLabel);	
 		playerHUDs.Add(ph);
-
+		
 		return ph;
 	}
 

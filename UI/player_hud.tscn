@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://t37p4udv0hqp"]
+[gd_scene load_steps=5 format=3 uid="uid://t37p4udv0hqp"]
 
 [ext_resource type="Script" path="res://UI/player_hud.cs" id="1_wfej6"]
+[ext_resource type="PackedScene" uid="uid://cu0nci0we1xy1" path="res://UI/player_join_hud.tscn" id="2_sgt4g"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ep22c"]
 
@@ -13,16 +14,23 @@ size_flags_horizontal = 2
 size_flags_vertical = 0
 script = ExtResource("1_wfej6")
 
-[node name="TitleLabel" type="RichTextLabel" parent="."]
+[node name="GameHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="RichTextLabel" parent="GameHUD"]
 layout_mode = 0
-offset_bottom = 21.0
+offset_right = 42.0
+offset_bottom = 42.0
 bbcode_enabled = true
 text = "
 test"
 fit_content = true
 autowrap_mode = 0
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="GameHUD"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 30.0
@@ -38,3 +46,7 @@ texture_progress_offset = Vector2(-3, -3)
 tint_under = Color(0.384647, 1.06489e-06, 9.62615e-08, 1)
 tint_over = Color(1, 1, 1, 0.243137)
 tint_progress = Color(0.431866, 1, 0.400656, 1)
+
+[node name="PlayerJoinHUD" parent="." instance=ExtResource("2_sgt4g")]
+visible = false
+layout_mode = 1

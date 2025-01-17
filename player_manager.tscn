@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1p6w7mf2lw86"]
+
+[ext_resource type="Script" path="res://Player_Manager.cs" id="1_xvkw2"]
+[ext_resource type="PackedScene" uid="uid://bp08fbsh5fj47" path="res://Entities/Player/Player.tscn" id="2_bg710"]
+
+[node name="Player Manager" type="Node"]
+script = ExtResource("1_xvkw2")
+player = ExtResource("2_bg710")
