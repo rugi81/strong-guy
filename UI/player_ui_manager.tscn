@@ -21,9 +21,6 @@ size_flags_stretch_ratio = 10.64
 visible = false
 layout_mode = 2
 
-[node name="TitleLabel" parent="Players/PlayerHUD/GameHUD" index="0"]
-layout_mode = 0
-
 [node name="HealthBar" parent="Players/PlayerHUD/GameHUD" index="1"]
 layout_mode = 0
 offset_left = 0.0

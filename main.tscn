@@ -107,6 +107,9 @@ motion_scale = Vector2(-1, 0)
 scale = Vector2(3, 3)
 texture = ExtResource("5_jsh27")
 
+[connection signal="PlayerAddRequest" from="Player Manager" to="Player UI Manager" method="_on_player_manager_player_add_request"]
+[connection signal="PlayerAdded" from="Player Manager" to="Player UI Manager" method="_on_player_manager_player_added"]
+
 [editable path="Players/Player"]
 [editable path="Players/Player2"]
 [editable path="Player UI Manager"]

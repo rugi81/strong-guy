@@ -22,10 +22,6 @@ public partial class player_ui_manager : CanvasLayer
 	{
 		playersUIContainer = GetNode<HBoxContainer>("Players");
 
-//		for ( var i = 0; i < maxPlayers; i++ ){
-	//		AddPlayerHUD( i, !!(i < playerCount) );
-//		}
-
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -47,7 +43,7 @@ public partial class player_ui_manager : CanvasLayer
 
 	public player_hud AddPlayerHUD( String playerLabel ){
 		player_hud ph = playerHUD.Instantiate<player_hud>();
-		var xSpacing = 130;
+		var xSpacing = 10;
 
 		ph.Position = new Vector2( playerHUDs.Count * xSpacing, 0 );
 
@@ -71,4 +67,17 @@ public partial class player_ui_manager : CanvasLayer
 	private void RemovePlayerHUD(){
 
 	}
+
+	public void _on_player_manager_player_add_request( int i ){
+		GD.Print( "Player "+i+" Add request!");
+
+	}
+
+	public void _on_player_manager_player_added( Player p, int i ){
+		GD.Print( "Player Added");
+		player_hud ph = playerHUDs[i];
+		ph.setActive(true);
+		ph.assignPlayer( p );
+		GetParent<main>().ConnectPlayerDeath(p);
+	}	
 }

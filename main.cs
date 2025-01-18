@@ -26,7 +26,7 @@ public partial class main : Node2D
 	private float groundOrigin = 600;
 
 	[Export]
-	private int maxPlayers = 4;
+	public int maxPlayers = 4;
 
 	private player_ui_manager playerUI;
 
@@ -40,9 +40,11 @@ public partial class main : Node2D
 		
 		for ( var i=0; i<maxPlayers; i++ ){
 			player_hud ph = playerUI.AddPlayerHUD( i, !!(i<playerArr.Count) );
-			Player p = (Player) playerArr[i];
-			ph.assignPlayer( p );
-			p.EntityDeath += _on_player_death;
+			if ( i < playerArr.Count ){
+				Player p = (Player) playerArr[i];
+				ph.assignPlayer( p );
+				p.EntityDeath += _on_player_death;
+			}
 		}
 
 		if ( hasTrain ){
@@ -133,5 +135,10 @@ public partial class main : Node2D
 		playerArr.Remove(p);
 		// spawn tombstone
 		
+	}
+
+	public void ConnectPlayerDeath( Player p ){
+		playerArr.Add(p);
+		p.EntityDeath += _on_player_death;
 	}
 }
