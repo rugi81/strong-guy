@@ -18,9 +18,16 @@ public partial class Player : Entity
     public override void _PhysicsProcess(double delta)
 	{
         base._PhysicsProcess(delta);
+        if (Position.Y > 2000){
+			//GD.Print("eek");
+			currentHealth = 0;
+		}
+
         if (currentHealth <= 0 && !dying){
             EmitSignal("PlayerHealthZero", this);
         }
+
+        
     }
 	
 

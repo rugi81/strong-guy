@@ -1,12 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://cu0nci0we1xy1"]
+[gd_scene load_steps=3 format=3 uid="uid://cu0nci0we1xy1"]
 
 [ext_resource type="Script" path="res://UI/player_join_hud.cs" id="1_8x5jy"]
+[ext_resource type="Texture2D" uid="uid://bs6jcexnkuo54" path="res://asset/strong-guy-thumb..png" id="2_s65f7"]
 
 [node name="PlayerJoinHUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -1.0
+offset_right = -2.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8x5jy")
@@ -29,7 +34,28 @@ text = "+ Join game
 "
 
 [node name="SelectCharacter" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Cha1" type="Control" parent="SelectCharacter"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Strong-guy-thumb_" type="Sprite2D" parent="SelectCharacter/Cha1"]
+position = Vector2(26, 26)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_s65f7")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SelectCharacter/Cha1"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 51.0
+offset_right = 105.0
+offset_bottom = 91.0
+text = "Strong Guy"
+fit_content = true
+autowrap_mode = 0

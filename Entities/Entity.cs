@@ -247,4 +247,8 @@ public partial class Entity : CharacterBody2D
 	public virtual void setPlayerIndex( int inIndex ){
 		playerIndex = inIndex;
 	}
+
+	public virtual int getPlayerIndex( ){
+		return playerIndex;
+	}
 }
