@@ -38,6 +38,7 @@ public partial class player_ui_manager : CanvasLayer
 	public player_hud AddPlayerHUD( int index, Boolean active ){
 		player_hud ph = AddPlayerHUD("[b]Player "+(index+1)+"[/b]", playerColors[index]);
 		ph.setActive(active);
+		ph.p_index = index;
 		return ph;
 	}
 
@@ -70,7 +71,9 @@ public partial class player_ui_manager : CanvasLayer
 
 	public void _on_player_manager_player_add_request( int i ){
 		GD.Print( "Player "+i+" Add request!");
-
+		
+		player_hud ph = playerHUDs[i];
+		ph.requestJoin();
 	}
 
 	public void _on_player_manager_player_added( Player p, int i ){
@@ -78,6 +81,7 @@ public partial class player_ui_manager : CanvasLayer
 		player_hud ph = playerHUDs[i];
 		ph.setActive(true);
 		ph.assignPlayer( p );
+		ph.
 		GetParent<main>().ConnectPlayerDeath(p);
 	}	
 }

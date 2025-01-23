@@ -33,7 +33,7 @@ public partial class baddie : Entity
 		//anim = GetNode<AnimatedSprite2D>("Wrapper/AnimatedSprite2D");
 		revertColorTimer = GetNode<Timer>("RevertColor");
 		attackDelay = GetNode<Timer>("Attack Delay");
-		GD.Print( "baddie: "+GetTree().Root.Name );
+		//GD.Print( "baddie: "+GetTree().Root.Name );
 
 		var r = GD.RandRange( 0, 1 );
 		dir = ( r > .5 );
@@ -142,7 +142,7 @@ public partial class baddie : Entity
 	}
     public override void getHit(bool inDir, int dmg)
     {
-		GD.Print("baddie OW");
+		//GD.Print("baddie OW");
         getHit(inDir);
 		currentHealth -= dmg;
     }

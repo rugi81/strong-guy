@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://cu0nci0we1xy1"]
+[gd_scene load_steps=8 format=3 uid="uid://cu0nci0we1xy1"]
 
 [ext_resource type="Script" path="res://UI/player_join_hud.cs" id="1_8x5jy"]
 [ext_resource type="Texture2D" uid="uid://bs6jcexnkuo54" path="res://asset/strong-guy-thumb..png" id="2_s65f7"]
+[ext_resource type="Texture2D" uid="uid://b6crttk5y6ggc" path="res://asset/norm-thumb.png" id="3_7s2mv"]
+[ext_resource type="Texture2D" uid="uid://xvmup3ianj03" path="res://asset/robut-thumb.png" id="4_ol2w7"]
+[ext_resource type="Texture2D" uid="uid://b6v6x1xhfa5gc" path="res://asset/White2x.png" id="5_20537"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8ory"]
+atlas = ExtResource("5_20537")
+region = Rect2(240.3, 642.9, 56.9799, 111.1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydxhs"]
+atlas = ExtResource("5_20537")
+region = Rect2(174.345, 642.9, 56.98, 111.1)
 
 [node name="PlayerJoinHUD" type="Control"]
 layout_mode = 3
@@ -42,11 +53,12 @@ offset_bottom = 40.0
 
 [node name="Cha1" type="Control" parent="SelectCharacter"]
 anchors_preset = 0
+offset_top = 18.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 58.0
 
 [node name="Strong-guy-thumb_" type="Sprite2D" parent="SelectCharacter/Cha1"]
-position = Vector2(26, 26)
+position = Vector2(52, 26)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_s65f7")
 
@@ -56,6 +68,73 @@ offset_left = 1.0
 offset_top = 51.0
 offset_right = 105.0
 offset_bottom = 91.0
-text = "Strong Guy"
+bbcode_enabled = true
+text = "[center]Strong Guy[/center]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Cha2" type="Control" parent="SelectCharacter"]
+visible = false
+anchors_preset = 0
+offset_top = 18.0
+offset_right = 40.0
+offset_bottom = 58.0
+
+[node name="Norm-thumb" type="Sprite2D" parent="SelectCharacter/Cha2"]
+position = Vector2(52, 26)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_7s2mv")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SelectCharacter/Cha2"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 51.0
+offset_right = 105.0
+offset_bottom = 91.0
+bbcode_enabled = true
+text = "[center]Norm[/center]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Cha3" type="Control" parent="SelectCharacter"]
+visible = false
+anchors_preset = 0
+offset_top = 18.0
+offset_right = 40.0
+offset_bottom = 58.0
+
+[node name="Norm-thumb" type="Sprite2D" parent="SelectCharacter/Cha3"]
+position = Vector2(52, 26)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ol2w7")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SelectCharacter/Cha3"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 51.0
+offset_right = 105.0
+offset_bottom = 91.0
+bbcode_enabled = true
+text = "[center]The Robut[/center]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Arrow-right" type="Sprite2D" parent="SelectCharacter"]
+position = Vector2(95, 45)
+scale = Vector2(0.256098, 0.175325)
+texture = SubResource("AtlasTexture_s8ory")
+
+[node name="Arrow-left" type="Sprite2D" parent="SelectCharacter"]
+position = Vector2(12, 45)
+scale = Vector2(0.256098, 0.175325)
+texture = SubResource("AtlasTexture_ydxhs")
+
+[node name="Select title" type="RichTextLabel" parent="SelectCharacter"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_colors/default_color = Color(0.548198, 0.695398, 1, 1)
+bbcode_enabled = true
+text = "select merc"
 fit_content = true
 autowrap_mode = 0

@@ -12,10 +12,15 @@ public partial class player_hud : Control
 	private int statusCount = 0;
 
 	private Control gameHUD;
-	private Control joinHUD;
+	private player_join_hud joinHUD;
 
 	private Player p;
+	public int p_index;
 	private Boolean visibleHealthText = false;
+
+	private Boolean playerActive = false;
+	private Boolean selectingPlayer = false;
+	private Boolean awaitingJoin = true; // defaults to join.
 	
 	[Signal]
 	public delegate void HealthChangedEventHandler();
@@ -27,7 +32,8 @@ public partial class player_hud : Control
 		healthBar = GetNode<TextureProgressBar>("GameHUD/HealthBar");
 
 		gameHUD = GetNode<Control>("GameHUD");
-		joinHUD = GetNode<Control>("PlayerJoinHUD");
+		joinHUD = GetNode<player_join_hud>("PlayerJoinHUD");
+		joinHUD.playerIndex = p_index;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,8 +41,44 @@ public partial class player_hud : Control
 	{
 	}
 
+	private void _on_health_changed(){
+		var health = p.currentHealth;
+		updateStatus( "Health", health.ToString() );
+		healthBar.Value = health;
+	}
+
+	private void _on_health_zero(){
+		//GD.Print("DEEEEEEEEEEEEEAD");
+		GetNode<Sprite2D>("GameHUD/Thumbs/Dead").Visible = true;
+		GetNode<Sprite2D>("GameHUD/Thumbs/"+p.getPlayerType()).Modulate = new Color(.5f,.5f,.5f);
+	}
+
+	private void _on_player_type_change(int playerType, Player p){
+		changePlayerType( playerType, p );
+	}
+
+	private void changePlayerType(int playerType, Player p){
+		GD.Print("PlayerHUD: player type change "+playerType);
+		var c = GetNode<Control>("GameHUD/Thumbs").GetChildren();
+
+		for ( var i=0; i<c.Count; i++ ){
+			Sprite2D a = (Sprite2D) c[i];
+			a.Visible = !!( a.Name == playerType.ToString() );
+			GD.Print( a.Name + " == " + (playerType+1).ToString() + " - " +  !!( a.Name == (playerType+1).ToString() ) );
+		}
+	}
+
+	public void playerLeft(){
+
+	}
+
+	public void requestJoin(){
+		joinHUD.SelectAPlayer( true, p_index );
+		
+	}
 
 	public void setActive( Boolean active ){
+		playerActive = active;
 		gameHUD.Visible = active;
 		joinHUD.Visible = !active;
 	}
@@ -50,17 +92,16 @@ public partial class player_hud : Control
 	public void assignPlayer( Player inPlayer ){
 		p = inPlayer;
 		p.HealthChanged += _on_health_changed;
+		p.HealthZero += _on_health_zero;
+		p.PlayerTypeChange += _on_player_type_change;
+
 		createStatusLabel( "Health", p.currentHealth.ToString() );
 		healthBar.Value = p.currentHealth;
+		joinHUD.playerIndex = p.getPlayerIndex();
+		changePlayerType( p.getPlayerType(), p );
 	}
 
-	private void _on_health_changed(){
-		var health = p.currentHealth;
-		updateStatus( "Health", health.ToString() );
-		healthBar.Value = health;
-	}
-
-	private RichTextLabel getStatusByLabel( String statusLabel ){
+    private RichTextLabel getStatusByLabel( String statusLabel ){
 		String label;
 		for ( var i = 0; i < statusCount; i++ ){
 			label = status[i].Name;
@@ -97,6 +138,6 @@ public partial class player_hud : Control
 		status.Add(rtl);
 		statusCount++;
 
-		GD.Print( status.Count );
+		//GD.Print( status.Count );
 	}
 }

@@ -223,16 +223,16 @@ public partial class Entity : CharacterBody2D
 	}
 
 	protected void _on_health_zero(){
-		GD.Print("DEATH");
+		//GD.Print("DEATH");
 
 		var hasDeathAnim = Array.Exists( anim_names, e => e == "death" );
 
 		if ( anim.HasAnimation("death") && hasDeathAnim ){
-			GD.Print("death anim");
+			//GD.Print("death anim");
 			anim.Play("death");
 			spr.Play("death");
 		}else{
-			GD.Print("no death anim");
+			//GD.Print("no death anim");
 			EntityDie();
 		}
 		dying = true;

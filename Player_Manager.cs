@@ -38,17 +38,11 @@ public partial class Player_Manager : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
-			GD.Print( "0 "+playerExists[0] );
-			GD.Print( "1 "+playerExists[0] );
-			GD.Print( "2 "+playerExists[0] );
-			GD.Print( "3 "+playerExists[0] );
 		//if (Input.IsActionJustPressed("input_action"+playerIndex) && !attacking && !gettingHurt){
 		for ( var i=0; i<maxPlayers; i++ ){
 			if ( !playerExists[i] ){
-				GD.Print(i + " Add player?");
 				if ( Input.IsActionJustPressed("input_action"+i) ){
-					AddPlayer(i);
+					//AddPlayer(i);
 					EmitSignal("PlayerAddRequest", i);
 				}
 			}
@@ -62,6 +56,18 @@ public partial class Player_Manager : Node
 		playerExists[ inIndex ] = true;
 		playerFolder.AddChild(p);
 		EmitSignal("PlayerAdded", p, inIndex);
+	}
+
+	public void AddPlayer(int inIndex, int Type ){
+		GD.Print("NEW PLAYER TYPE: "+Type);
+		Player p = player.Instantiate<Player>();
+		players.Add(p);
+		p.setPlayerIndex( inIndex );
+		p.Position = new Vector2(GD.RandRange(10,200), -200);
+		playerExists[ inIndex ] = true;
+		playerFolder.AddChild(p);
+		p.setPlayerType( Type );
+		EmitSignal("PlayerAdded", p, inIndex);		
 	}
 
 	public void RemovePlayer(int inIndex){
