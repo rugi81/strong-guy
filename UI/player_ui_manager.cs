@@ -81,7 +81,6 @@ public partial class player_ui_manager : CanvasLayer
 		player_hud ph = playerHUDs[i];
 		ph.setActive(true);
 		ph.assignPlayer( p );
-		ph.
 		GetParent<main>().ConnectPlayerDeath(p);
 	}	
 }

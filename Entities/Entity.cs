@@ -24,11 +24,15 @@ public partial class Entity : CharacterBody2D
 	// State vars
 	protected Boolean jumping = false;
 	protected Boolean attacking = false;
+	protected Boolean climbing = false;
+	protected Boolean climbingUp = false;
 	protected Boolean face_right;
 	public Boolean gettingHit = false;
 	public int gettingHit_direction = -1;
 	public Boolean gettingHurt = false;
 	protected Boolean dying = false;
+	protected int connectedClimbables = 0;
+	protected float climbableX;
 
 	protected int msgCount = 0;
 
@@ -65,8 +69,22 @@ public partial class Entity : CharacterBody2D
 
 		Vector2 velocity = Velocity;
 
-		// Add the gravity.
-		velocity.Y += gravity * (float)delta;
+		if (!climbing){
+			// Add the gravity.
+			velocity.Y += gravity * (float)delta;
+		}else{
+			GD.Print( CollisionLayer );
+
+			velocity = Vector2.Zero;
+			Position = new Vector2( climbableX, Position.Y );
+			spr.Play("climb");
+			anim.Play("climb");
+
+			spr.Pause();
+			anim.Pause();
+
+			GD.Print(GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect());
+		}
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
@@ -77,7 +95,8 @@ public partial class Entity : CharacterBody2D
 
 		if (  Mathf.Round( direction.X * 100 )/100 != 0 )//Vector2.Zero)
 		{
-			if (!jumping && !attacking && !gettingHurt){			
+			if (!jumping && !attacking && !gettingHurt){					
+				climbing = false;
 				spr.Play("walk");
 				anim.Play("walk");
 			}
@@ -89,7 +108,7 @@ public partial class Entity : CharacterBody2D
 		{
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 
-			if (!jumping && !attacking && !gettingHurt){
+			if (!jumping && !attacking && !gettingHurt && !climbing){
 				spr.Play("idle");
 				anim.Play("idle");
 			}
@@ -114,8 +133,27 @@ public partial class Entity : CharacterBody2D
 			}
 		}
 
+		// Climbing 
+		if (Input.IsActionPressed("input_up"+playerIndex) && !gettingHurt && connectedClimbables > 0 ){
+			climbing = true;
+			velocity = Vector2.Zero;
+			velocity.Y -= 500;
+			climbingUp = true;
+			spr.Play();
+		}
+		if (Input.IsActionPressed("input_down"+playerIndex) && !gettingHurt  && connectedClimbables > 0 ){
+			climbing = true;
+			velocity = Vector2.Zero;
+			velocity.Y += 500;
+			climbingUp = false;
+			spr.Play();
+		}
+		if (connectedClimbables < 1){
+			climbing = false;
+		}
 		// Handle Jump.
-		if (Input.IsActionJustPressed("input_jump"+playerIndex) && IsOnFloor() && !gettingHurt){
+		if (Input.IsActionJustPressed("input_jump"+playerIndex) && ( IsOnFloor() || climbing ) && !gettingHurt){
+			climbing = false;
 			velocity.Y = JumpVelocity;
 			spr.Play("jump");
 			anim.Play("jump");
@@ -218,8 +256,34 @@ public partial class Entity : CharacterBody2D
 	}
 
 	protected void _on_body_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
-		//GD.Print("BODY CONTACT "+body.GetType().Name);
 		
+		//GD.Print(GetType().Name);
+		if ( this.GetType().Name == "Player" && body.GetType().Name == "TileMap" ){
+			TileMap tm = (TileMap) body;
+		
+			Vector2I tpos = tm.GetCoordsForBodyRid( body_rid );
+			TileData data = tm.GetCellTileData( 0, tpos );
+			if ( (bool) data.GetCustomData("climbable") ){
+				connectedClimbables++;
+				climbableX = tm.MapToLocal( tpos ).X;
+				//GD.Print( climbableX + " " + tm.MapToLocal( tpos ) + " " + tpos );
+			}
+		}
+		
+	}
+
+	protected void _on_body_body_shape_exited(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
+
+		if ( this.GetType().Name == "Player" && body.GetType().Name == "TileMap" ){
+			TileMap tm = (TileMap) body;
+			Vector2I tpos = tm.GetCoordsForBodyRid( body_rid );
+			TileData data = tm.GetCellTileData( 0, tpos );
+			GD.Print(data);
+			if ( (bool) data.GetCustomData("climbable") ){
+				connectedClimbables--;
+			}
+		}
+
 	}
 
 	protected void _on_health_zero(){

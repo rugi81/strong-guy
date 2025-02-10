@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d1c346133j1vk"]
 
-[ext_resource type="Shader" path="res://Entities/Baddies/ghost_shader_material.gdshader" id="1_fijsp"]
+[ext_resource type="Shader" path="res://Entities/Baddies/baddie.gdshader" id="1_kuner"]
 
 [resource]
-render_priority = 0
-shader = ExtResource("1_fijsp")
+shader = ExtResource("1_kuner")
+shader_parameter/dying = false

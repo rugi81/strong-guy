@@ -19,6 +19,14 @@ region = Rect2(541, 445, 135, 185)
 atlas = ExtResource("1_gtlm0")
 region = Rect2(776, 445, 135, 185)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0facy"]
+atlas = ExtResource("1_gtlm0")
+region = Rect2(307, 109, 135, 185)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8jim"]
+atlas = ExtResource("1_gtlm0")
+region = Rect2(786, 109, 135, 185)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_tpgas"]
 atlas = ExtResource("2_hp6tx")
 region = Rect2(54, 115, 135, 185)
@@ -91,17 +99,9 @@ region = Rect2(749, 773, 135, 185)
 atlas = ExtResource("1_gtlm0")
 region = Rect2(81, 109, 135, 185)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0facy"]
-atlas = ExtResource("1_gtlm0")
-region = Rect2(307, 109, 135, 185)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ykox"]
 atlas = ExtResource("1_gtlm0")
 region = Rect2(541, 109, 135, 185)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o8jim"]
-atlas = ExtResource("1_gtlm0")
-region = Rect2(786, 109, 135, 185)
 
 [resource]
 animations = [{
@@ -121,6 +121,17 @@ animations = [{
 "loop": false,
 "name": &"attack",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0facy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8jim")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8yb4wusteax1"]
+[gd_scene load_steps=10 format=3 uid="uid://c8yb4wusteax1"]
 
 [ext_resource type="Script" path="res://main.cs" id="1_hh8ph"]
 [ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
@@ -8,14 +8,16 @@
 [ext_resource type="PackedScene" uid="uid://p1i3s7mirtbs" path="res://UI/player_ui_manager.tscn" id="5_40xp3"]
 [ext_resource type="Texture2D" uid="uid://budwgshi2ynf4" path="res://asset/Epic_BlueSunset_Cam_0_Front+Z.png" id="5_jsh27"]
 [ext_resource type="PackedScene" uid="uid://b1p6w7mf2lw86" path="res://player_manager.tscn" id="8_ltddd"]
+[ext_resource type="TileSet" uid="uid://wbh4f1e333k3" path="res://train2.tres" id="9_hrehy"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_hh8ph")
 hasTrain = false
+maxZoom = 0.75
 
 [node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]
 Baddies = ExtResource("3_xm36p")
-MaxEntities = 30
+MaxEntities = 5
 EntityHealth = 30
 EntityDamage = 15
 
@@ -92,6 +94,11 @@ motion_scale = Vector2(-1, 0)
 [node name="EpicBlueSunsetCam0Front+z" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 scale = Vector2(3, 3)
 texture = ExtResource("5_jsh27")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("9_hrehy")
+format = 2
+layer_0/tile_data = PackedInt32Array(393237, 458752, 6, 524309, 458752, 6, 458773, 458752, 6, 327701, 458752, 6, 262165, 393216, 7, 589845, 458752, 7, 196613, 458752, 6, 131077, 458752, 6, 65541, 458752, 6, 5, 458752, 6, -65531, 458752, 6, -131067, 458752, 6, 65540, 0, 0, 65539, 0, 0, 65538, 0, 0, 65537, 0, 0)
 
 [connection signal="PlayerAddRequest" from="Player Manager" to="Player UI Manager" method="_on_player_manager_player_add_request"]
 [connection signal="PlayerAdded" from="Player Manager" to="Player UI Manager" method="_on_player_manager_player_added"]

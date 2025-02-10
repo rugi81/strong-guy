@@ -29,7 +29,7 @@ shape = SubResource("RectangleShape2D_t1weh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Wrapper"]
 sprite_frames = ExtResource("2_ia6m0")
-animation = &"hit"
+animation = &"climb"
 autoplay = "idle"
 frame = 1
 
@@ -53,5 +53,6 @@ shape = SubResource("CircleShape2D_njsx3")
 [connection signal="EntityDeath" from="." to="." method="_on_entity_death"]
 [connection signal="HealthZero" from="." to="." method="_on_health_zero"]
 [connection signal="body_shape_entered" from="Body" to="." method="_on_body_body_shape_entered"]
+[connection signal="body_shape_exited" from="Body" to="." method="_on_body_body_shape_exited"]
 [connection signal="animation_finished" from="Wrapper/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Wrapper/Actions/attack" to="." method="_on_attack_body_entered"]
