@@ -159,7 +159,9 @@ input_up3={
 2d_physics/layer_1="Players"
 2d_physics/layer_2="Environment"
 2d_physics/layer_3="Baddies"
-2d_physics/layer_5="Ladders"
+2d_physics/layer_5="Ladder"
+2d_physics/layer_6="Ladder_bottom"
+2d_physics/layer_7="Ladder_top"
 
 [rendering]
 

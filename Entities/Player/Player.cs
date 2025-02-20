@@ -38,7 +38,7 @@ public partial class Player : Entity
 
     protected override void EntityDie(){
         EmitSignal( "EntityDeath", Position, this );
-        GD.Print( GetParent() );
+        //GD.Print( GetParent() );
 
         tombstone ts = tombStone.Instantiate<tombstone>();
         ts.Position = Position;

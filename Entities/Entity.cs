@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Net.Http;
 
 public partial class Entity : CharacterBody2D
 {
@@ -25,14 +26,19 @@ public partial class Entity : CharacterBody2D
 	protected Boolean jumping = false;
 	protected Boolean attacking = false;
 	protected Boolean climbing = false;
+
 	protected Boolean climbingUp = false;
+	protected int canClimbDown = 0;
+	protected int canClimbUp = 0;
+	protected int connectedClimbables = 0;
+	protected float climbableX;
+	protected bool readyToClimb = true;
+
 	protected Boolean face_right;
 	public Boolean gettingHit = false;
 	public int gettingHit_direction = -1;
 	public Boolean gettingHurt = false;
 	protected Boolean dying = false;
-	protected int connectedClimbables = 0;
-	protected float climbableX;
 
 	protected int msgCount = 0;
 
@@ -72,8 +78,14 @@ public partial class Entity : CharacterBody2D
 		if (!climbing){
 			// Add the gravity.
 			velocity.Y += gravity * (float)delta;
+			CollisionMask = 7; // reset the collision mask
 		}else{
-			GD.Print( CollisionLayer );
+			GD.Print( CollisionLayer + " ``` " + CollisionMask );
+			if ((climbingUp && canClimbUp > 0) || (!climbingUp && canClimbDown > 0) ){
+				CollisionMask = 4; // if I'm climbing a ladder, ignore environment; look ahead though - if i can't climb down and i'm pressing down, stooop.
+			}else{
+				CollisionMask = 7;
+			}
 
 			velocity = Vector2.Zero;
 			Position = new Vector2( climbableX, Position.Y );
@@ -133,24 +145,44 @@ public partial class Entity : CharacterBody2D
 			}
 		}
 
+		GD.Print("UP: "+canClimbUp+ " ~~~ DOWN:" + canClimbDown + " ClimbingUp:"+climbingUp+" ReadyToClimb:" + readyToClimb + " OnFloor:"+IsOnFloor());
 		// Climbing 
-		if (Input.IsActionPressed("input_up"+playerIndex) && !gettingHurt && connectedClimbables > 0 ){
-			climbing = true;
-			velocity = Vector2.Zero;
-			velocity.Y -= 500;
-			climbingUp = true;
-			spr.Play();
+		if (Input.IsActionPressed("input_up"+playerIndex) && !gettingHurt && connectedClimbables > 0 && readyToClimb){
+			if (canClimbUp < 1){
+				climbing = false;
+				climbingUp = false;
+			}else{			
+				climbing = true;
+				velocity = Vector2.Zero;
+				velocity.Y -= 500;
+				climbingUp = true;
+				spr.Play();
+			}
 		}
-		if (Input.IsActionPressed("input_down"+playerIndex) && !gettingHurt  && connectedClimbables > 0 ){
-			climbing = true;
-			velocity = Vector2.Zero;
-			velocity.Y += 500;
-			climbingUp = false;
-			spr.Play();
+		if (Input.IsActionPressed("input_down"+playerIndex) && !gettingHurt  && connectedClimbables > 0 && readyToClimb ){
+			if (IsOnFloor() && canClimbDown < 1){
+				climbing = false;
+				climbingUp = false;
+			}else{
+				climbing = true;
+				velocity = Vector2.Zero;
+				velocity.Y += 500;
+				climbingUp = false;
+				spr.Play();
+			}
 		}
 		if (connectedClimbables < 1){
 			climbing = false;
+			if ( climbingUp )
+				readyToClimb = false;
 		}
+		if ( (!climbing && !climbingUp) || !climbingUp ){
+			readyToClimb = true;
+		}
+		if ( Input.IsActionJustReleased("input_down"+playerIndex) || Input.IsActionJustReleased("input_up"+playerIndex) ){
+			readyToClimb = true;
+		}
+
 		// Handle Jump.
 		if (Input.IsActionJustPressed("input_jump"+playerIndex) && ( IsOnFloor() || climbing ) && !gettingHurt){
 			climbing = false;
@@ -255,9 +287,25 @@ public partial class Entity : CharacterBody2D
 		//GD.Print( body.GetType().Name );
 	}
 
+	protected void _on_head_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
+		
+//		GD.Print("head -- "+ GetType().Name);
+		if ( this.GetType().Name == "Player" && body.GetType().Name == "TileMap" ){
+			TileMap tm = (TileMap) body;
+		
+			Vector2I tpos = tm.GetCoordsForBodyRid( body_rid );
+			TileData data = tm.GetCellTileData( 0, tpos );
+			
+			if ( (bool) data.GetCustomData("climbable") ){
+				canClimbUp++;
+			}
+		}
+		
+	}
+
 	protected void _on_body_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
 		
-		//GD.Print(GetType().Name);
+//		GD.Print(GetType().Name);
 		if ( this.GetType().Name == "Player" && body.GetType().Name == "TileMap" ){
 			TileMap tm = (TileMap) body;
 		
@@ -269,6 +317,37 @@ public partial class Entity : CharacterBody2D
 				//GD.Print( climbableX + " " + tm.MapToLocal( tpos ) + " " + tpos );
 			}
 		}
+	}
+
+	protected void _on_feet_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
+		
+//		GD.Print(GetType().Name);
+		if ( this.GetType().Name == "Player" && body.GetType().Name == "TileMap" ){
+			TileMap tm = (TileMap) body;
+		
+			Vector2I tpos = tm.GetCoordsForBodyRid( body_rid );
+			TileData data = tm.GetCellTileData( 0, tpos );
+			if ( (bool) data.GetCustomData("climbable") ){
+				canClimbDown++;
+				canClimbUp++;
+			}
+		}
+		
+	}
+
+	protected void _on_head_body_shape_exited(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
+		
+//		GD.Print("head exit -- "+ GetType().Name);
+		if ( this.GetType().Name == "Player" && body.GetType().Name == "TileMap" ){
+			TileMap tm = (TileMap) body;
+		
+			Vector2I tpos = tm.GetCoordsForBodyRid( body_rid );
+			TileData data = tm.GetCellTileData( 0, tpos );
+			
+			if ( (bool) data.GetCustomData("climbable") ){
+				canClimbUp--;
+			}
+		}
 		
 	}
 
@@ -278,9 +357,24 @@ public partial class Entity : CharacterBody2D
 			TileMap tm = (TileMap) body;
 			Vector2I tpos = tm.GetCoordsForBodyRid( body_rid );
 			TileData data = tm.GetCellTileData( 0, tpos );
-			GD.Print(data);
 			if ( (bool) data.GetCustomData("climbable") ){
 				connectedClimbables--;
+			}
+		}
+
+	}
+
+	protected void _on_feet_body_shape_exited(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
+
+		if ( this.GetType().Name == "Player" && body.GetType().Name == "TileMap" ){
+			TileMap tm = (TileMap) body;
+			Vector2I tpos = tm.GetCoordsForBodyRid( body_rid );
+			TileData data = tm.GetCellTileData( 0, tpos );
+			
+			
+			if ( (bool) data.GetCustomData("climbable") ){
+				canClimbDown--;
+				canClimbUp--;
 			}
 		}
 
