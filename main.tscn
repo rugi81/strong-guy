@@ -70,10 +70,6 @@ rotation = 0.0974149
 scale = Vector2(3.49819, 2.37184)
 skew = 1.08487
 
-[node name="Player1Cam" type="Camera2D" parent="."]
-zoom = Vector2(0.75, 0.75)
-position_smoothing_enabled = true
-
 [node name="Player UI Manager" parent="." instance=ExtResource("5_40xp3")]
 offset = Vector2(5, 0)
 transform = Transform2D(1, 0, 0, 1, 5, 0)
@@ -83,17 +79,24 @@ playerCount = 0
 [node name="Player Manager" parent="." node_paths=PackedStringArray("playerFolder") instance=ExtResource("8_ltddd")]
 playerFolder = NodePath("../Players")
 
+[node name="Player1Cam" type="Camera2D" parent="."]
+zoom = Vector2(0.75, 0.75)
+position_smoothing_enabled = true
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 follow_viewport_enabled = true
 scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+visible = false
 position = Vector2(922, 346)
-motion_scale = Vector2(-1, 0)
+motion_scale = Vector2(0, 0)
 
-[node name="EpicBlueSunsetCam0Front+z" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(1, 0)
-scale = Vector2(3, 3)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="EpicBlueSunsetCam0Front+z" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(580, 346)
 texture = ExtResource("5_jsh27")
 
 [node name="TileMap" type="TileMap" parent="."]

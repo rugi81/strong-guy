@@ -115,6 +115,10 @@ public partial class Entity : CharacterBody2D
 			velocity.X = direction.X * Speed;
 			face_right = !!(direction.X > 0);
 			DoFacing();
+
+			if (connectedClimbables < 1 && climbingUp){
+				readyToClimb = true;
+			}
 		}
 		else
 		{
@@ -145,7 +149,7 @@ public partial class Entity : CharacterBody2D
 			}
 		}
 
-		GD.Print("UP: "+canClimbUp+ " ~~~ DOWN:" + canClimbDown + " ClimbingUp:"+climbingUp+" ReadyToClimb:" + readyToClimb + " OnFloor:"+IsOnFloor());
+		//GD.Print("UP: "+canClimbUp+ " ~~~ DOWN:" + canClimbDown + " ClimbingUp:"+climbingUp+" ReadyToClimb:" + readyToClimb + " OnFloor:"+IsOnFloor());
 		// Climbing 
 		if (Input.IsActionPressed("input_up"+playerIndex) && !gettingHurt && connectedClimbables > 0 && readyToClimb){
 			if (canClimbUp < 1){
@@ -173,7 +177,7 @@ public partial class Entity : CharacterBody2D
 		}
 		if (connectedClimbables < 1){
 			climbing = false;
-			if ( climbingUp )
+			if ( climbingUp && ( Input.IsActionJustReleased("input_down"+playerIndex) || Input.IsActionJustReleased("input_up"+playerIndex) ) )
 				readyToClimb = false;
 		}
 		if ( (!climbing && !climbingUp) || !climbingUp ){
