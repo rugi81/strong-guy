@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1aqxftan7xhs"]
+[gd_scene load_steps=13 format=3 uid="uid://b1aqxftan7xhs"]
 
 [ext_resource type="Script" path="res://Entities/Entity.cs" id="1_cys3l"]
 [ext_resource type="SpriteFrames" uid="uid://6780ua34erhc" path="res://Entities/Player/baseEntity.tres" id="2_ia6m0"]
@@ -8,6 +8,43 @@
 size = Vector2(50, 155)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njsx3"]
+
+[sub_resource type="Curve" id="Curve_ri8sg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_oul7t"]
+curve = SubResource("Curve_ri8sg")
+
+[sub_resource type="Gradient" id="Gradient_x3qbd"]
+colors = PackedColorArray(1, 0.545098, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tfq71"]
+gradient = SubResource("Gradient_x3qbd")
+
+[sub_resource type="Curve" id="Curve_43hin"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.201602), -1.95911, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_w1fkd"]
+curve = SubResource("Curve_43hin")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kifrx"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 21.29
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = 500.0
+radial_accel_max = 500.0
+scale_min = 15.0
+scale_max = 30.0
+scale_curve = SubResource("CurveTexture_w1fkd")
+color_ramp = SubResource("GradientTexture1D_tfq71")
+alpha_curve = SubResource("CurveTexture_oul7t")
+turbulence_noise_strength = 20.0
 
 [node name="Entity" type="CharacterBody2D"]
 collision_mask = 7
@@ -49,6 +86,39 @@ collision_mask = 5
 position = Vector2(52, -17)
 scale = Vector2(5, 5)
 shape = SubResource("CircleShape2D_njsx3")
+
+[node name="ParticleState" type="Node2D" parent="."]
+position = Vector2(21, 9)
+
+[node name="Hit 1" type="GPUParticles2D" parent="ParticleState"]
+z_index = 5
+position = Vector2(-33, -27)
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_kifrx")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="Hit 2" type="GPUParticles2D" parent="ParticleState"]
+z_index = 5
+position = Vector2(-7, -3)
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_kifrx")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="Hit 3" type="GPUParticles2D" parent="ParticleState"]
+z_index = 5
+position = Vector2(-18, 26)
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_kifrx")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
 
 [connection signal="EntityDeath" from="." to="." method="_on_entity_death"]
 [connection signal="HealthZero" from="." to="." method="_on_health_zero"]

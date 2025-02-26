@@ -39,6 +39,9 @@ public partial class Entity : CharacterBody2D
 	protected Boolean face_right;
 	public Boolean gettingHit = false;
 	public int gettingHit_direction = -1;
+	public int getHitCount = 1;
+	public int getHitMaxCount = 3;
+
 	public Boolean gettingHurt = false;
 	protected Boolean dying = false;
 
@@ -229,9 +232,18 @@ public partial class Entity : CharacterBody2D
 		//GD.Print("Attacking - "+attacking);
 	}
 
+	protected void getHitParticles(){
+		GpuParticles2D g = GetNode<GpuParticles2D>("ParticleState/Hit "+(getHitCount++));
+		g.Emitting = true;
+		if ( getHitCount == getHitMaxCount ){
+			getHitCount = 1;
+		}
+	}
+
 	public virtual void getHit( Boolean inDir ){
 		gettingHit = true;
 		gettingHit_direction = ( inDir )?-1:1;
+		getHitParticles();
 	}
 	public virtual void getHit( Boolean inDir, int dmg, Entity e ){
 		this.getHit(inDir);

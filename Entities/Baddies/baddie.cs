@@ -144,6 +144,8 @@ public partial class baddie : Entity
 		gettingHit_direction = ( inDir )?-1:1;
 		spr.Modulate = new Color(1,0,0);
 		revertColorTimer.Start();
+		
+		getHitParticles();
 	}
     public override void getHit(bool inDir, int dmg, Entity e)
     {
