@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -17,6 +18,9 @@ public partial class baddie : Entity
 	[Export]
 	protected int attackDamage = 5;
 	protected new int currentHealth = 30;
+
+	[Export]
+	protected int defeatScore = 10;
 
 	private int health;
 	private int mana;
@@ -37,7 +41,8 @@ public partial class baddie : Entity
 
 		var r = GD.RandRange( 0, 1 );
 		dir = ( r > .5 );
-		//GD.Print( dir );
+		
+		GD.Print( "Who hit me? "+ whoHitMe.Count );
 
 		base._Ready();
 	}
@@ -111,7 +116,7 @@ public partial class baddie : Entity
 
 		if (Position.Y > 2000){
 			//GD.Print("eek");
-			QueueFree();
+			EntityDie(true);
 		}
 		
 		MoveAndSlide();
@@ -140,11 +145,16 @@ public partial class baddie : Entity
 		spr.Modulate = new Color(1,0,0);
 		revertColorTimer.Start();
 	}
-    public override void getHit(bool inDir, int dmg)
+    public override void getHit(bool inDir, int dmg, Entity e)
     {
 		//GD.Print("baddie OW");
         getHit(inDir);
 		currentHealth -= dmg;
+
+		if ( !whoHitMe.Contains( e ) ){
+			whoHitMe.Add( e );
+		}
+		GD.Print( "Who hit me? "+ whoHitMe );		
     }
 
     private void _on_change_mind_timeout()
@@ -194,10 +204,10 @@ public partial class baddie : Entity
 	{	
 		//GD.Print("baddie contact "+body.GetType().Name);
 		if ( body.GetType().Name == "Entity" && attacking ){
-			((Entity)body).getHit( face_right, attackDamage );
+			((Entity)body).getHit( face_right, attackDamage, (Entity)this );
 		}
 		if ( body.GetType().Name == "Player" && attacking ){
-			((Player)body).getHit( face_right, attackDamage );
+			((Player)body).getHit( face_right, attackDamage, (Entity)this );
 		}
 		//GD.Print( body.GetType().Name );
 	}
@@ -222,6 +232,7 @@ public partial class baddie : Entity
 	protected void EntityDie( Boolean inDying ){
 		GD.Print("DEATH TIMER DONE");
 		if ( inDying ){
+			giveScore();
 			QueueFree();
 		}
 	}
@@ -229,6 +240,14 @@ public partial class baddie : Entity
 	private void _on_death_delay_timeout(){
 		GD.Print("DEATH TIMER");
 		EntityDie(dying);
-	}	
 
+
+	}
+
+	private void giveScore(){
+		for( int i = 0; i < whoHitMe.Count; i++ ){
+			whoHitMe[i].changeScore( defeatScore/whoHitMe.Count );
+			GD.Print( "OUCH: "+whoHitMe[i].GetType() );
+		}
+	}
 }

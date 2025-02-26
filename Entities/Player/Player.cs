@@ -12,6 +12,8 @@ public partial class Player : Entity
 	public new delegate void EntityDeathEventHandler( Vector2 inPos, Player p );
     [Signal]
     public delegate void PlayerTypeChangeEventHandler( int playerType, Player p );
+    [Signal]
+    public delegate void PlayerScoreChangeEventHandler( int scoreChange, Player p );
 
     [Export]
     public PackedScene tombStone;
@@ -99,16 +101,22 @@ public partial class Player : Entity
 
         if ( friendlyFire ){
     		if ( body.GetType().Name == "Entity" && attacking ){
-	    		((Entity)body).getHit( face_right, attackDamage );
+	    		((Entity)body).getHit( face_right, attackDamage, (Entity) this );
     		}
 	    	if ( body.GetType().Name == "Player" && attacking ){
-		    	((Player)body).getHit( face_right, attackDamage );
+		    	((Player)body).getHit( face_right, attackDamage, (Entity) this );
 		    }
         }
 
    		if ( body.GetType().Name == "baddie" && attacking ){
-    		((baddie)body).getHit( face_right, attackDamage );
+    		((baddie)body).getHit( face_right, attackDamage, (Entity) this );
    		}
 		
+	}   
+
+	public override void changeScore( int scoreChange ){
+		score += scoreChange;
+        EmitSignal("PlayerScoreChange", score, this );
 	}    
+
 }

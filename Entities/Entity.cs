@@ -17,10 +17,12 @@ public partial class Entity : CharacterBody2D
 	[Export]
 	protected int playerMaxHealth = 100;
 	public int currentHealth;
-
+	public int score = 0;
 
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -550.0f;
+
+	protected List<Entity> whoHitMe = new List<Entity>();
 
 	// State vars
 	protected Boolean jumping = false;
@@ -80,13 +82,14 @@ public partial class Entity : CharacterBody2D
 			velocity.Y += gravity * (float)delta;
 			CollisionMask = 7; // reset the collision mask
 		}else{
-			GD.Print( CollisionLayer + " ``` " + CollisionMask );
+			//GD.Print( CollisionLayer + " ``` " + CollisionMask );
 			if ((climbingUp && canClimbUp > 0) || (!climbingUp && canClimbDown > 0) ){
 				CollisionMask = 4; // if I'm climbing a ladder, ignore environment; look ahead though - if i can't climb down and i'm pressing down, stooop.
 			}else{
 				CollisionMask = 7;
 			}
 
+			face_right = true;
 			velocity = Vector2.Zero;
 			Position = new Vector2( climbableX, Position.Y );
 			spr.Play("climb");
@@ -95,7 +98,7 @@ public partial class Entity : CharacterBody2D
 			spr.Pause();
 			anim.Pause();
 
-			GD.Print(GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect());
+			//GD.Print(GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect());
 		}
 
 		// Get the input direction and handle the movement/deceleration.
@@ -230,7 +233,7 @@ public partial class Entity : CharacterBody2D
 		gettingHit = true;
 		gettingHit_direction = ( inDir )?-1:1;
 	}
-	public virtual void getHit( Boolean inDir, int dmg ){
+	public virtual void getHit( Boolean inDir, int dmg, Entity e ){
 		this.getHit(inDir);
 		currentHealth -= dmg;
 		if ( currentHealth < 0 ){
@@ -239,7 +242,6 @@ public partial class Entity : CharacterBody2D
 		EmitSignal("HealthChanged");
 		//GD.Print( "Player "+playerIndex+" -Health: "+currentHealth );
 	}
-
 
 	protected Vector2 DoGettingHit( Vector2 velocity ){
 		var hitForce = new Vector2( GD.RandRange( 300, 900 ) * -gettingHit_direction, -GD.RandRange( 300, 900 ) );
@@ -412,5 +414,9 @@ public partial class Entity : CharacterBody2D
 
 	public virtual int getPlayerIndex( ){
 		return playerIndex;
+	}
+
+	public virtual void changeScore( int scoreChange ){
+		score += scoreChange;
 	}
 }

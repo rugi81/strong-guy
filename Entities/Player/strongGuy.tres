@@ -1,7 +1,8 @@
-[gd_resource type="SpriteFrames" load_steps=15 format=3 uid="uid://bfnuaa0ewknv8"]
+[gd_resource type="SpriteFrames" load_steps=16 format=3 uid="uid://bfnuaa0ewknv8"]
 
 [ext_resource type="Texture2D" uid="uid://qb18hjpjcyvf" path="res://asset/strong-guy-0.png" id="1_0o8qr"]
 [ext_resource type="Texture2D" uid="uid://rfx0ji54451f" path="res://asset/strong-guy3.png" id="2_45mx3"]
+[ext_resource type="Texture2D" uid="uid://bdv2l11s7x3e4" path="res://asset/strong-guy2.png" id="2_awxmd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sna4r"]
 atlas = ExtResource("1_0o8qr")
@@ -11,21 +12,21 @@ region = Rect2(14, 50, 320, 280)
 atlas = ExtResource("1_0o8qr")
 region = Rect2(1334, 40, 320, 280)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y5ym0"]
-atlas = ExtResource("2_45mx3")
-region = Rect2(0, 553, 320, 280)
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjyci"]
+atlas = ExtResource("2_awxmd")
+region = Rect2(50, 590, 150, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_annjs"]
-atlas = ExtResource("2_45mx3")
-region = Rect2(320, 553, 320, 280)
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwnjw"]
+atlas = ExtResource("2_awxmd")
+region = Rect2(411, 590, 150, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4pr41"]
-atlas = ExtResource("2_45mx3")
-region = Rect2(640, 525, 320, 280)
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw2jq"]
+atlas = ExtResource("2_awxmd")
+region = Rect2(714, 557, 150, 200)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tapw4"]
-atlas = ExtResource("2_45mx3")
-region = Rect2(881, 554, 320, 280)
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbuu8"]
+atlas = ExtResource("2_awxmd")
+region = Rect2(974, 590, 150, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sinky"]
 atlas = ExtResource("2_45mx3")
@@ -72,16 +73,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y5ym0")
+"texture": SubResource("AtlasTexture_qjyci")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_annjs")
+"texture": SubResource("AtlasTexture_cwnjw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4pr41")
+"texture": SubResource("AtlasTexture_xw2jq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tapw4")
+"texture": SubResource("AtlasTexture_vbuu8")
 }],
 "loop": true,
 "name": &"climb",

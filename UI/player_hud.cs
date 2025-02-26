@@ -57,6 +57,10 @@ public partial class player_hud : Control
 		changePlayerType( playerType, p );
 	}
 
+	private void _on_player_score_change(int score, Player p){
+		updateStatus("Score", score.ToString());
+	}
+
 	private void changePlayerType(int playerType, Player p){
 		GD.Print("PlayerHUD: player type change "+playerType);
 		var c = GetNode<Control>("GameHUD/Thumbs").GetChildren();
@@ -94,8 +98,10 @@ public partial class player_hud : Control
 		p.HealthChanged += _on_health_changed;
 		p.HealthZero += _on_health_zero;
 		p.PlayerTypeChange += _on_player_type_change;
+		p.PlayerScoreChange += _on_player_score_change;
 
 		createStatusLabel( "Health", p.currentHealth.ToString() );
+		createStatusLabel( "Score", p.score.ToString() );
 		healthBar.Value = p.currentHealth;
 		joinHUD.playerIndex = p.getPlayerIndex();
 		changePlayerType( p.getPlayerType(), p );
@@ -128,10 +134,13 @@ public partial class player_hud : Control
 		rtl.Name = statusLabel;
 		rtl.Text = statusLabel + ": " + newValue;
 		rtl.Size = new Vector2( 100, 200 );
-		rtl.Position = new Vector2( 0, statusCount * fieldHeight + 25);
+		rtl.Position = new Vector2( 60, statusCount * fieldHeight + 35);
 		rtl.FitContent = true;
 		rtl.AutowrapMode = TextServer.AutowrapMode.Off;
-		rtl.Visible = visibleHealthText;
+
+		if ( statusLabel == "Health" ){
+			rtl.Visible = visibleHealthText;
+		}
 
 		GetNode("GameHUD").AddChild(rtl);
 

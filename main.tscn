@@ -17,7 +17,7 @@ maxZoom = 0.75
 
 [node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]
 Baddies = ExtResource("3_xm36p")
-MaxEntities = 0
+MaxEntities = 10
 EntityHealth = 30
 EntityDamage = 15
 
@@ -46,8 +46,8 @@ skew = 0.223289
 position = Vector2(257, -53)
 scale = Vector2(0.7, 0.7)
 
-[node name="Wrapper" parent="Players/Player" index="4"]
-position = Vector2(0, 20)
+[node name="AnimatedSprite2D" parent="Players/Player/Wrapper" index="0"]
+animation = &"hit"
 
 [node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(-11, 602)
@@ -102,7 +102,7 @@ texture = ExtResource("5_jsh27")
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("9_hrehy")
 format = 2
-layer_0/tile_data = PackedInt32Array(393237, 458752, 6, 524309, 458752, 6, 458773, 458752, 6, 327701, 458752, 6, 262165, 393216, 7, 589845, 262144, 4, 196613, 0, 0, 131077, 458752, 6, 65541, 458752, 6, 5, 458752, 6, -65531, 458752, 6, -131067, 458752, 6, 65540, 0, 0, 65539, 0, 0, 65538, 0, 0, 65537, 0, 0)
+layer_0/tile_data = PackedInt32Array(393237, 458752, 6, 524309, 458752, 6, 458773, 458752, 6, 327701, 458752, 6, 262165, 393216, 7, 589845, 458752, 7, 196613, 0, 0, 131077, 458752, 6, 65541, 458752, 6, 5, 458752, 6, -65531, 458752, 6, -131067, 458752, 6, 65540, 0, 0, 65539, 0, 0, 65538, 0, 0, 65537, 0, 0)
 
 [connection signal="PlayerAddRequest" from="Player Manager" to="Player UI Manager" method="_on_player_manager_player_add_request"]
 [connection signal="PlayerAdded" from="Player Manager" to="Player UI Manager" method="_on_player_manager_player_added"]
