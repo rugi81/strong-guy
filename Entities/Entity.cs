@@ -95,8 +95,14 @@ public partial class Entity : CharacterBody2D
 			face_right = true;
 			velocity = Vector2.Zero;
 			Position = new Vector2( climbableX, Position.Y );
-			spr.Play("climb");
-			anim.Play("climb");
+
+			if ( climbingUp ){
+				spr.Play("climb");
+				anim.Play("climb");
+			}else{
+				spr.PlayBackwards("climb");
+				anim.PlayBackwards("climb");
+			}
 
 			spr.Pause();
 			anim.Pause();

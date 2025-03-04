@@ -22,6 +22,11 @@ public partial class main : Node2D
 	[Export]
 	private float trainAcceleration = 1;
 	private float trainSpeed = 10;
+
+	// Background stuff
+	private ParallaxLayer clouds;
+	[Export]
+	private float cloudMotion = 0;
 	private float groundBoundary = -600;
 	private float groundOrigin = 600;
 
@@ -29,6 +34,7 @@ public partial class main : Node2D
 	public int maxPlayers = 4;
 
 	private player_ui_manager playerUI;
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -51,6 +57,8 @@ public partial class main : Node2D
 			ground = GetNode<TileMap>("Ground");
 			wheels = GetTree().GetNodesInGroup("train_wheel");
 		}
+
+		clouds = GetNode<ParallaxLayer>("ParallaxBackground/Clouds");
 
 	}
 
@@ -80,6 +88,8 @@ public partial class main : Node2D
 				w.Rotate( trainSpeed/100 );
 			}
 		}
+
+		clouds.MotionOffset += new Vector2( -cloudMotion, 0 );
 	}
 
 	private Vector2 GetPlayersMidPoint(){

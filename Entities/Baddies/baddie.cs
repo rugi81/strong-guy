@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 public partial class baddie : Entity
 {
@@ -248,8 +249,10 @@ public partial class baddie : Entity
 
 	private void giveScore(){
 		for( int i = 0; i < whoHitMe.Count; i++ ){
-			whoHitMe[i].changeScore( defeatScore/whoHitMe.Count );
-			GD.Print( "OUCH: "+whoHitMe[i].GetType() );
+			if ( IsInstanceValid( whoHitMe[i] ) ){
+				whoHitMe[i].changeScore( defeatScore/whoHitMe.Count );
+				GD.Print( "OUCH: "+whoHitMe[i].GetType() );
+			}
 		}
 	}
 }
