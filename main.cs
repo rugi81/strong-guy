@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.Intrinsics;
 using System.Runtime.Serialization;
 using System.Transactions;
 
@@ -27,6 +28,10 @@ public partial class main : Node2D
 	private ParallaxLayer clouds;
 	[Export]
 	private float cloudMotion = 0;
+	private Node2D cloudShadow;
+	private Vector2 cloudOrigin;
+	private bool cloudCover = false;
+
 	private float groundBoundary = -600;
 	private float groundOrigin = 600;
 
@@ -58,7 +63,9 @@ public partial class main : Node2D
 			wheels = GetTree().GetNodesInGroup("train_wheel");
 		}
 
-		clouds = GetNode<ParallaxLayer>("ParallaxBackground/Clouds");
+		clouds = GetNode<ParallaxLayer>("Player1Cam/ParallaxBackground/Clouds");
+		cloudShadow = GetNode<Node2D>("CloudShadow");
+		cloudOrigin = new Vector2( cloudShadow.Position.X, cloudShadow.Position.Y );
 
 	}
 
@@ -88,8 +95,37 @@ public partial class main : Node2D
 				w.Rotate( trainSpeed/100 );
 			}
 		}
-
+	
 		clouds.MotionOffset += new Vector2( -cloudMotion, 0 );
+		var pbg = clouds.GetParent<ParallaxBackground>();
+		int cloudsWidth = 5262;
+
+		Vector2 cloudScrollOffset = clouds.MotionOffset % cloudsWidth; 
+		Vector2 camOffset = new Vector2( cam1.GetScreenCenterPosition().X - (cam1.GetViewportRect().Size.X/2), 0 );
+		camOffset *= -clouds.MotionScale; // Parallax layer motion scale multiplies the CAMERA, not the background scroll offset.
+
+		cloudShadow.Position = cloudOrigin + cloudScrollOffset + camOffset;
+		cloudShadow.Position = new Vector2( cloudShadow.Position.X, cam1.GetScreenCenterPosition().Y + cloudOrigin.Y - 320);
+
+//		GD.Print( camOffset + " " + pbg.ScrollOffset + " " + clouds.GlobalPosition );
+		Area2D bgsl = GetNode<Area2D>("BGSunLight");
+		bgsl.Position = cam1.GetScreenCenterPosition() + new Vector2( 0, -50);
+
+		PointLight2D sun = bgsl.GetNode<PointLight2D>("PointLight2D");
+		sun.Visible = !cloudCover;
+		if ( !cloudCover ){
+			if ( sun.Energy > 2 ){
+				sun.Energy = 2;
+			}else{
+				sun.Energy += (float)delta * 10;
+			}
+		}else{
+			if ( sun.Energy < 0 ){
+				sun.Energy = 0;
+			}else{
+				sun.Energy -= (float)delta * 10;
+			}
+		}
 	}
 
 	private Vector2 GetPlayersMidPoint(){
@@ -141,10 +177,32 @@ public partial class main : Node2D
 	}
 
 	private void _on_player_death( Vector2 inPos, Player p ){
-		GD.Print("DIE: "+p);
+		//GD.Print("DIE: "+p);
 		playerArr.Remove(p);
 		// spawn tombstone
 		
+	}
+
+	private void _on_body_body_shape_entered(Rid body_rid, Node2D body, int body_shape_index, int local_shape_index){
+//		GD.Print( "SUN HIT: "+ body.GetType().Name );
+	}
+
+	private void _on_bg_cloud_area_entered(Area2D area){
+		GD.Print( "enter: " + area.Name );
+		GD.Print( cloudCover );
+
+		cloudCover = true;
+		//area.GetNode<PointLight2D>("PointLight2D").Visible = false;
+		//area.GetNode<PointLight2D>("PointLight2D").Energy = 0;
+	}
+
+	private void _on_bg_cloud_area_exited(Area2D area){
+		GD.Print( "exit: " + area.Name );
+		GD.Print( cloudCover );
+
+		cloudCover = false;
+		//area.GetNode<PointLight2D>("PointLight2D").Visible = true;
+		//area.GetNode<PointLight2D>("PointLight2D").Energy = 20;
 	}
 
 	public void ConnectPlayerDeath( Player p ){
