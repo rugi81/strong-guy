@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://t37p4udv0hqp"]
+[gd_scene load_steps=12 format=3 uid="uid://t37p4udv0hqp"]
 
 [ext_resource type="Script" path="res://UI/player_hud.cs" id="1_wfej6"]
 [ext_resource type="Texture2D" uid="uid://bs6jcexnkuo54" path="res://asset/strong-guy-thumb..png" id="2_qvp0e"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b6v6x1xhfa5gc" path="res://asset/White2x.png" id="2_vng44"]
 [ext_resource type="Texture2D" uid="uid://b6crttk5y6ggc" path="res://asset/norm-thumb.png" id="3_bl5g8"]
 [ext_resource type="Texture2D" uid="uid://xvmup3ianj03" path="res://asset/robut-thumb.png" id="4_3q6v4"]
+[ext_resource type="PackedScene" uid="uid://bxm2mxxtwrtcf" path="res://UI/debug_hud.tscn" id="7_i1vb4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i5kjd"]
 atlas = ExtResource("2_vng44")
@@ -96,3 +97,9 @@ tint_progress = Color(0.431866, 1, 0.400656, 1)
 [node name="PlayerJoinHUD" parent="." instance=ExtResource("2_sgt4g")]
 visible = false
 layout_mode = 1
+
+[node name="DebugHUD" parent="." instance=ExtResource("7_i1vb4")]
+visible = false
+offset_top = 71.0
+offset_right = 0.0
+offset_bottom = 71.0

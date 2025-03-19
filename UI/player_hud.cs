@@ -13,6 +13,7 @@ public partial class player_hud : Control
 
 	private Control gameHUD;
 	private player_join_hud joinHUD;
+	private debug_hud debugHUD;
 
 	private Player p;
 	public int p_index;
@@ -21,6 +22,9 @@ public partial class player_hud : Control
 	private Boolean playerActive = false;
 	private Boolean selectingPlayer = false;
 	private Boolean awaitingJoin = true; // defaults to join.
+
+	[Export]
+	private bool debugMode = true;
 	
 	[Signal]
 	public delegate void HealthChangedEventHandler();
@@ -34,6 +38,11 @@ public partial class player_hud : Control
 		gameHUD = GetNode<Control>("GameHUD");
 		joinHUD = GetNode<player_join_hud>("PlayerJoinHUD");
 		joinHUD.playerIndex = p_index;
+
+		debugHUD = GetNode<debug_hud>("DebugHUD");
+		if ( debugMode ){
+			debugHUD.Visible = true;
+		} 
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -105,6 +114,8 @@ public partial class player_hud : Control
 		healthBar.Value = p.currentHealth;
 		joinHUD.playerIndex = p.getPlayerIndex();
 		changePlayerType( p.getPlayerType(), p );
+
+		debugHUD.SetPlayer(p);
 	}
 
     private RichTextLabel getStatusByLabel( String statusLabel ){

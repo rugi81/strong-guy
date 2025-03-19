@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxm2mxxtwrtcf"]
+
+[ext_resource type="Script" path="res://UI/debug_hud.cs" id="1_er6e8"]
+[ext_resource type="FontFile" uid="uid://50olns2ajhpe" path="res://asset/Arrows.ttf" id="2_2tont"]
+
+[node name="DebugHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_er6e8")
+
+[node name="ActionInput" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_fonts/normal_font = ExtResource("2_2tont")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 36
+theme_override_font_sizes/italics_font_size = 36
+bbcode_enabled = true
+text = "ADFGHCBE[b]abxy[/b]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Timer" type="Timer" parent="ActionInput"]

@@ -112,7 +112,7 @@ public partial class main : Node2D
 		bgsl.Position = cam1.GetScreenCenterPosition() + new Vector2( 0, -50);
 
 		PointLight2D sun = bgsl.GetNode<PointLight2D>("PointLight2D");
-		sun.Visible = !cloudCover;
+		//sun.Visible = !cloudCover;
 		if ( !cloudCover ){
 			if ( sun.Energy > 2 ){
 				sun.Energy = 2;
