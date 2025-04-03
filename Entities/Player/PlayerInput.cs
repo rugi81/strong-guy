@@ -3,16 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-public partial class debug_hud : Control
+public partial class PlayerInput : Node
 {
-	[Export]
-	private bool debugOff = true;
-	
 	private List<string> actions = new List<string>();
 	private Player p;
 	private bool playerSet = false; 
 	private RichTextLabel actionString;
-	private Dictionary<string, string> actionDictionary = new Dictionary<string, string>{
+	private Dictionary<string, string> actionVisualDictionary = new Dictionary<string, string>{
 		{"n","C"},
 		{"e","A"},
 		{"s","D"},
@@ -34,6 +31,28 @@ public partial class debug_hud : Control
 		{"action","[b]A[/b]"},
 		{"action-held","[b][color=red]A[][/b]"}
 	};
+	private Dictionary<string, string> actionDictionary = new Dictionary<string, string>{
+		{"n","w"},
+		{"e","d"},
+		{"s","s"},
+		{"w","a"},
+		{"nw","w+d"},
+		{"ne","w+a"},
+		{"se","s+d"},
+		{"sw","s+a"},
+		{"n-held","w."},
+		{"e-held","d."},
+		{"s-held","s."},
+		{"w-held","a."},
+		{"nw-held","w+d."},
+		{"ne-held","w+a."},
+		{"se-held","s+d."},
+		{"sw-held","s+a."},		
+		{"jump","J"},
+		{"jump-held","J."},
+		{"action","A"},
+		{"action-held","A."}
+	};
 	private int maxShownActions = 6;
 	[Export]
 	private float actionRegisterTime = .03f; 
@@ -48,7 +67,11 @@ public partial class debug_hud : Control
 
 	private string lastActionRegistered = "";
 	[Export]
-	private float actionTimeLimit = 2; // time in seconds for a single combo to decay, from the last action
+	private float actionTimeLimit = .3f; // time in seconds for a single combo to decay, from the last action
+	[Export]
+	private float actionClearDelay = .3f; // when the actions are cleared, how long to wait until new combo can happen.
+	private bool actionClearing = false;
+
 	private string currentAction = "";
 	private string currentActionType = "";
 	private string currentAbility = "";
@@ -57,16 +80,12 @@ public partial class debug_hud : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		actionString = GetNode<RichTextLabel>("ActionInput");
 		GD.Print("TEST: "+GetActionKey("jump"));
 		actionString.Text = "";
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-//			GD.Print( "debug ui process" );
-		if ( playerSet && !debugOff ){
+    public string processPlayerInput( double delta ){
+		if ( playerSet && !actionClearing ){
 			int pid = p.getPlayerIndex();	
 
 			/*
@@ -180,7 +199,17 @@ public partial class debug_hud : Control
 					processAction(currentDirection);
 				}
 			}
+            return GetActionString();
+		}else if ( actionClearing ){
+			liveTimer += (float) delta;
+			if ( liveTimer > actionClearDelay ){
+				actionClearing = false;
+				liveTimer = 0;
+			}
 		}
+
+
+        return "";
 	}
 
 	private bool checkDirection( string action ){
@@ -206,9 +235,7 @@ public partial class debug_hud : Control
 
 	private void registerAction(string inAction){
 		if (actions.Count > 0){
-			//if (currentAction != actions[actions.Count-1] || !actionHeld){
-			
-			GD.Print( currentAction + " " + inAction + " " + lastActionRegistered + " -- " + (lastActionRegistered != currentAction || lastActionRegistered+"-held" != currentAction ) +" " + ( inAction == currentAction ) );
+//  		GD.Print( currentAction + " " + inAction + " " + lastActionRegistered + " -- " + (lastActionRegistered != currentAction || lastActionRegistered+"-held" != currentAction ) +" " + ( inAction == currentAction ) );
 			if ( (lastActionRegistered != currentAction ) && inAction == currentAction){
 				AddAction(inAction);
 				actionTimer = 0;
@@ -218,10 +245,8 @@ public partial class debug_hud : Control
 
 	}
 
-	private string GetActionKey(string inAction){
-		
+	private string GetActionKey(string inAction){		
 		return actionDictionary[inAction];
-//		return "";
 	}
 
 	public void SetPlayer( Player inPlayer ){
@@ -249,22 +274,22 @@ public partial class debug_hud : Control
 		UpdateActionString();
 	}
 
-	private void ClearActions(){
+	public void ClearActions(){
 		liveTimer = 0;
+		actionClearing = true;
 		actions.Clear();
 		UpdateActionString();
 	}
 
-	private void UpdateActionString(){
+    private string GetActionString(){
 		string a = "";
 		for( int i=0; i<actions.Count; i++ ){
 			a += GetActionKey( actions[i] );
 		}
-		actionString.Text = a;
-		//GD.Print( "actionString: " + a );
-	}
+        return a;
+    }
 
-	private void AddMonitorLabel(){
-
+	private void UpdateActionString(){
+        GD.Print( "actions: "+GetActionString() );
 	}
 }

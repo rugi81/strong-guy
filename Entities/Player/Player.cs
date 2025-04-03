@@ -21,9 +21,46 @@ public partial class Player : Entity
     protected int attackDamage = 10;
     protected int playerType = 1;
 
+    protected PlayerInput playerInput = new PlayerInput();
+
+    protected string actions;
+
+    protected bool dashing = false;
+    protected float dashTimer = .2f;
+
+    protected float actionTimer = 0;
+
+    public override void _Ready()
+    { 
+        autoMoveAndSlide = false;
+        base._Ready();
+        playerInput.SetPlayer(this);
+    }
+
     public override void _PhysicsProcess(double delta)
 	{
         base._PhysicsProcess(delta);
+        actions = playerInput.processPlayerInput(delta);
+
+        if ( !dashing ){
+            if ( actions.EndsWith( "dd" ) || actions.EndsWith("aa") ){ // dash
+                dashing = true;
+                actionTimer = 0;
+                playerInput.ClearActions();
+            }
+        }else if ( dashing ){
+            int dir = face_right?1:-1;
+            GD.Print( "::"+Velocity.X );
+            Velocity = new Vector2( 2000 * dir * ((dashTimer - actionTimer)/dashTimer), Velocity.Y );
+            GD.Print( "="+Velocity.X );
+            actionTimer += (float) delta;
+            if ( actionTimer > dashTimer ){
+                dashing = false;
+            }
+        }
+
+        //
+
         if (Position.Y > 2000){
 			//GD.Print("eek");
 			currentHealth = 0;
@@ -34,7 +71,7 @@ public partial class Player : Entity
             EmitSignal("PlayerHealthZero", this);
         }
 
-        
+        MoveAndSlide();
     }
 	
 

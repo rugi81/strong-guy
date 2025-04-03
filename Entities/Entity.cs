@@ -2,7 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Net;
 using System.Net.Http;
+using System.Reflection.Metadata;
 
 public partial class Entity : CharacterBody2D
 {
@@ -49,6 +51,7 @@ public partial class Entity : CharacterBody2D
 
 	protected String[] anim_names;
 	protected Boolean friendlyFire = false;
+	protected bool autoMoveAndSlide = true;
 
 	// Signals
     [Signal]
@@ -74,12 +77,76 @@ public partial class Entity : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (dying){
+		Vector2 velocity = Velocity;
+		string actionState = "idle|";
+		Vector2 direction = Input.GetVector("input_left"+playerIndex, "input_right"+playerIndex, "input_jump"+playerIndex, "input_down"+playerIndex);
+
+
+		// state resets
+		if ( IsOnFloor() ) jumping = false;
+
+		// check possible actions/states
+		if (dying){ // no states possible
 			return;
 		}
+		if (connectedClimbables < 1 && climbingUp){
+			readyToClimb = true;
+		}
 
-		Vector2 velocity = Velocity;
+		// apply constants
+		velocity = ApplyGravity( velocity, delta );
 
+		if ( Mathf.Round( direction.X * 100 )/100 != 0 ){
+			actionState += "walk|";
+			if (!jumping && !attacking && !gettingHurt){					
+				climbing = false;
+				SetAnim("walk");
+			}
+			velocity.X = direction.X * Speed;
+			face_right = !!(direction.X > 0);
+			DoFacing();
+		}else{
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+
+			if (!jumping && !attacking && !gettingHurt && !climbing)
+				SetAnim("idle");
+		}
+
+		if (Input.IsActionJustPressed("input_action"+playerIndex) && !attacking && !gettingHurt){
+			DoAttack();
+			actionState += "action|";
+		}
+
+		// mid air attack in to jump.
+		if (!IsOnFloor() && anim.CurrentAnimation != "jump" && anim.CurrentAnimation != "idle" && anim.CurrentAnimation != "" && !gettingHurt){
+			if (!attacking && jumping){
+				SetAnim("jump");
+				anim.Seek(.5);
+			}
+		}
+
+		velocity = HandleClimbing( velocity );
+		velocity = HandleJump( velocity );
+		
+		// outside forces
+		if (gettingHit){
+			velocity = DoGettingHit( velocity );
+		}		
+		if ( currentHealth <= 0 ){
+			currentHealth = 0;
+			EmitSignal("HealthZero");
+		}
+
+		Velocity = velocity;
+		if (autoMoveAndSlide){  GD.Print("ENTITY"); MoveAndSlide();  };
+	}
+
+	protected void SetAnim( string inAnim ){
+		spr.Play(inAnim);
+		anim.Play(inAnim);
+	}
+
+	protected Vector2 ApplyGravity( Vector2 velocity, double delta ){
 		if (!climbing){
 			// Add the gravity.
 			velocity.Y += gravity * (float)delta;
@@ -109,59 +176,10 @@ public partial class Entity : CharacterBody2D
 
 			//GD.Print(GetNode<CollisionShape2D>("CollisionShape2D").Shape.GetRect());
 		}
+		return velocity;
+	}
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
-
-		Vector2 direction = Input.GetVector("input_left"+playerIndex, "input_right"+playerIndex, "input_jump"+playerIndex, "input_down"+playerIndex);
-		
-		//GD.Print( "GettingHit: "+gettingHit+" - Hurting:"+gettingHurt );
-
-		if (  Mathf.Round( direction.X * 100 )/100 != 0 )//Vector2.Zero)
-		{
-			if (!jumping && !attacking && !gettingHurt){					
-				climbing = false;
-				spr.Play("walk");
-				anim.Play("walk");
-			}
-			velocity.X = direction.X * Speed;
-			face_right = !!(direction.X > 0);
-			DoFacing();
-
-			if (connectedClimbables < 1 && climbingUp){
-				readyToClimb = true;
-			}
-		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-
-			if (!jumping && !attacking && !gettingHurt && !climbing){
-				spr.Play("idle");
-				anim.Play("idle");
-			}
-		}
-
-		if (Input.IsActionJustPressed("input_action"+playerIndex) && !attacking && !gettingHurt){
-			DoAttack();
-		}
-
-
-		if (IsOnFloor()){
-			jumping = false;
-		}
-
-		if (!IsOnFloor() && anim.CurrentAnimation != "jump" && anim.CurrentAnimation != "idle" && anim.CurrentAnimation != "" && !gettingHurt){
-			//GD.Print('"'+anim.CurrentAnimation+'"'+" - "+attacking);
-			if (!attacking && jumping){
-				//GD.Print("Change");
-				spr.Play("jump");
-				anim.Play("jump");
-				anim.Seek(.5);
-			}
-		}
-
-		//GD.Print("UP: "+canClimbUp+ " ~~~ DOWN:" + canClimbDown + " ClimbingUp:"+climbingUp+" ReadyToClimb:" + readyToClimb + " OnFloor:"+IsOnFloor());
+	protected Vector2 HandleClimbing( Vector2 velocity ){
 		// Climbing 
 		if (Input.IsActionPressed("input_up"+playerIndex) && !gettingHurt && connectedClimbables > 0 && readyToClimb){
 			if (canClimbUp < 1){
@@ -198,7 +216,10 @@ public partial class Entity : CharacterBody2D
 		if ( Input.IsActionJustReleased("input_down"+playerIndex) || Input.IsActionJustReleased("input_up"+playerIndex) ){
 			readyToClimb = true;
 		}
+		return velocity;
+	}
 
+	protected Vector2 HandleJump( Vector2 velocity ){
 		// Handle Jump.
 		if (Input.IsActionJustPressed("input_jump"+playerIndex) && ( IsOnFloor() || climbing ) && !gettingHurt){
 			climbing = false;
@@ -210,19 +231,7 @@ public partial class Entity : CharacterBody2D
 				attacking = false;
 			}
 		}
-
-		if (gettingHit){
-			velocity = DoGettingHit( velocity );
-		}
-		
-		Velocity = velocity;
-		MoveAndSlide();
-
-		if ( currentHealth <= 0 ){
-			currentHealth = 0;
-			EmitSignal("HealthZero");
-		}
-
+		return velocity;
 	}
 
 	protected void DoFacing(){
