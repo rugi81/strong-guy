@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bp08fbsh5fj47"]
+[gd_scene load_steps=14 format=3 uid="uid://bp08fbsh5fj47"]
 
 [ext_resource type="PackedScene" uid="uid://b1aqxftan7xhs" path="res://Entities/Entity.tscn" id="1_itky5"]
 [ext_resource type="Script" path="res://Entities/Player/Player.cs" id="2_oyaxt"]
@@ -8,6 +8,47 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lrf46"]
 size = Vector2(49.5868, 20.1923)
+
+[sub_resource type="Curve" id="Curve_o7t52"]
+_data = [Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.95576, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_bqqno"]
+curve = SubResource("Curve_o7t52")
+
+[sub_resource type="Curve" id="Curve_pbql3"]
+max_value = 50.0
+_data = [Vector2(0, 48.6983), 0.0, 0.0, 0, 0, Vector2(0.727575, 6.60881), -69.1451, -69.1451, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jk6gl"]
+curve = SubResource("Curve_pbql3")
+
+[sub_resource type="Curve" id="Curve_mth6w"]
+min_value = 1.0
+max_value = 2.0
+_data = [Vector2(0, 1), 0.0, 2.3538, 0, 0, Vector2(1, 2), -0.0816292, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jft0g"]
+curve = SubResource("Curve_mth6w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t0e6d"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 10.0
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+angular_velocity_max = 10.0
+angular_velocity_curve = SubResource("CurveTexture_jk6gl")
+gravity = Vector3(0, 98, 0)
+scale_min = 15.0
+scale_max = 20.0
+scale_curve = SubResource("CurveTexture_jft0g")
+color = Color(0.942823, 0.942823, 0.942823, 0.760784)
+alpha_curve = SubResource("CurveTexture_bqqno")
 
 [node name="Player" instance=ExtResource("1_itky5")]
 script = ExtResource("2_oyaxt")
@@ -37,6 +78,7 @@ shape = SubResource("RectangleShape2D_lrf46")
 [node name="AnimatedSprite2D" parent="Wrapper" index="0"]
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("3_nsybq")
+animation = &"attack"
 
 [node name="AnimationPlayer" parent="Wrapper" index="1"]
 libraries = {
@@ -46,9 +88,17 @@ libraries = {
 [node name="attack" parent="Wrapper/Actions" index="0"]
 position = Vector2(40, 6)
 
+[node name="Floor dust" type="GPUParticles2D" parent="ParticleState" index="3"]
+visibility_layer = 16
+position = Vector2(0, 90)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_t0e6d")
+
 [connection signal="HealthChanged" from="." to="." method="_on_health_changed"]
 [connection signal="PlayerHealthZero" from="." to="." method="_on_player_health_zero"]
 [connection signal="body_shape_entered" from="Feet" to="." method="_on_feet_body_shape_entered"]
 [connection signal="body_shape_exited" from="Feet" to="." method="_on_feet_body_shape_exited"]
 [connection signal="body_shape_entered" from="Head" to="." method="_on_head_body_shape_entered"]
 [connection signal="body_shape_exited" from="Head" to="." method="_on_head_body_shape_exited"]
+[connection signal="frame_changed" from="Wrapper/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]

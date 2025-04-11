@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Net;
 using System.Net.Http;
 using System.Reflection.Metadata;
+using System.Runtime.Serialization;
 
 public partial class Entity : CharacterBody2D
 {
@@ -43,6 +44,7 @@ public partial class Entity : CharacterBody2D
 	public int gettingHit_direction = -1;
 	public int getHitCount = 1;
 	public int getHitMaxCount = 3;
+	protected Vector2 hitForce = Vector2.Zero;
 
 	public Boolean gettingHurt = false;
 	protected Boolean dying = false;
@@ -269,9 +271,14 @@ public partial class Entity : CharacterBody2D
 		EmitSignal("HealthChanged");
 		//GD.Print( "Player "+playerIndex+" -Health: "+currentHealth );
 	}
+	public virtual void getHit( Boolean inDir, int dmg, Entity e, Vector2 inHitForce, string effect ){
+		this.getHit(inDir, dmg, e);
+		hitForce += inHitForce;
+	}
+
 
 	protected Vector2 DoGettingHit( Vector2 velocity ){
-		var hitForce = new Vector2( GD.RandRange( 300, 900 ) * -gettingHit_direction, -GD.RandRange( 300, 900 ) );
+		//		var hitForce = new Vector2( GD.RandRange( 300, 900 ) * -gettingHit_direction, -GD.RandRange( 300, 900 ) );
 		velocity += hitForce;
 		gettingHit = false; // initial impact
 
@@ -288,6 +295,8 @@ public partial class Entity : CharacterBody2D
 			gettingHurt = true;
 		}
 		
+		hitForce = Vector2.Zero; // reset hitForce
+
 		return velocity;
 	}
 
@@ -311,7 +320,7 @@ public partial class Entity : CharacterBody2D
 		}
 	}
 
-	protected void _on_attack_body_entered(Node2D body)
+	protected virtual void _on_attack_body_entered(Node2D body)
 	{	
 		//GD.Print("contact "+attacking);
 		if ( body.GetType().Name == "baddie" && attacking ){
