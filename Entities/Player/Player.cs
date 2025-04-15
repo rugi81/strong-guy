@@ -37,12 +37,13 @@ public partial class Player : Entity
 
     protected bool    comboActive     = false;
     protected float   comboTimer      = 0;
-    protected float   comboMaxTime    = 2;
+    protected float   comboMaxTime    = .5f;
     protected int     comboCount      = 0;
     protected string  currentCombo    = "";
     protected string  lastAction        = "";
     protected bool    newAction       = false;
     protected bool    comboReady      = false;
+    protected int     actionCount     = 0;
 
     protected GpuParticles2D floorDust;
 
@@ -60,6 +61,11 @@ public partial class Player : Entity
 	{
         base._PhysicsProcess(delta);
         actions = playerInput.processPlayerInput(delta);
+        if ( actions.Length > actionCount ){
+            GD.Print( "action check ---" + actions.Length + " " + actionCount );
+           newAction = true;
+        }
+        actionCount = actions.Length;
 
         // movement abilities
         if ( !dashing ){
@@ -72,9 +78,9 @@ public partial class Player : Entity
         }else if ( dashing ){
             floorDust.Emitting = true;
             int dir = face_right?1:-1;
-            GD.Print( "::"+Velocity.X );
+            //GD.Print( "::"+Velocity.X );
             Velocity = new Vector2( 2000 * dir * ((dashTimer - actionTimer)/dashTimer), Velocity.Y );
-            GD.Print( "="+Velocity.X );
+            //GD.Print( "="+Velocity.X );
             actionTimer += (float) delta;
             if ( actionTimer > dashTimer ){
                 dashing = false;
@@ -100,26 +106,40 @@ public partial class Player : Entity
                 comboCount = 0;
                 comboTimer = 0;
                 comboActive = false;
+                actionCount = 0;
             }
         }
-
-        if ( newAction && comboCount == 0 ){
-
-            currentCombo = lastAction;
-            comboCount++;
-            comboTimer = 0;
-            comboActive = true;
+        
+        if ( newAction && ( comboReady || comboCount == 0 ) ){
+            int dir = face_right?1:-1;
             newAction = false;
 
-        }
-        
-        if ( newAction ){
-            if ( comboCount == 1 ){
+            //GD.Print("NEW ACTION: "+comboCount);
+            if ( comboCount == 0 ){
+                GD.Print("First action");
+
+                currentCombo = lastAction;
+                comboCount++;
+                comboTimer = 0;
+                comboActive = true;
+                comboReady = false;
+
+            }else if ( comboCount == 1 ){
+                GD.Print( currentCombo +" "+comboActive);
 
                 if ( currentCombo == "A" ){
+                    GD.Print( currentCombo +"??");
                     if ( lastAction == "A" ){
                         comboCount++;
+                        currentCombo = "AA";
                         comboTimer = 0;
+                        comboReady = false;
+                        SetAnim("attack_aa");
+                        anim.Seek(0.2);
+                        Velocity = new Vector2( 1000 * dir, -300 );//Velocity.Y );
+                        //spr.Modulate = new Color(1, 1, 0, 1);                         
+                        GD.Print("COMBO");
+
                         // override current action with combo action
                         // override DoAttack?
                         // what if player presses too quick? need to queue action? OR does this extra press get ignored?
@@ -128,17 +148,28 @@ public partial class Player : Entity
                 }
 
             }else if ( comboCount == 2 ){
-
-                if ( currentCombo == "A" ){
+                GD.Print( "current combo: (2) "+currentCombo );
+                if ( currentCombo == "AA" ){
                     if ( lastAction == "A" ){
-                        comboCount++;
+                        
+                        SetAnim("attack");
+                        anim.Seek(0.2);
+                        Velocity = new Vector2( 2000 * dir, Velocity.Y );                            
+                        //spr.Modulate = new Color(1, 0, 1, 1);                         
+                        GD.Print("COMBO END");
+                        floorDust.Emitting = true;
+
+                        currentCombo = "";
+                        comboCount = 0;
                         comboTimer = 0;
+                        comboActive = false;
+                        comboReady = false;
+                        actionCount = 0;                        
                     }
                 }
 
             }
         }
-
 
         // if comboIng
         //      comboTimer += delta
@@ -158,6 +189,10 @@ public partial class Player : Entity
         //      do combo thing( comboCount )
         // else
         //      nada. resetCombo
+
+        if (spr.Animation == "idle"){
+            floorDust.Emitting = false;
+        }
 
 
         if (Position.Y > 2000){
@@ -263,9 +298,9 @@ public partial class Player : Entity
     public void _on_animated_sprite_2d_frame_changed(){
         //GD.Print("BLAH");
         
-        if ( attacking && spr.Animation == "attack" ){
-            GD.Print( spr.Animation + " ~ "+ spr.Frame ); 
-            if ( spr.Frame >= 2 ){
+        if ( attacking && ( spr.Animation == "attack" || spr.Animation == "attack_aa" ) ){
+            //GD.Print( spr.Animation + " ~ "+ spr.Frame ); 
+            if ( spr.Frame > 2 ){
                 comboReady = true; 
                 GD.Print( "COMBO READY" );
             }

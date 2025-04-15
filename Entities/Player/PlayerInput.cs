@@ -80,7 +80,7 @@ public partial class PlayerInput : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GD.Print("TEST: "+GetActionKey("jump"));
+		//GD.Print("TEST: "+GetActionKey("jump"));
 		actionString.Text = "";
 	}
 
@@ -147,8 +147,8 @@ public partial class PlayerInput : Node
 					rightKey = checkDirection( "input_right"+pid ),
 					downKey = checkDirection( "input_down"+pid );
 
-			if (pid > 2)
-			GD.Print( leftKey + " - "+Input.GetActionStrength("input_left"+pid)+" && " + upKey + " - "+Input.GetActionStrength("input_up"+pid) );
+			if (pid > 2){}
+			//GD.Print( leftKey + " - "+Input.GetActionStrength("input_left"+pid)+" && " + upKey + " - "+Input.GetActionStrength("input_up"+pid) );
 
 			if ( actionKey || jumpKey ){
 				
@@ -290,6 +290,6 @@ public partial class PlayerInput : Node
     }
 
 	private void UpdateActionString(){
-        GD.Print( "actions: "+GetActionString() );
+        //GD.Print( "actions: "+GetActionString() );
 	}
 }

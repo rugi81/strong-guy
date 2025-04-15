@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 public partial class debug_hud : Control
 {
 	[Export]
-	private bool debugOff = true;
+	private bool debugOff = false;
 	
 	private List<string> actions = new List<string>();
 	private Player p;

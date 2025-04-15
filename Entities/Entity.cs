@@ -301,7 +301,7 @@ public partial class Entity : CharacterBody2D
 	}
 
 	protected void _on_animation_player_animation_finished(String animStr){
-		if (animStr == "attack"){
+		if (animStr == "attack" || animStr == "attack_aa"){
 			//GD.Print("Stop Attack");
 			anim.Stop(true);
 			spr.Stop();
