@@ -144,6 +144,7 @@ occluder_light_mask = 128
 
 [node name="MonsterGenerator" parent="." instance=ExtResource("2_umpxy")]
 Baddies = ExtResource("3_xm36p")
+MaxEntities = 0
 EntityHealth = 30
 EntityDamage = 15
 

@@ -44,6 +44,8 @@ public partial class Player : Entity
     protected bool    newAction       = false;
     protected bool    comboReady      = false;
     protected int     actionCount     = 0;
+    protected float   comboDecayTime  = .5f; // once a combo is complete, how long until next?
+    protected bool    comboDecay      = false;
 
     protected GpuParticles2D floorDust;
 
@@ -61,30 +63,37 @@ public partial class Player : Entity
 	{
         base._PhysicsProcess(delta);
         actions = playerInput.processPlayerInput(delta);
-        if ( actions.Length > actionCount ){
-            GD.Print( "action check ---" + actions.Length + " " + actionCount );
-           newAction = true;
-        }
+        newAction = ( actions.Length > actionCount );
+
+//        if ( actions.Length > actionCount ){
+            //GD.Print( "action check ---" + actions.Length + " " + actionCount );
+//        }
+
         actionCount = actions.Length;
 
+        if ( newAction ){
+            GD.Print( actions.Length + " " + actionCount );
+            GD.Print( actions );
+        }
         // movement abilities
         if ( !dashing ){
-            if ( actions.EndsWith( "dd" ) || actions.EndsWith("aa") ){ // dash
+            if ( actions.EndsWith( "d|d" ) || actions.EndsWith("a|a") ){ // dash
                 dashing = true;
-                actionTimer = 0;
                 playerInput.ClearActions();
                 floorDust.Emitting = true;
+                
+                actionTimer = 0;
+                actionCount = 0;
             }
         }else if ( dashing ){
             floorDust.Emitting = true;
             int dir = face_right?1:-1;
-            //GD.Print( "::"+Velocity.X );
-            Velocity = new Vector2( 2000 * dir * ((dashTimer - actionTimer)/dashTimer), Velocity.Y );
-            //GD.Print( "="+Velocity.X );
+            Velocity = new Vector2( 2000 * dir * ((dashTimer - actionTimer)/dashTimer), Velocity.Y );            
             actionTimer += (float) delta;
             if ( actionTimer > dashTimer ){
                 dashing = false;
                 floorDust.Emitting = false;
+                finishCombo();
             }
         }
 
@@ -96,48 +105,48 @@ public partial class Player : Entity
         // 
 
         if ( actions.Length > 0 ){
-            lastAction  = ""+actions[ actions.Length-1 ];
+            //lastAction = "|"+actions[ actions.Length-1 ];
+            lastAction = playerInput.GetLastAction();
         }
     
         if ( comboActive ){
             comboTimer += (float) delta;
             if ( comboTimer > comboMaxTime ){
-                currentCombo = "";
-                comboCount = 0;
+                finishCombo();
+            }
+        }
+        if ( comboDecay ){
+            comboTimer += (float) delta;
+            if ( comboTimer > comboDecayTime ){
+                comboDecay = false;
                 comboTimer = 0;
-                comboActive = false;
-                actionCount = 0;
             }
         }
         
-        if ( newAction && ( comboReady || comboCount == 0 ) ){
+        if ( !comboDecay && newAction && ( comboReady || comboCount == 0 ) ){
             int dir = face_right?1:-1;
             newAction = false;
 
             //GD.Print("NEW ACTION: "+comboCount);
             if ( comboCount == 0 ){
-                GD.Print("First action");
+                GD.Print("First action: " + lastAction);
 
-                currentCombo = lastAction;
-                comboCount++;
-                comboTimer = 0;
+                doComboStep();
                 comboActive = true;
                 comboReady = false;
 
             }else if ( comboCount == 1 ){
-                GD.Print( currentCombo +" "+comboActive);
+                GD.Print( "Current Combo: "+currentCombo +" "+comboActive);
 
                 if ( currentCombo == "A" ){
-                    GD.Print( currentCombo +"??");
+                    //GD.Print( currentCombo +"??");
                     if ( lastAction == "A" ){
-                        comboCount++;
-                        currentCombo = "AA";
-                        comboTimer = 0;
-                        comboReady = false;
+
+                        doComboStep();
                         SetAnim("attack_aa");
                         anim.Seek(0.2);
                         Velocity = new Vector2( 1000 * dir, -300 );//Velocity.Y );
-                        //spr.Modulate = new Color(1, 1, 0, 1);                         
+                    
                         GD.Print("COMBO");
 
                         // override current action with combo action
@@ -148,27 +157,38 @@ public partial class Player : Entity
                 }
 
             }else if ( comboCount == 2 ){
-                GD.Print( "current combo: (2) "+currentCombo );
+                //GD.Print( "current combo: (2) "+currentCombo );
                 if ( currentCombo == "AA" ){
                     if ( lastAction == "A" ){
                         
                         SetAnim("attack");
                         anim.Seek(0.2);
                         Velocity = new Vector2( 2000 * dir, Velocity.Y );                            
-                        //spr.Modulate = new Color(1, 0, 1, 1);                         
-                        GD.Print("COMBO END");
+                        //spr.Modulate = new Color(1, 0, 1, 1);             
                         floorDust.Emitting = true;
+                        finishCombo( true );
 
-                        currentCombo = "";
-                        comboCount = 0;
-                        comboTimer = 0;
-                        comboActive = false;
-                        comboReady = false;
-                        actionCount = 0;                        
                     }
-                }
 
+                }
             }
+        }
+
+        void doComboStep(){
+            currentCombo += lastAction;
+            comboCount++;
+            comboTimer = 0;
+            comboReady = false;
+        }
+
+        void finishCombo( bool decay = false ){
+            currentCombo = "";
+            comboCount = 0;
+            comboTimer = 0;
+            comboActive = false; // combo complete
+            comboReady = false;
+            actionCount = 0; 
+            comboDecay = decay;                       
         }
 
         // if comboIng

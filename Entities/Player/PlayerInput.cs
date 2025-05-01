@@ -212,6 +212,11 @@ public partial class PlayerInput : Node
         return "";
 	}
 
+	public string GetLastAction(){
+
+		return GetActionKey(actions[actions.Count-1]);
+	}
+
 	private bool checkDirection( string action ){
 		float actionStrengthThreshold = 0.1f;
 		return Input.IsActionPressed(action) && Input.GetActionStrength(action) > actionStrengthThreshold;
@@ -284,7 +289,7 @@ public partial class PlayerInput : Node
     private string GetActionString(){
 		string a = "";
 		for( int i=0; i<actions.Count; i++ ){
-			a += GetActionKey( actions[i] );
+			a += "|"+GetActionKey( actions[i] );
 		}
         return a;
     }

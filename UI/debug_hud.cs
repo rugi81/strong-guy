@@ -208,7 +208,7 @@ public partial class debug_hud : Control
 		if (actions.Count > 0){
 			//if (currentAction != actions[actions.Count-1] || !actionHeld){
 			
-			GD.Print( currentAction + " " + inAction + " " + lastActionRegistered + " -- " + (lastActionRegistered != currentAction || lastActionRegistered+"-held" != currentAction ) +" " + ( inAction == currentAction ) );
+			//GD.Print( currentAction + " " + inAction + " " + lastActionRegistered + " -- " + (lastActionRegistered != currentAction || lastActionRegistered+"-held" != currentAction ) +" " + ( inAction == currentAction ) );
 			if ( (lastActionRegistered != currentAction ) && inAction == currentAction){
 				AddAction(inAction);
 				actionTimer = 0;
