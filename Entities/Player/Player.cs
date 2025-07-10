@@ -24,7 +24,8 @@ public partial class Player : Entity
     protected int attackDamage = 10;
     protected string currentAttack = "normal";
 
-    protected int playerType = 1;
+    [Export]
+    protected int playerType = -1;
 
     protected PlayerInput playerInput = new PlayerInput();
 
@@ -55,6 +56,7 @@ public partial class Player : Entity
         autoMoveAndSlide = false;
         base._Ready();
         playerInput.SetPlayer(this);
+        changePlayer();
 
         floorDust = GetNode<GpuParticles2D>("ParticleState/Floor dust");
     }
@@ -161,7 +163,7 @@ public partial class Player : Entity
                 if ( currentCombo == "AA" ){
                     if ( lastAction == "A" ){
                         
-                        SetAnim("attack");
+                        SetAnim("attack_aaa");
                         anim.Seek(0.2);
                         Velocity = new Vector2( 2000 * dir, Velocity.Y );                            
                         //spr.Modulate = new Color(1, 0, 1, 1);             
@@ -320,7 +322,7 @@ public partial class Player : Entity
         
         if ( attacking && ( spr.Animation == "attack" || spr.Animation == "attack_aa" ) ){
             //GD.Print( spr.Animation + " ~ "+ spr.Frame ); 
-            if ( spr.Frame > 2 ){
+            if ( spr.Frame > 1.5 ){
                 comboReady = true; 
                 GD.Print( "COMBO READY" );
             }

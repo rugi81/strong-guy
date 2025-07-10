@@ -22,6 +22,7 @@ collision_layer = 4
 material = ExtResource("3_dogw7")
 sprite_frames = ExtResource("3_i54li")
 animation = &"walk"
+frame = 1
 
 [node name="AnimationPlayer" parent="Wrapper" index="1"]
 speed_scale = 0.518

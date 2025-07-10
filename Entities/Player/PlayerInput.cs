@@ -119,7 +119,9 @@ public partial class PlayerInput : Node
 			}
 
 			if ( Input.IsActionJustReleased("input_jump"+pid) || 
-				 Input.IsActionJustReleased("input_action"+pid) ){
+				 Input.IsActionJustReleased("input_action"+pid) ||
+				 Input.IsActionJustReleased("input_block"+pid) || 
+				 Input.IsActionJustReleased("input_special"+pid) ){
 				actionHeld = false;
 				actionTimer = 0;
 				currentAction = "";
@@ -142,7 +144,9 @@ public partial class PlayerInput : Node
 
 			bool 	actionKey = Input.IsActionPressed("input_action"+pid),
 					jumpKey = Input.IsActionPressed("input_jump"+pid),
-					leftKey = checkDirection( "input_left"+pid ),
+					blockKey = Input.IsActionPressed("input_block"+pid),
+					specialKey = Input.IsActionPressed("input_special"+pid),
+					leftKey = checkDirection("input_left" + pid),
 					upKey	= checkDirection( "input_up"+pid ),
 					rightKey = checkDirection( "input_right"+pid ),
 					downKey = checkDirection( "input_down"+pid );
@@ -150,12 +154,16 @@ public partial class PlayerInput : Node
 			if (pid > 2){}
 			//GD.Print( leftKey + " - "+Input.GetActionStrength("input_left"+pid)+" && " + upKey + " - "+Input.GetActionStrength("input_up"+pid) );
 
-			if ( actionKey || jumpKey ){
+			if ( actionKey || jumpKey || blockKey || specialKey ){
 				
 				if ( actionKey )
 					currentAbility = "action";
 				if ( jumpKey )
 					currentAbility = "jump";
+				if ( blockKey )
+					currentAbility = "block";
+				if ( specialKey )
+					currentAbility = "special";
 
 				abilityHeld = true;
 				processAction(currentAbility);
@@ -213,8 +221,10 @@ public partial class PlayerInput : Node
 	}
 
 	public string GetLastAction(){
-
-		return GetActionKey(actions[actions.Count-1]);
+		if (actions.Count == 0)
+			return "";
+		else
+			return GetActionKey(actions[actions.Count - 1]);
 	}
 
 	private bool checkDirection( string action ){

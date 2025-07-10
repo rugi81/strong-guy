@@ -67,9 +67,8 @@ shape = SubResource("RectangleShape2D_t1weh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Wrapper"]
 sprite_frames = ExtResource("2_ia6m0")
-animation = &"climb"
+animation = &"use"
 autoplay = "idle"
-frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Wrapper"]
 libraries = {
