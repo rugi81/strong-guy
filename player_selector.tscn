@@ -1,0 +1,101 @@
+[gd_scene load_steps=6 format=3 uid="uid://ceyu8r7cs63ug"]
+
+[ext_resource type="FontFile" uid="uid://bm4o358y73n1r" path="res://asset/ThaleahFat_TTF.ttf" id="1_omvim"]
+[ext_resource type="Texture2D" uid="uid://c5fkpsmsn8bnf" path="res://icon.svg" id="2_3x73q"]
+[ext_resource type="Script" path="res://player_selector.cs" id="2_vvh6n"]
+
+[sub_resource type="Theme" id="Theme_pp3od"]
+default_font = ExtResource("1_omvim")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0npkh"]
+content_margin_left = 20.0
+content_margin_top = 50.0
+content_margin_right = 100.0
+content_margin_bottom = 100.0
+bg_color = Color(0, 0, 0, 0.509804)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Player Selector" type="Panel"]
+clip_contents = true
+custom_minimum_size = Vector2(250, 500)
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = SubResource("Theme_pp3od")
+theme_override_styles/panel = SubResource("StyleBoxFlat_0npkh")
+script = ExtResource("2_vvh6n")
+
+[node name="Disabled" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Disabled Text" type="MarginContainer" parent="Disabled"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Disabled/Disabled Text"]
+clip_contents = false
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "Press Start"
+fit_content = true
+
+[node name="Active" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Active Text" type="MarginContainer" parent="Active"]
+layout_mode = 2
+
+[node name="Container2" type="CenterContainer" parent="Active/Active Text"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="PlayerLabel" type="RichTextLabel" parent="Active/Active Text/Container2"]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 40
+text = "Player 1"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Container" type="CenterContainer" parent="Active/Active Text"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="CharacterName" type="RichTextLabel" parent="Active/Active Text/Container"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 40
+text = "Mr. Default"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Active Portrait" type="MarginContainer" parent="Active"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 50
+
+[node name="Image" type="TextureRect" parent="Active/Active Portrait"]
+layout_mode = 2
+texture = ExtResource("2_3x73q")
+stretch_mode = 6
