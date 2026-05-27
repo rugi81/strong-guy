@@ -6,6 +6,7 @@ public partial class character_selection : Control
 {
 	private  Godot.Collections.Array<Node> player_Selectors;
 	private List<int> availableControllers = new List<int>();
+	private List<int> availableCharacters = new List<int>();
 
 	private bool testChanged = false;
 	private string testString = "";
@@ -38,9 +39,9 @@ public partial class character_selection : Control
 
 		foreach ( player_selector ps in player_Selectors)
 		{
-			ps.listenForInput( availableControllers );
+			ps.listenForInput( delta, availableControllers );
 		}
-		
+
 		if ( test_output != testString)
 		{
 			testString = test_output;

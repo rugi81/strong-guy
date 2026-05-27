@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c8yb4wusteax1"]
+[gd_scene load_steps=21 format=3 uid="uid://c8yb4wusteax1"]
 
 [ext_resource type="Script" path="res://main.cs" id="1_hh8ph"]
 [ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://c4vet868rhbho" path="res://asset/2d_lights_and_shadows_neutral_point_light.webp" id="8_s6egx"]
 [ext_resource type="Texture2D" uid="uid://bi3etyhx5hqw0" path="res://asset/cloud.png" id="9_5fx00"]
 [ext_resource type="TileSet" uid="uid://wbh4f1e333k3" path="res://train2.tres" id="9_hrehy"]
+[ext_resource type="PackedScene" uid="uid://cmhuxmndya7ww" path="res://Entities/Player/Characters/Simon.tscn" id="10_1viyb"]
+[ext_resource type="PackedScene" uid="uid://2kanbdnegsma" path="res://Entities/Player/tombstone.tscn" id="11_s4ryw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jomqp"]
 radius = 5.0
@@ -176,13 +178,9 @@ occluder = SubResource("OccluderPolygon2D_yiogr")
 
 [node name="Players" type="Node" parent="."]
 
-[node name="Player" parent="Players" instance=ExtResource("4_kybmu")]
-position = Vector2(257, -53)
-scale = Vector2(0.7, 0.7)
-playerType = 2
-
-[node name="AnimatedSprite2D" parent="Players/Player/Wrapper" index="0"]
-animation = &"hit"
+[node name="Player" parent="Players" instance=ExtResource("10_1viyb")]
+position = Vector2(135, -72)
+scale = Vector2(0.8, 0.8)
 
 [node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(-11, 602)
@@ -229,6 +227,8 @@ playerColors = PackedColorArray(1, 0.541241, 0.476759, 1, 0.280038, 0.495665, 1,
 playerCount = 0
 
 [node name="Player Manager" parent="." node_paths=PackedStringArray("playerFolder") instance=ExtResource("8_ltddd")]
+boltTest = ExtResource("10_1viyb")
+playerScn = Array[PackedScene]([ExtResource("4_kybmu"), ExtResource("11_s4ryw")])
 playerFolder = NodePath("../Players")
 
 [node name="Player1Cam" type="Camera2D" parent="."]
@@ -279,6 +279,5 @@ layer_0/tile_data = PackedInt32Array(393237, 458752, 6, 524309, 458752, 6, 45877
 [connection signal="PlayerAddRequest" from="Player Manager" to="Player UI Manager" method="_on_player_manager_player_add_request"]
 [connection signal="PlayerAdded" from="Player Manager" to="Player UI Manager" method="_on_player_manager_player_added"]
 
-[editable path="Players/Player"]
 [editable path="Player UI Manager"]
 [editable path="Player UI Manager/Players/PlayerHUD"]

@@ -10,6 +10,8 @@ public partial class player_selector : Panel
 	private int character_selection = 0;
 	private int max_character = 4;
 
+	private bool selectionChanged = false;
+
 	[Export]
 	private string title = "Player";
 	[Export]
@@ -44,7 +46,7 @@ public partial class player_selector : Panel
 
 	}
 
-	public void listenForInput( List<int> unassignedControllers )
+	public void listenForInput( double delta, List<int> unassignedControllers )
 	{
 
 		if ( isListening ){
@@ -54,7 +56,7 @@ public partial class player_selector : Panel
 
 				foreach ( var i in unassignedControllers ){
 					// is this controller available??
-					if ( Input.IsActionJustReleased("input_jump"+i) )
+					if ( Input.IsActionPressed("input_jump"+i) )
 					{
 						GD.Print("Input - "+i);
 						updateControllerList = true;
@@ -69,22 +71,31 @@ public partial class player_selector : Panel
 			}
 			else
 			{
-				if ( Input.IsActionJustReleased("input_action"+ControllerID))
-				{
-					unassignedControllers.Add( ControllerID );
-					deActivatePlayer();	
-				}
-				
-				if ( Input.IsActionJustReleased("input_left"+ControllerID))
-				{
-					// prev character
-					prevCharacter();
-				}
-				if ( Input.IsActionJustReleased("input_right"+ControllerID))
-				{
-					// next character
-					nextCharacter();
-				}
+
+					if ( Input.IsActionPressed("input_action"+ControllerID))
+					{
+						unassignedControllers.Add( ControllerID );
+						deActivatePlayer();	
+					}
+					
+					// need to sort controller issue - THUMB STICK WILL TRIGGER LEFT THEN RIGHT
+					if ( Input.IsActionPressed("input_left"+ControllerID) && !selectionChanged )
+					{
+						GD.Print("left");
+						// prev character
+						prevCharacter();
+					}
+					if ( Input.IsActionPressed("input_right"+ControllerID) && !selectionChanged)
+					{
+						GD.Print("right");
+						// next character
+						nextCharacter();
+					}
+					if (Input.IsActionJustReleased("input_right" + ControllerID) || Input.IsActionJustReleased("input_left" + ControllerID))
+					{
+						selectionChanged = false;
+					} 
+
 
 			}
 
@@ -118,11 +129,12 @@ public partial class player_selector : Panel
 	// fn: next Char
 	private void nextCharacter()
 	{
-		character_selection = character_selection-1;
+		character_selection = character_selection+1;
 		if ( character_selection > max_character)
 		{
 			character_selection = 0;
 		}
+		selectionChanged = true;
 		GD.Print("character: "+character_selection);
 	}
 
@@ -134,6 +146,7 @@ public partial class player_selector : Panel
 		{
 			character_selection = max_character;
 		}
+		selectionChanged = true;
 		GD.Print("character: "+character_selection);
 	}
 

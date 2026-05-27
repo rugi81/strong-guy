@@ -1,0 +1,93 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmhuxmndya7ww"]
+
+[ext_resource type="PackedScene" uid="uid://bp08fbsh5fj47" path="res://Entities/Player/Player.tscn" id="1_rq32l"]
+[ext_resource type="Script" path="res://Entities/Player/Characters/Simon.cs" id="2_tlg8t"]
+[ext_resource type="Texture2D" uid="uid://croxn0ycri3kv" path="res://asset/nerd-transp.png" id="3_88iar"]
+[ext_resource type="AnimationLibrary" uid="uid://dnn2tn70u2lwf" path="res://Entities/Player/Characters/nerd.res" id="3_ww1kd"]
+[ext_resource type="SpriteFrames" uid="uid://c6phayybmcgoc" path="res://Entities/Player/Characters/Nerd.tres" id="4_525th"]
+
+[node name="Player" instance=ExtResource("1_rq32l")]
+script = ExtResource("2_tlg8t")
+tombStone = null
+
+[node name="AnimatedSprite2D" parent="Wrapper" index="0"]
+visible = false
+animation = &"idle"
+autoplay = ""
+frame = 0
+
+[node name="AnimationPlayer" parent="Wrapper" index="1"]
+libraries = {
+"": ExtResource("3_ww1kd")
+}
+
+[node name="Avatar" type="Node2D" parent="Wrapper" index="3"]
+position = Vector2(0, 7)
+
+[node name="Back Leg" type="AnimatedSprite2D" parent="Wrapper/Avatar" index="0"]
+position = Vector2(11.9427, 40.019)
+scale = Vector2(0.276882, 0.276882)
+sprite_frames = ExtResource("4_525th")
+animation = &"walk"
+autoplay = "idle"
+offset = Vector2(0, 65)
+
+[node name="Front Leg" type="AnimatedSprite2D" parent="Wrapper/Avatar" index="1"]
+position = Vector2(-7.75525, 41.3587)
+scale = Vector2(0.276882, 0.276882)
+sprite_frames = ExtResource("4_525th")
+animation = &"walk"
+autoplay = "idle"
+offset = Vector2(0, 65)
+
+[node name="Waist" type="Sprite2D" parent="Wrapper/Avatar" index="2"]
+position = Vector2(-9.53674e-07, 33)
+rotation = 0.0872665
+scale = Vector2(0.276882, 0.276882)
+texture = ExtResource("3_88iar")
+region_enabled = true
+region_rect = Rect2(447.179, 207.282, 132.513, 93.5385)
+
+[node name="Upper Body" type="Sprite2D" parent="Wrapper/Avatar/Waist" index="0"]
+position = Vector2(3.44434e-06, -28.8932)
+rotation = 0.0872665
+scale = Vector2(1.13685, 1.13685)
+texture = ExtResource("3_88iar")
+offset = Vector2(0, -155)
+region_enabled = true
+region_rect = Rect2(1111.48, 114.442, 220.255, 337.978)
+
+[node name="Gun" type="Node2D" parent="Wrapper/Avatar/Waist/Upper Body" index="0"]
+position = Vector2(-54.0072, -88.9531)
+scale = Vector2(3.1769, 3.1769)
+
+[node name="Weapon" type="Sprite2D" parent="Wrapper/Avatar/Waist/Upper Body/Gun" index="0"]
+position = Vector2(34.5784, 11.7962)
+scale = Vector2(0.276119, 0.276119)
+texture = ExtResource("3_88iar")
+region_enabled = true
+region_rect = Rect2(172.417, 793.019, 230.303, 183.598)
+
+[node name="Arm" type="Sprite2D" parent="Wrapper/Avatar/Waist/Upper Body/Gun" index="1"]
+position = Vector2(3.57836, 8.79621)
+rotation = 0.30474
+scale = Vector2(0.372498, 0.372498)
+texture = ExtResource("3_88iar")
+region_enabled = true
+region_rect = Rect2(2133.76, 282.529, 90.0308, 100.749)
+
+[node name="Front Leg" type="RemoteTransform2D" parent="Wrapper/Avatar/Waist" index="1"]
+position = Vector2(-25.2715, 32.5149)
+remote_path = NodePath("../../Front Leg")
+
+[node name="foot" type="Marker2D" parent="Wrapper/Avatar/Waist/Front Leg" index="0"]
+position = Vector2(-1.72217e-06, 133.631)
+
+[node name="Back Leg" type="RemoteTransform2D" parent="Wrapper/Avatar/Waist" index="2"]
+position = Vector2(45.178, 21.4943)
+rotation = -0.0872665
+scale = Vector2(1, 1)
+remote_path = NodePath("../../Back Leg")
+
+[node name="foot" type="Marker2D" parent="Wrapper/Avatar/Waist/Back Leg" index="0"]
+position = Vector2(-3.61165, 137.243)

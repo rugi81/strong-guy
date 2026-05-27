@@ -209,6 +209,40 @@ input_up3={
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":1,"axis_value":-1.0,"script":null)
 ]
 }
+input_block1={
+"deadzone": 0.5,
+"events": []
+}
+input_block2={
+"deadzone": 0.5,
+"events": []
+}
+input_block3={
+"deadzone": 0.5,
+"events": []
+}
+input_special1={
+"deadzone": 0.5,
+"events": []
+}
+input_special2={
+"deadzone": 0.5,
+"events": []
+}
+input_special3={
+"deadzone": 0.5,
+"events": []
+}
+input_aimright0={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":1.0,"script":null)
+]
+}
+input_aimdown0={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":1.0,"script":null)
+]
+}
 
 [layer_names]
 

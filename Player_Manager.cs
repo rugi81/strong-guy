@@ -1,11 +1,16 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Player_Manager : Node
 {
 	[Export] 
 	private PackedScene player;
+	[Export] 
+	private PackedScene boltTest;
+	[Export]
+	private PackedScene[] playerScn;
 
 	[Export]
 	private Node playerFolder;
@@ -60,8 +65,20 @@ public partial class Player_Manager : Node
 
 	public void AddPlayer(int inIndex, int Type ){
 		GD.Print("NEW PLAYER TYPE: "+Type);
-		Player p = player.Instantiate<Player>();
-		players.Add(p);
+		Player p;
+		if ( Type == 1 ){
+			Simon b = boltTest.Instantiate<Simon>();
+			players.Add( b );
+			b.HelloBolts = "I've changed Bolts!";
+			p = (Player)b;
+		}else{
+			p = player.Instantiate<Player>();
+			players.Add( p );
+		}
+		GD.Print( "@@@@!!!! "+p.GetType().Name );
+		GD.Print( players.Last().GetType().Name );
+		//GD.Print( ((Simon)players.Last()).HelloBolts );
+		//players.Add(p);
 		p.setPlayerIndex( inIndex );
 		p.Position = new Vector2(GD.RandRange(10,200), -200);
 		playerExists[ inIndex ] = true;
