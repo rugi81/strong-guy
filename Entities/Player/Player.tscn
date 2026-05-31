@@ -55,6 +55,7 @@ script = ExtResource("2_oyaxt")
 tombStone = ExtResource("3_2x672")
 attackDamage = 10
 playerType = -1
+canDash = true
 
 [node name="Body" parent="." index="1"]
 collision_mask = 23

@@ -8,6 +8,8 @@
 
 [node name="Player" instance=ExtResource("1_rq32l")]
 script = ExtResource("2_tlg8t")
+Projectile = null
+fire_rate = 0.25
 tombStone = null
 
 [node name="AnimatedSprite2D" parent="Wrapper" index="0"]
@@ -25,7 +27,7 @@ libraries = {
 position = Vector2(0, 7)
 
 [node name="Back Leg" type="AnimatedSprite2D" parent="Wrapper/Avatar" index="0"]
-position = Vector2(11.9427, 40.019)
+position = Vector2(12.6662, 38.609)
 scale = Vector2(0.276882, 0.276882)
 sprite_frames = ExtResource("4_525th")
 animation = &"walk"
@@ -33,7 +35,7 @@ autoplay = "idle"
 offset = Vector2(0, 65)
 
 [node name="Front Leg" type="AnimatedSprite2D" parent="Wrapper/Avatar" index="1"]
-position = Vector2(-7.75525, 41.3587)
+position = Vector2(-6.74985, 42.1897)
 scale = Vector2(0.276882, 0.276882)
 sprite_frames = ExtResource("4_525th")
 animation = &"walk"
@@ -91,3 +93,6 @@ remote_path = NodePath("../../Back Leg")
 
 [node name="foot" type="Marker2D" parent="Wrapper/Avatar/Waist/Back Leg" index="0"]
 position = Vector2(-3.61165, 137.243)
+
+[node name="Projectiles" type="Node2D" parent="." index="5"]
+position = Vector2(21, 9)

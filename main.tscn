@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c8yb4wusteax1"]
+[gd_scene load_steps=22 format=3 uid="uid://c8yb4wusteax1"]
 
 [ext_resource type="Script" path="res://main.cs" id="1_hh8ph"]
 [ext_resource type="PackedScene" uid="uid://djsqx75duleug" path="res://platform.tscn" id="1_rxpng"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bp08fbsh5fj47" path="res://Entities/Player/Player.tscn" id="4_kybmu"]
 [ext_resource type="PackedScene" uid="uid://p1i3s7mirtbs" path="res://UI/player_ui_manager.tscn" id="5_40xp3"]
 [ext_resource type="Texture2D" uid="uid://budwgshi2ynf4" path="res://asset/Epic_BlueSunset_Cam_0_Front+Z.png" id="5_jsh27"]
+[ext_resource type="PackedScene" uid="uid://cudca6ft3iuye" path="res://Entities/Environment/bullet.tscn" id="8_65inw"]
 [ext_resource type="PackedScene" uid="uid://b1p6w7mf2lw86" path="res://player_manager.tscn" id="8_ltddd"]
 [ext_resource type="Texture2D" uid="uid://c4vet868rhbho" path="res://asset/2d_lights_and_shadows_neutral_point_light.webp" id="8_s6egx"]
 [ext_resource type="Texture2D" uid="uid://bi3etyhx5hqw0" path="res://asset/cloud.png" id="9_5fx00"]
@@ -180,7 +181,8 @@ occluder = SubResource("OccluderPolygon2D_yiogr")
 
 [node name="Player" parent="Players" instance=ExtResource("10_1viyb")]
 position = Vector2(135, -72)
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.7, 0.7)
+Projectile = ExtResource("8_65inw")
 
 [node name="Platform3" parent="." instance=ExtResource("1_rxpng")]
 position = Vector2(-11, 602)

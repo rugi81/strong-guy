@@ -27,6 +27,10 @@ public partial class Player : Entity
     [Export]
     protected int playerType = -1;
 
+    
+    [Export]
+    protected bool canDash = true;
+
     protected PlayerInput playerInput = new PlayerInput();
 
     protected string actions;
@@ -78,26 +82,29 @@ public partial class Player : Entity
             GD.Print( actions );
         }
         // movement abilities
-        if ( !dashing ){
-            if ( actions.EndsWith( "d|d" ) || actions.EndsWith("a|a") ){ // dash
-                dashing = true;
-                playerInput.ClearActions();
+        if ( canDash ){
+            if ( !dashing ){
+                if ( actions.EndsWith( "d|d" ) || actions.EndsWith("a|a") ){ // dash
+                    dashing = true;
+                    playerInput.ClearActions();
+                    floorDust.Emitting = true;
+                    
+                    actionTimer = 0;
+                    actionCount = 0;
+                }
+            }else if ( dashing ){
                 floorDust.Emitting = true;
-                
-                actionTimer = 0;
-                actionCount = 0;
-            }
-        }else if ( dashing ){
-            floorDust.Emitting = true;
-            int dir = face_right?1:-1;
-            Velocity = new Vector2( 2000 * dir * ((dashTimer - actionTimer)/dashTimer), Velocity.Y );            
-            actionTimer += (float) delta;
-            if ( actionTimer > dashTimer ){
-                dashing = false;
-                floorDust.Emitting = false;
-                finishCombo();
+                int dir = face_right?1:-1;
+                Velocity = new Vector2( 2000 * dir * ((dashTimer - actionTimer)/dashTimer), Velocity.Y );            
+                actionTimer += (float) delta;
+                if ( actionTimer > dashTimer ){
+                    dashing = false;
+                    floorDust.Emitting = false;
+                    finishCombo();
+                }
             }
         }
+
 
         // build-up action abilities
         // ongoing ability that only clears the action list at the end (if it clears)
