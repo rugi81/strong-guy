@@ -20,7 +20,7 @@ public partial class bullet : RigidBody2D
 	[Export]
 	private bool explode_on_contact = true; // explode on contact, or explode when life timer expires?
 	[Export]
-	private float explosion_size = 1.1f;
+	private float explosion_size = 1.02f;
 	[Export]
 	private float explosion_time = 1;
 	private float explosion_timer = 0;
@@ -85,7 +85,15 @@ public partial class bullet : RigidBody2D
 	{
 		exploding = true;
 		LinearVelocity = Godot.Vector2.Zero;
-		GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation = "explode";
+		AnimatedSprite2D asp = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		asp.Animation = "explode";
+		asp.SpeedScale = 1/explosion_time;
+		CallDeferred("freezeBullet");
+	}
+
+	private void freezeBullet()
+	{
+		Freeze = true;
 	}
 
 	// ** listeners / emitters
