@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cu0nci0we1xy1"]
+[gd_scene load_steps=9 format=3 uid="uid://cu0nci0we1xy1"]
 
 [ext_resource type="Script" path="res://UI/player_join_hud.cs" id="1_8x5jy"]
 [ext_resource type="Texture2D" uid="uid://bs6jcexnkuo54" path="res://asset/strong-guy-thumb..png" id="2_s65f7"]
 [ext_resource type="Texture2D" uid="uid://b6crttk5y6ggc" path="res://asset/norm-thumb.png" id="3_7s2mv"]
 [ext_resource type="Texture2D" uid="uid://xvmup3ianj03" path="res://asset/robut-thumb.png" id="4_ol2w7"]
 [ext_resource type="Texture2D" uid="uid://b6v6x1xhfa5gc" path="res://asset/White2x.png" id="5_20537"]
+[ext_resource type="Texture2D" uid="uid://c3ac32uepwna1" path="res://asset/simon-thumb.png" id="5_oyl33"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s8ory"]
 atlas = ExtResource("5_20537")
@@ -52,6 +53,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Cha1" type="Control" parent="SelectCharacter"]
+visible = false
 anchors_preset = 0
 offset_top = 18.0
 offset_right = 40.0
@@ -116,6 +118,29 @@ offset_right = 105.0
 offset_bottom = 91.0
 bbcode_enabled = true
 text = "[center]The Robut[/center]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Cha4" type="Control" parent="SelectCharacter"]
+visible = false
+anchors_preset = 0
+offset_top = 18.0
+offset_right = 40.0
+offset_bottom = 58.0
+
+[node name="Norm-thumb" type="Sprite2D" parent="SelectCharacter/Cha4"]
+position = Vector2(52, 26)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_oyl33")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SelectCharacter/Cha4"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 51.0
+offset_right = 105.0
+offset_bottom = 91.0
+bbcode_enabled = true
+text = "[center]The Scientist[/center]"
 fit_content = true
 autowrap_mode = 0
 

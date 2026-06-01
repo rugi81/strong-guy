@@ -20,7 +20,7 @@ public partial class bullet : RigidBody2D
 	[Export]
 	private bool explode_on_contact = true; // explode on contact, or explode when life timer expires?
 	[Export]
-	private float explosion_size = 1.02f;
+	private float explosion_size = 1.03f;
 	[Export]
 	private float explosion_time = 1;
 	private float explosion_timer = 0;

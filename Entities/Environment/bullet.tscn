@@ -68,6 +68,7 @@ max_contacts_reported = 1
 contact_monitor = true
 script = ExtResource("1_rw45e")
 direction = Vector2(1, 0)
+explosion_time = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 0.154067

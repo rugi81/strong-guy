@@ -88,7 +88,6 @@ position = Vector2(-1.72217e-06, 133.631)
 [node name="Back Leg" type="RemoteTransform2D" parent="Wrapper/Avatar/Waist" index="2"]
 position = Vector2(45.178, 21.4943)
 rotation = -0.0872665
-scale = Vector2(1, 1)
 remote_path = NodePath("../../Back Leg")
 
 [node name="foot" type="Marker2D" parent="Wrapper/Avatar/Waist/Back Leg" index="0"]

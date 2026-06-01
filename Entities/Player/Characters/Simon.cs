@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 public partial class Simon : Player
 {
@@ -25,6 +26,8 @@ public partial class Simon : Player
         base._PhysicsProcess(delta);
 
 		Godot.Vector2 direction = Input.GetVector("input_aimleft" + playerIndex, "input_aimright" + playerIndex, "input_aimup" + playerIndex, "input_aimdown" + playerIndex);
+        direction = direction.Normalized();
+
         Node2D g = GetNode<Node2D>("Wrapper/Avatar/Waist/Upper Body/Gun");
 
         if ( direction != Godot.Vector2.Zero ){
@@ -35,6 +38,7 @@ public partial class Simon : Player
         else
         {             
             Aim = Godot.Vector2.FromAngle(0);
+            direction = (face_right)? Godot.Vector2.Right:Godot.Vector2.Left;
             g.Rotation = 0;
         }
 
@@ -46,8 +50,9 @@ public partial class Simon : Player
 
         if (Input.IsActionPressed("input_rtrigger" + playerIndex) && fire_timer > fire_rate)
         {
+            Godot.Vector2 offset = new Godot.Vector2(0,10);
             bullet b = Projectile.Instantiate<bullet>();
-            b.Position = this.Position;
+            b.Position = this.Position + offset + ( direction * 50 );
             GetParent().AddChild(b);
 
             

@@ -213,7 +213,7 @@ occluder = SubResource("OccluderPolygon2D_n4his")
 position = Vector2(838, 219)
 scale = Vector2(0.2, 1)
 
-[node name="Platform" parent="Platform6" instance=ExtResource("1_rxpng")]
+[node name="Platform2" parent="Platform6" instance=ExtResource("1_rxpng")]
 position = Vector2(-1495, -150)
 rotation = 0.0974149
 scale = Vector2(3.49819, 2.37184)
