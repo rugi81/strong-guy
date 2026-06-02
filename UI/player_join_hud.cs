@@ -7,7 +7,7 @@ public partial class player_join_hud : Control
 	public bool selectingPlayer = false;
 	private int oldCharacter = 1;
 	private int currentCharacter = 1;
-	private int characterNumber = 3;
+	private int characterNumber = 4;
 
 
 	private Control joinHUD;
@@ -23,6 +23,8 @@ public partial class player_join_hud : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{		
+		//GD.Print("Player JOIN HUD: "+playerIndex);
+		
 		if ( selectHUD.Visible ){
 			if (Input.IsActionJustPressed("input_left"+playerIndex)){
 				currentCharacter--;
@@ -37,6 +39,7 @@ public partial class player_join_hud : Control
 				}
 			}			
 			if (Input.IsActionJustPressed("input_action"+playerIndex)){
+				GD.Print("Player Input: "+playerIndex+" -- action");
 				DoSelect();
 			}			
 

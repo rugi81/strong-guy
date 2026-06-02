@@ -19,7 +19,7 @@ public partial class Player_Manager : Node
 	private int maxPlayers = 4;
 
 	private List<Player> players = new List<Player>();
-	private Boolean[] playerExists = {true,true,false,false};
+	private Boolean[] playerExists = {true,false,false,false};
 
 	[Signal]
 	public delegate void PlayerAddedEventHandler( Player p, int i );
@@ -45,9 +45,11 @@ public partial class Player_Manager : Node
 	{
 		//if (Input.IsActionJustPressed("input_action"+playerIndex) && !attacking && !gettingHurt){
 		for ( var i=0; i<maxPlayers; i++ ){
+
 			if ( !playerExists[i] ){
 				if ( Input.IsActionJustPressed("input_action"+i) ){
-					//AddPlayer(i);
+					if ( i == 1 ){ GD.Print("Pressed!");	}
+
 					EmitSignal("PlayerAddRequest", i);
 				}
 			}
@@ -66,10 +68,10 @@ public partial class Player_Manager : Node
 	public void AddPlayer(int inIndex, int Type ){
 		GD.Print("NEW PLAYER TYPE: "+Type);
 		Player p;
-		if ( Type == 1 ){
+		if ( Type == 4 ){
 			Simon b = boltTest.Instantiate<Simon>();
 			players.Add( b );
-			b.HelloBolts = "I've changed Bolts!";
+			b.Scale = new Godot.Vector2(.7f,.7f);
 			p = (Player)b;
 		}else{
 			p = player.Instantiate<Player>();

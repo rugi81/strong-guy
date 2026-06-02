@@ -121,92 +121,98 @@ input_special0={
 }
 input_left1={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194319,"key_label":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":0,"axis_value":-1.0,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194319,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 input_right1={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194321,"key_label":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":0,"axis_value":1.0,"script":null)
 ]
 }
 input_jump1={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194326,"physical_keycode":4194326,"key_label":4194326,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":0,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 input_action1={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194310,"key_label":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194310,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 input_up1={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194320,"key_label":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":1,"axis_value":-1.0,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194320,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 input_down1={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194322,"key_label":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":1,"axis_value":1.0,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194322,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 input_left2={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":0,"axis_value":-1.0,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":0,"axis_value":-1.0,"script":null)
 ]
 }
 input_right2={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":0,"axis_value":1.0,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":0,"axis_value":1.0,"script":null)
 ]
 }
 input_jump2={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":0,"pressure":0.0,"pressed":true,"script":null)
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":2,"button_index":0,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 input_action2={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":2,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 input_up2={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":1,"axis_value":-1.0,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":1,"axis_value":-1.0,"script":null)
 ]
 }
 input_down2={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":1,"axis_value":1.0,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":1,"axis_value":1.0,"script":null)
 ]
 }
 input_left3={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":0,"axis_value":-1.0,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":0,"axis_value":-1.0,"script":null)
 ]
 }
 input_right3={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":0,"axis_value":1.0,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":0,"axis_value":1.0,"script":null)
 ]
 }
 input_jump3={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":2,"button_index":0,"pressure":0.0,"pressed":true,"script":null)
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":3,"button_index":0,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 input_action3={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":2,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":3,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 input_down3={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":1,"axis_value":1.0,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":1,"axis_value":1.0,"script":null)
 ]
 }
 input_up3={
 "deadzone": 0.5,
-"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":1,"axis_value":-1.0,"script":null)
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":1,"axis_value":-1.0,"script":null)
 ]
 }
 input_block1={
@@ -256,6 +262,86 @@ input_aimup0={
 input_rtrigger0={
 "deadzone": 0.5,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":5,"axis_value":1.0,"script":null)
+]
+}
+input_aimright1={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":2,"axis_value":1.0,"script":null)
+]
+}
+input_aimdown1={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":3,"axis_value":1.0,"script":null)
+]
+}
+input_aimleft1={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":2,"axis_value":-1.0,"script":null)
+]
+}
+input_aimup1={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":3,"axis_value":-1.0,"script":null)
+]
+}
+input_rtrigger1={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":5,"axis_value":1.0,"script":null)
+]
+}
+input_aimright2={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":2,"axis_value":1.0,"script":null)
+]
+}
+input_aimdown2={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":3,"axis_value":1.0,"script":null)
+]
+}
+input_aimleft2={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":2,"axis_value":-1.0,"script":null)
+]
+}
+input_aimup2={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":3,"axis_value":-1.0,"script":null)
+]
+}
+input_rtrigger2={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":2,"axis":5,"axis_value":1.0,"script":null)
+]
+}
+input_aimright3={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":2,"axis_value":1.0,"script":null)
+]
+}
+input_aimdown3={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":3,"axis_value":1.0,"script":null)
+]
+}
+input_aimleft3={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":2,"axis_value":-1.0,"script":null)
+]
+}
+input_aimup3={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":3,"axis_value":-1.0,"script":null)
+]
+}
+input_rtrigger3={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":3,"axis":5,"axis_value":1.0,"script":null)
+]
+}
+input_action={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 

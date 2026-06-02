@@ -6,11 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b6v6x1xhfa5gc" path="res://asset/White2x.png" id="2_vng44"]
 [ext_resource type="Texture2D" uid="uid://b6crttk5y6ggc" path="res://asset/norm-thumb.png" id="3_bl5g8"]
 [ext_resource type="Texture2D" uid="uid://xvmup3ianj03" path="res://asset/robut-thumb.png" id="4_3q6v4"]
+[ext_resource type="Texture2D" uid="uid://c3ac32uepwna1" path="res://asset/simon-thumb.png" id="5_ulu6r"]
 [ext_resource type="PackedScene" uid="uid://bxm2mxxtwrtcf" path="res://UI/debug_hud.tscn" id="7_i1vb4"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i5kjd"]
-atlas = ExtResource("2_vng44")
-region = Rect2(771.343, 528.814, 72.634, 97.4359)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jpd24"]
 atlas = ExtResource("2_vng44")
@@ -58,7 +55,7 @@ texture = ExtResource("4_3q6v4")
 [node name="4" type="Sprite2D" parent="GameHUD/Thumbs"]
 visible = false
 scale = Vector2(0.5, 0.5)
-texture = SubResource("AtlasTexture_i5kjd")
+texture = ExtResource("5_ulu6r")
 
 [node name="Dead" type="Sprite2D" parent="GameHUD/Thumbs"]
 visible = false

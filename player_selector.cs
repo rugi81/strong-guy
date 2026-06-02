@@ -8,7 +8,7 @@ public partial class player_selector : Panel
 	private int ControllerID;
 	private bool playerReady = false;
 	private int character_selection = 0;
-	private int max_character = 4;
+	private int max_character = 5;
 
 	private bool selectionChanged = false;
 
@@ -105,8 +105,8 @@ public partial class player_selector : Panel
 	// fn: Activate Selector
 	private void activatePlayer(int inControllerID)
 	{
-		GD.Print("activatePlayer: "+playerLabel);
-		GD.Print("character: "+character_selection);
+		//GD.Print("activatePlayer: "+playerLabel);
+		//GD.Print("character: "+character_selection);
 		ControllerID = inControllerID;
 		active = true;
 		updateUIActivation();
